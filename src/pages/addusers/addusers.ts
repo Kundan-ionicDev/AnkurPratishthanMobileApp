@@ -94,7 +94,7 @@ export class AddusersPage {
 
   
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddusersPage');
+    // console.log('ionViewDidLoad AddusersPage');
   }
 
   addcategory(){
