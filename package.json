@@ -59,7 +59,7 @@
     "ionic": "^5.4.4",
     "typescript": "2.3.4"
   },
-  "description": "Ionic 3 Start Theme",
+  "description": "Ankur Pratishthan mobile app library management system",
   "cordovaPlugins": [],
   "cordovaPlatforms": [],
   "cordova": {
