@@ -1,0 +1,288 @@
+<ion-header>
+  <ion-navbar color="primary">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>{{ pagetitle }} </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <div *ngIf="isclustadd == false && pagetitle == 'Librarian Management'">
+        <ion-list>
+          <ion-list-header>List of {{ pagetitle }}</ion-list-header>
+          <ion-item *ngFor="let item of librariabdata">
+            <ion-thumbnail item-start>
+                <img src="{{ item.Image }}">
+              </ion-thumbnail>
+            <ion-label>
+              <h3>{{ item.Name}}</h3>
+              <p><b>Address:</b> {{ item.Address }}</p>
+              <p><b>Phone:</b>{{ item.ContactNumber }}</p>
+              <p><b>Email Id :</b>{{ item.EmailId }}</p>
+              <p><b>Libririan :</b> {{ item.Librarian }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+    </div>
+
+    <div *ngIf="isclustadd == false && pagetitle == 'Member Management'">
+        <ion-list>
+            <ion-list-header>List of {{ pagetitle }}</ion-list-header>
+            <ion-item *ngFor="let item of librariabdata">
+              <ion-thumbnail item-start>
+                  <img src="{{ item.Image }}">
+                </ion-thumbnail>
+              <ion-label>
+                <h3>{{ item.Name}}</h3>
+                <p><b>Address:</b> {{ item.Address }}</p>
+                <p><b>Phone:</b>{{ item.ContactNumber }}</p>
+                <p><b>Email Id :</b>{{ item.EmailId }}</p>
+                <p><b>Libririan :</b> {{ item.Librarian }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+    </div>
+
+    <div *ngIf="isclustadd == false && pagetitle == 'Cluster Management'">
+        <ion-list>
+            <ion-list-header>List of {{ pagetitle }}</ion-list-header>
+            <ion-item *ngFor="let item of clustrdata" (click)="detailSelected(item)">
+              <ion-thumbnail item-start>
+                  <img src="{{ item.Image }}">
+                </ion-thumbnail>
+              <ion-label>
+                <h3>{{ item.Name}}</h3>
+                <p><b>Address:</b> {{ item.Address }}</p>
+                <p><b>Phone:</b>{{ item.ContactNumber }}</p>
+                <p><b>Members :</b>{{ item.MemberCount }}</p>
+                <p><b>Libririan :</b> {{ item.Librarian }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+    </div>
+
+    <!-- Add New Cluster-->
+    <div *ngIf="isclustadd == true  && pagetitle == 'Cluster Management'">
+        <form class="list-form" [formGroup]="clusteradd" (ngSubmit)="register()"> 
+            <ion-item>
+              <ion-label floating>
+                <ion-icon name="person" item-start class="text-primary"></ion-icon>
+                Full Name
+              </ion-label>
+              <ion-input type="text" formControlName="fullname" ></ion-input>
+            </ion-item>
+        
+            <ion-item>
+              <ion-label floating>
+                <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+                  Email
+              </ion-label>
+              <ion-input type="email" formControlName="emailaddress" ></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>
+                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  Address
+                </ion-label>
+                <ion-input type="text" formControlName="address" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label floating>
+                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                    Cluster Code
+                  </ion-label>
+                  <ion-input type="text" formControlName="clustercode" ></ion-input>
+                </ion-item>
+
+            <ion-item>
+              <ion-label floating>
+                <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                Mobile Number
+              </ion-label>
+              <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Assign Librarian</ion-label>
+                <ion-select>
+                  <ion-option value="e">Udhav</ion-option>
+                  <ion-option value="m">Kundan</ion-option>
+                  <ion-option value="h">Pranav</ion-option>
+                  <ion-option value="g">Devika</ion-option>
+                  <ion-option value="u">Hiren</ion-option>
+                </ion-select>
+            </ion-item>
+
+          <div margin-top>
+              <button ion-button block color="dark" type="submit">
+                Save
+              </button>
+          
+              <p text-center ion-text color="secondary">Clear</p>
+            </div>
+          </form>
+    </div>
+    <!-- End of Cluster adding -->
+
+    <!-- Add new Librarian -->
+    <div *ngIf="isclustadd == true  && pagetitle == 'Librarian Management'">
+        <form class="list-form" [formGroup]="librariadd" (ngSubmit)="register()"> 
+            <ion-item>
+              <ion-label floating>
+                <ion-icon name="person" item-start class="text-primary"></ion-icon>
+                Full Name
+              </ion-label>
+              <ion-input type="text" formControlName="fullname" ></ion-input>
+            </ion-item>
+        
+            <ion-item>
+                <ion-label floating>
+                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  Address
+                </ion-label>
+                <ion-input type="text" formControlName="address" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label floating>
+                    <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+                      Email
+                  </ion-label>
+                  <ion-input type="email" formControlName="emailaddress" ></ion-input>
+                </ion-item>
+
+              <ion-item>
+                  <ion-label floating>
+                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                    Mobile Number
+                  </ion-label>
+                  <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
+                </ion-item>
+
+            <ion-item>
+                  <ion-label floating>
+                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                    Alternate Mobile Number
+                  </ion-label>
+                  <ion-input type="tel" formControlName="alternatenumber" ></ion-input>
+                </ion-item>
+
+            
+
+              <ion-item>
+                  <ion-label floating>
+                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                   Date of Birth
+                  </ion-label>
+                  <ion-input type="date" formControlName="dateofbirth" ></ion-input>
+                </ion-item>
+
+            
+
+            <ion-item>
+                <ion-label floating>Assign Cluster</ion-label>
+                <ion-select>
+                  <ion-option value="e">Sneha Sadan Orphanage Vinayalaya</ion-option>
+                  <ion-option value="m">Sneha Sadan</ion-option>
+                  <ion-option value="h">Home For The Aged</ion-option>
+                  <ion-option value="g">Sishu Bhavan</ion-option>
+                </ion-select>
+            </ion-item>
+
+          <div margin-top>
+              <button ion-button block color="dark" type="submit">
+                Save
+              </button>
+          
+              <p text-center ion-text color="secondary">Clear</p>
+            </div>
+          </form>
+    </div>
+  <!-- End of Librarian adding -->
+
+  <!-- Add New Member -->
+  <div *ngIf="isclustadd == true  && pagetitle == 'Member Management'">
+      <form class="list-form" [formGroup]="memberadd" (ngSubmit)="register()"> 
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="person" item-start class="text-primary"></ion-icon>
+              Full Name
+            </ion-label>
+            <ion-input type="text" formControlName="fullname" ></ion-input>
+          </ion-item>
+      
+          <ion-item>
+              <ion-label floating>
+                <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                Address
+              </ion-label>
+              <ion-input type="text" formControlName="address" ></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>
+                  <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+                    Email
+                </ion-label>
+                <ion-input type="email" formControlName="emailaddress" ></ion-input>
+              </ion-item>
+
+            <ion-item>
+                <ion-label floating>
+                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  Mobile Number
+                </ion-label>
+                <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
+              </ion-item>
+
+          <ion-item>
+                <ion-label floating>
+                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  Alternate Mobile Number
+                </ion-label>
+                <ion-input type="tel" formControlName="alternatenumber" ></ion-input>
+              </ion-item>
+
+          
+
+            <ion-item>
+                <ion-label floating>
+                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                 Date of Birth
+                </ion-label>
+                <ion-input type="date" formControlName="dateofbirth" ></ion-input>
+              </ion-item>
+
+          
+
+          <ion-item>
+              <ion-label floating>Assign Cluster</ion-label>
+              <ion-select>
+                <ion-option value="e">Sneha Sadan Orphanage Vinayalaya</ion-option>
+                <ion-option value="m">Sneha Sadan</ion-option>
+                <ion-option value="h">Home For The Aged</ion-option>
+                <ion-option value="g">Sishu Bhavan</ion-option>
+              </ion-select>
+          </ion-item>
+
+        <div margin-top>
+            <button ion-button block color="dark" type="submit">
+              Save
+            </button>
+        
+            <p text-center ion-text color="secondary">Clear</p>
+          </div>
+        </form>
+  </div>
+  <!-- End of Adding New Member-->
+  
+  <ion-fab right bottom>
+      <button (click)="addcategory()" ion-fab color="light">
+          <ion-icon name="{{ iconName }}"></ion-icon>
+      </button>
+    </ion-fab>
+</ion-content>

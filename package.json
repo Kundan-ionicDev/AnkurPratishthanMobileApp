@@ -1,0 +1,90 @@
+{
+  "name": "ankurpratishthan",
+  "version": "0.0.3",
+  "author": "kundan sakpal <kundan.mobileappdev@gmail.com>",
+  "homepage": "http://credencetechnologies.co.in",
+  "scripts": {
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "lint": "ionic-app-scripts lint",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve"
+  },
+  "dependencies": {
+    "@angular/common": "4.4.4",
+    "@angular/compiler": "4.4.4",
+    "@angular/compiler-cli": "4.4.4",
+    "@angular/core": "4.4.4",
+    "@angular/forms": "4.4.4",
+    "@angular/http": "4.4.4",
+    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser-dynamic": "4.4.4",
+    "@ionic-native/barcode-scanner": "^4.20.0",
+    "@ionic-native/camera": "^5.16.0",
+    "@ionic-native/core": "3.12.1",
+    "@ionic-native/device": "^4.2.1",
+    "@ionic-native/fingerprint-aio": "^4.20.0",
+    "@ionic-native/keyboard": "^4.1.0",
+    "@ionic-native/splash-screen": "3.12.1",
+    "@ionic-native/status-bar": "3.12.1",
+    "@ionic-native/zbar": "^5.16.0",
+    "@ionic-super-tabs/angular": "^6.0.0-rc.5",
+    "@ionic-super-tabs/core": "^6.0.0-rc.5",
+    "@ionic/angular": "^4.0.0-beta.15",
+    "@ionic/storage": "2.0.1",
+    "chart.js": "^2.8.0",
+    "cordova-android": "^8.1.0",
+    "cordova-browser": "^6.0.0",
+    "cordova-ios": "^4.4.0",
+    "cordova-plugin-camera": "^4.1.0",
+    "cordova-plugin-console": "^1.1.0",
+    "cordova-plugin-device": "^1.1.6",
+    "cordova-plugin-fingerprint-aio": "^3.0.0",
+    "cordova-plugin-splashscreen": "^4.0.3",
+    "cordova-plugin-statusbar": "^2.2.3",
+    "cordova-plugin-whitelist": "^1.3.2",
+    "cordova-sqlite-storage": "^3.4.0",
+    "ionic-angular": "3.8.0",
+    "ionic-plugin-keyboard": "^2.2.1",
+    "ionic-text-avatar": "^1.1.0",
+    "ionic2-super-tabs": "^4.1.4",
+    "ionicons": "3.0.0",
+    "phonegap-plugin-barcodescanner": "^8.1.0",
+    "rxjs": "5.4.3",
+    "sw-toolbox": "3.6.0",
+    "zone.js": "0.8.18"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "^3.2.4",
+    "ionic": "^5.4.4",
+    "typescript": "2.3.4"
+  },
+  "description": "Ionic 3 Start Theme",
+  "cordovaPlugins": [],
+  "cordovaPlatforms": [],
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-console": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-whitelist": {},
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-fingerprint-aio": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "config": {
+    "ionic_sass": "./sass.js"
+  }
+}

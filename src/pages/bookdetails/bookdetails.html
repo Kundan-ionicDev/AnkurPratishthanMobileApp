@@ -1,0 +1,86 @@
+<ion-content class="common-bg">
+    <img src="../../assets/img/books/Poets.jpeg" alt="">
+  
+    <!--services-->
+    <ion-grid class="border-bottom dark-bg">
+      <ion-row>
+        <ion-col text-center>
+          <div class="text-sm">
+            <div>
+              <ion-icon name="time" class="text-white"></ion-icon>
+              <span ion-text color="light">Time</span>
+              <ion-icon name="checkbox-outline" margin-left class="text-white" ></ion-icon>
+              <span ion-text color="light" >Free cancellation</span>
+              <ion-icon name="list-box" margin-left class="text-white" ></ion-icon>
+              <span ion-text color="light" >Electronic voucher</span>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+    <!--high light-->
+    <div class="border-bottom" padding>
+      <span ion-text color="dark" class="bold">HIGHLIGHT</span>
+      <ul class="highlight">
+        <li>
+          <ion-icon name="checkmark" class="text-green"></ion-icon>
+          <span ion-text color="primary">Highlight</span>
+        </li>
+      </ul>
+    </div>
+  
+    <!--booking form-->
+    <div class="booking-form card round" margin>
+      <div class="border-bottom" padding>
+        <h5>Trip</h5>
+  
+        <!--choose guest-->
+        <ion-grid class="filters" no-padding margin-top>
+          <ion-row>
+            <ion-col class="adult" width-70>
+              <span ion-text color="primary"><strong>Trip.price_adult</strong> Adults</span>
+            </ion-col>
+            <ion-col width-10 text-center>
+              <ion-icon name="remove-circle" class="text-2x" tappable (click)="minusAdult()" color="secondary"></ion-icon>
+            </ion-col>
+            <ion-col width-10 text-center>Adults</ion-col>
+            <ion-col width-10 text-center>
+              <ion-icon name="add-circle" class="text-2x" tappable (click)="plusAdult()" color="secondary"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row margin-top>
+            <ion-col width-70>
+              <span ion-text color="primary"><strong>Trip.price_child</strong> Child (0-12 years)</span>
+            </ion-col>
+            <ion-col width-10 text-center>
+              <ion-icon name="remove-circle" class="text-2x" tappable (click)="minusChildren()" color="secondary"></ion-icon>
+            </ion-col>
+            <ion-col width-10 text-center>Children</ion-col>
+            <ion-col width-10 text-center>
+              <ion-icon name="add-circle" class="text-2x" tappable (click)="plusChildren()" color="secondary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div padding class="form-bottom">
+  <!--       <span ion-text color="dark" class="bold">{{ adults }} Adults</span> -->
+        <!--booking button-->
+        <button ion-button class="pull-right" color="secondary" tappable (click)="checkout()">Book Now </button>
+        <div class="clear"></div>
+      </div>
+    </div>
+  
+    <!--description-->
+    <div class="border-bottom" padding>
+      <span ion-text color="primary" class="bold">DESCRIPTION</span>
+      <p ion-text>Trip Description </p>
+    </div>
+  
+    <!--address-->
+    <div class="border-bottom" padding>
+      <span ion-text color="primary" class="bold">LOCATION</span>
+      <p ion-text>Trip Location</p>
+    </div>
+  </ion-content>
+  

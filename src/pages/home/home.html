@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <!-- {{ apiProvider.UserRoleId }} -->
+      <strong>Ankur</strong> Prathishthan
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (click)="presentNotifications($event)">
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+      <button ion-button tappable (click)="goToAccount()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="animated fadeIn common-bg">
+    <!-- <h1>Click Button To Scan</h1>
+ 
+    <button ion-button (click)="scanCode()">
+      Scan Code
+    </button>
+   
+    <div *ngIf="scannedData">
+      <p>
+        Scanned Code Text : <b>{{ scannedData["text"] }}</b>
+      </p>
+      <p>
+        Scanned Code Format : <b>{{ scannedData["format"] }}</b>
+      </p>
+    </div>
+   
+    <h1>Enter Value to Create QR code</h1>
+    <ion-input type="text" [(ngModel)]="encodedData"></ion-input>
+   
+    <button ion-button (click)="encodedText()">
+      Create QR
+    </button>
+  <ion-item>
+  	<ion-input type="text" placeholder="My QR data" [(ngModel)]="qrData">	
+  	</ion-input>
+  </ion-item>
+  <button ion-button full (click)="scanCode()"><ion-icon name="qr-scanner"></ion-icon>ScanCode</button> -->
+
+  <div class="ion-padding">
+    <ion-card>
+      <ion-card-header>
+        Orphane
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+       Books Inventory 
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #doughnutCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        Line Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #lineCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

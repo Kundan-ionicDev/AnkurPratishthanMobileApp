@@ -1,0 +1,198 @@
+{
+  "status":200,
+  "data":{
+  "categories": [
+    {
+      "key": "1",
+      "thumb": "https://res.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635730/shutterstock_211209340_hr5vjk.jpg",
+      "title": "Beverages",
+      "description": "Souvlaki features the fresh-tasting combination of lemon juice, garlic, and olive oil that is so prevalent in Greek cuisine",
+      "price": 4,
+      "date": "10/01/16"
+    },
+    {
+      "key": "2",
+      "thumb": "https://res-1.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635646/shutterstock_124388140_pcemyn.jpg",
+      "title": "Appetizers",
+      "description": "Serving authentic Italian Chicken Masala made by a 100% Italian from Chicago to Denver's front range. Vegan and Gluten free options available",
+      "price": 7,
+      "date": "04/01/16"
+    },
+    {
+      "key": 3,
+      "thumb": "https://res-2.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635603/shutterstock_85029121_yqrjco.jpg",
+      "title": "Salads",
+      "description": "Start the meal off right with these delicious appetizer recipes for dips, finger foods and other tasty bites your guests can nibble on.",
+      "price": 5,
+      "date": "07/11/15"
+    },
+    {
+      "key": "4",
+      "thumb": "https://res-3.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635771/shutterstock_414301747_mtoc29.jpg",
+      "title": "Sides",
+      "description": "Souvlaki features the fresh-tasting combination of lemon juice, garlic, and olive oil that is so prevalent in Greek cuisine",
+      "price": 13,
+      "date": "16/10/15"
+    },
+    {
+      "key": "5",
+      "thumb": "https://res.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635600/shutterstock_78020470_mogsht.jpg",
+      "title": "Desserts",
+      "description": "Serving authentic Italian Chicken Masala made by a 100% Italian from Chicago to Denver's front range. Vegan and Gluten free options available",
+      "price": "10",
+      "date": "22/6/15"
+    },
+    {
+      "key": "6",
+      "thumb": "https://res-1.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635736/shutterstock_154111196_dr1rsp.jpg",
+      "title": "Main Course",
+      "description": "Start the meal off right with these delicious appetizer recipes for dips, finger foods and other tasty bites your guests can nibble on.",
+      "price": 11,
+      "date": "04/01/15"
+    },
+    {
+      "key": "7",
+      "thumb": "https://res-2.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635706/shutterstock_125990357_cktkdy.jpg",
+      "title": "Starters",
+      "description": "Souvlaki features the fresh-tasting combination of lemon juice, garlic, and olive oil that is so prevalent in Greek cuisine",
+      "price": 15,
+      "date": "11/11/14"
+    },
+    {
+      "key": "8",
+      "thumb": "https://res-3.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635695/shutterstock_150017666_h2deah.jpg",
+      "title": "Slice",
+      "description": "Start the meal off right with these delicious appetizer recipes for dips, finger foods and other tasty bites your guests can nibble on.",
+      "price": 9,
+      "date": "01/01/14"
+    }
+  ],
+  "featured": [
+    {
+      "key": "100",
+      "thumb": "assets/img/hero/1.jpg"
+    },
+    {
+      "key": "1",
+      "thumb": "assets/img/hero/2.jpg"
+    },
+    {
+      "key": "2",
+      "thumb": "assets/img/hero/3.jpg"
+    },
+    {
+      "key": "3",
+      "thumb": "assets/img/hero/4.jpg"
+    }
+  ],
+ 
+"Orders": [
+    {
+      "key": "1",
+      "thumb": "https://res.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635730/shutterstock_211209340_hr5vjk.jpg",
+      "title": "Red Wine",
+      "description": "Souvlaki features the fresh-tasting combination of lemon juice, garlic, and olive oil that is so prevalent in Greek cuisine",
+      "price": 4,
+      "date": "10/01/16",
+      "review":{
+        "rating":5,
+        "comment":"Giving 5 star to this item,Seriously worth to buy it"
+      }
+    },
+    {
+      "key": "2",
+      "thumb": "https://res-1.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635646/shutterstock_124388140_pcemyn.jpg",
+      "title": "King Beef",
+      "description": "Serving authentic Italian Chicken Masala made by a 100% Italian from Chicago to Denver's front range. Vegan and Gluten free options available",
+      "price": 7,
+      "date": "04/01/16"
+    },
+    {
+      "key": 3,
+      "thumb": "https://res-2.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635603/shutterstock_85029121_yqrjco.jpg",
+      "title": "Mix Salad",
+      "description": "Start the meal off right with these delicious appetizer recipes for dips, finger foods and other tasty bites your guests can nibble on.",
+      "price": 5,
+      "date": "07/11/15",
+      "review":{
+        "rating":4,
+        "comment":"Seriously worth to buy it"
+      }
+    },
+    {
+      "key": "4",
+      "thumb": "https://res-3.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635771/shutterstock_414301747_mtoc29.jpg",
+      "title": "Chicken Manchurian",
+      "description": "Souvlaki features the fresh-tasting combination of lemon juice, garlic, and olive oil that is so prevalent in Greek cuisine",
+      "price": 13,
+      "date": "16/10/15"
+    },
+    {
+      "key": "5",
+      "thumb": "https://res.cloudinary.com/ionicfirebaseapp/image/upload/c_scale,h_110,w_200/v1483635600/shutterstock_78020470_mogsht.jpg",
+      "title": "Lime Soda",
+      "description": "Serving authentic Italian Chicken Masala made by a 100% Italian from Chicago to Denver's front range. Vegan and Gluten free options available",
+      "price": "10",
+      "date": "22/6/15"
+    }],
+  "newsList": [
+    {
+      "id": "1",
+      "title": "India vs Bangladesh match",
+      "discription": "Murali Vijay and Cheteshwar Pujara steadied the ship for India. as they strung a fifty-plus partnership in the one-off Test.",
+      "image": "assets/img/news.jpg",
+      "dateTime": "09.02.2017,10:20 am",
+      "details": "Pujara maintains a steady approach in the next over by Shakib, getting a single at the end of the over to move to 49. FIFTY for Cheteshwar Pujara — his 12th in Tests! Gets there with a single off Rabbi, and now both batsmen will look to convert this to a big score today. Vijay drives the fifth ball towards extra-cover to get a couple of runs.Vijay brings up his half-century in style, driving Shakib through extra-cover to get his seventh boundary, and ends up bringing up the milestone for the 15th time in his Test career, taking 82 balls to do so. Executes a fine pull in the following over, pushing it wide of the backward square-leg fielder, before getting four leg-byes a couple of deliveries later. FOUR! Murali Vijay gets to his half-century in style, driving Shakib towards extra-cover to bring up the milestone for the 15th time in his Test career! And that also brings up the 100-stand between him and Pujara! Now for his partner to bring up the milestone as well."
+    },
+    {
+      "id": "2",
+      "title": "India vs Bangladesh match",
+      "discription": "Murali Vijay and Cheteshwar Pujara steadied the ship for India. as they strung a fifty-plus partnership in the one-off Test.",
+      "image": "assets/img/news.jpg",
+      "dateTime": "10.02.2017,10:20 am",
+      "details": "Pujara maintains a steady approach in the next over by Shakib, getting a single at the end of the over to move to 49. FIFTY for Cheteshwar Pujara — his 12th in Tests! Gets there with a single off Rabbi, and now both batsmen will look to convert this to a big score today. Vijay drives the fifth ball towards extra-cover to get a couple of runs.Vijay brings up his half-century in style, driving Shakib through extra-cover to get his seventh boundary, and ends up bringing up the milestone for the 15th time in his Test career, taking 82 balls to do so. Executes a fine pull in the following over, pushing it wide of the backward square-leg fielder, before getting four leg-byes a couple of deliveries later. FOUR! Murali Vijay gets to his half-century in style, driving Shakib towards extra-cover to bring up the milestone for the 15th time in his Test career! And that also brings up the 100-stand between him and Pujara! Now for his partner to bring up the milestone as well."
+    },
+    {
+      "id": "3",
+      "title": "India vs Bangladesh match",
+      "discription": "Murali Vijay and Cheteshwar Pujara steadied the ship for India. as they strung a fifty-plus partnership in the one-off Test.",
+      "image": "assets/img/news.jpg",
+      "dateTime": "11.02.2017,10:20 am",
+      "details": "Pujara maintains a steady approach in the next over by Shakib, getting a single at the end of the over to move to 49. FIFTY for Cheteshwar Pujara — his 12th in Tests! Gets there with a single off Rabbi, and now both batsmen will look to convert this to a big score today. Vijay drives the fifth ball towards extra-cover to get a couple of runs.Vijay brings up his half-century in style, driving Shakib through extra-cover to get his seventh boundary, and ends up bringing up the milestone for the 15th time in his Test career, taking 82 balls to do so. Executes a fine pull in the following over, pushing it wide of the backward square-leg fielder, before getting four leg-byes a couple of deliveries later. FOUR! Murali Vijay gets to his half-century in style, driving Shakib towards extra-cover to bring up the milestone for the 15th time in his Test career! And that also brings up the 100-stand between him and Pujara! Now for his partner to bring up the milestone as well."
+    },
+    {
+      "id": "4",
+      "title": "India vs Bangladesh match",
+      "discription": "Murali Vijay and Cheteshwar Pujara steadied the ship for India. as they strung a fifty-plus partnership in the one-off Test.",
+      "image": "assets/img/news.jpg",
+      "dateTime": "12.02.2017,10:20 am",
+      "details": "Pujara maintains a steady approach in the next over by Shakib, getting a single at the end of the over to move to 49. FIFTY for Cheteshwar Pujara — his 12th in Tests! Gets there with a single off Rabbi, and now both batsmen will look to convert this to a big score today. Vijay drives the fifth ball towards extra-cover to get a couple of runs.Vijay brings up his half-century in style, driving Shakib through extra-cover to get his seventh boundary, and ends up bringing up the milestone for the 15th time in his Test career, taking 82 balls to do so. Executes a fine pull in the following over, pushing it wide of the backward square-leg fielder, before getting four leg-byes a couple of deliveries later. FOUR! Murali Vijay gets to his half-century in style, driving Shakib towards extra-cover to bring up the milestone for the 15th time in his Test career! And that also brings up the 100-stand between him and Pujara! Now for his partner to bring up the milestone as well."
+    },
+    {
+      "id": "5",
+      "title": "India vs Bangladesh match",
+      "discription": "Murali Vijay and Cheteshwar Pujara steadied the ship for India. as they strung a fifty-plus partnership in the one-off Test.",
+      "image": "assets/img/news.jpg",
+      "dateTime": "12.02.2017,10:20 am",
+      "details": "Pujara maintains a steady approach in the next over by Shakib, getting a single at the end of the over to move to 49. FIFTY for Cheteshwar Pujara — his 12th in Tests! Gets there with a single off Rabbi, and now both batsmen will look to convert this to a big score today. Vijay drives the fifth ball towards extra-cover to get a couple of runs.Vijay brings up his half-century in style, driving Shakib through extra-cover to get his seventh boundary, and ends up bringing up the milestone for the 15th time in his Test career, taking 82 balls to do so. Executes a fine pull in the following over, pushing it wide of the backward square-leg fielder, before getting four leg-byes a couple of deliveries later. FOUR! Murali Vijay gets to his half-century in style, driving Shakib towards extra-cover to bring up the milestone for the 15th time in his Test career! And that also brings up the 100-stand between him and Pujara! Now for his partner to bring up the milestone as well."
+    },
+    {
+      "id": "6",
+      "title": "India vs Bangladesh match",
+      "discription": "Murali Vijay and Cheteshwar Pujara steadied the ship for India. as they strung a fifty-plus partnership in the one-off Test.",
+      "image": "assets/img/news.jpg",
+      "dateTime": "12.02.2017,10:20 am",
+      "details": "Pujara maintains a steady approach in the next over by Shakib, getting a single at the end of the over to move to 49. FIFTY for Cheteshwar Pujara — his 12th in Tests! Gets there with a single off Rabbi, and now both batsmen will look to convert this to a big score today. Vijay drives the fifth ball towards extra-cover to get a couple of runs.Vijay brings up his half-century in style, driving Shakib through extra-cover to get his seventh boundary, and ends up bringing up the milestone for the 15th time in his Test career, taking 82 balls to do so. Executes a fine pull in the following over, pushing it wide of the backward square-leg fielder, before getting four leg-byes a couple of deliveries later. FOUR! Murali Vijay gets to his half-century in style, driving Shakib towards extra-cover to bring up the milestone for the 15th time in his Test career! And that also brings up the 100-stand between him and Pujara! Now for his partner to bring up the milestone as well."
+    },
+    {
+      "id": "7",
+      "title": "India vs Bangladesh match",
+      "discription": "Murali Vijay and Cheteshwar Pujara steadied the ship for India. as they strung a fifty-plus partnership in the one-off Test.",
+      "image": "assets/img/news.jpg",
+      "dateTime": "12.02.2017,10:20 am",
+      "details": "Pujara maintains a steady approach in the next over by Shakib, getting a single at the end of the over to move to 49. FIFTY for Cheteshwar Pujara — his 12th in Tests! Gets there with a single off Rabbi, and now both batsmen will look to convert this to a big score today. Vijay drives the fifth ball towards extra-cover to get a couple of runs.Vijay brings up his half-century in style, driving Shakib through extra-cover to get his seventh boundary, and ends up bringing up the milestone for the 15th time in his Test career, taking 82 balls to do so. Executes a fine pull in the following over, pushing it wide of the backward square-leg fielder, before getting four leg-byes a couple of deliveries later. FOUR! Murali Vijay gets to his half-century in style, driving Shakib towards extra-cover to bring up the milestone for the 15th time in his Test career! And that also brings up the 100-stand between him and Pujara! Now for his partner to bring up the milestone as well."
+    }
+  ]
+}
+
+}

@@ -1,0 +1,32 @@
+<!-- -->
+<ion-header>
+  <ion-navbar color="primary">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Manage Orphane</ion-title>
+      <ion-buttons end>
+        <button ion-button tappable (click)="presentNotifications($event)">
+          <ion-icon name="md-add"></ion-icon>
+        </button>
+        <button ion-button tappable (click)="goToAccount()">
+          <ion-icon name="cog"></ion-icon>
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
+    <ion-list>
+    <ion-item-sliding *ngFor="let item of items" (click)="itemSelected(item)">
+        <ion-item>
+            <h2> {{ item.title }}</h2>
+            <p> {{ item.subtitle }}</p>
+        </ion-item>
+        <ion-icon name="arrow-forward"  end></ion-icon>
+        <ion-item-options side="right">
+          <button ion-button color="success" (click)="favorite(item)">Edit</button>
+          <button ion-button color="danger" (click)="share(item)">Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
+  </ion-list>
+</ion-content>
