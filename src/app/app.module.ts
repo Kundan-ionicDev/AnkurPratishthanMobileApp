@@ -36,7 +36,7 @@ import { RestApiProvider } from '../providers/rest-api/rest-api';
 // import { QRScanner } from '@ionic-native/qr-scanner';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { QrcodePage } from "../pages/qrcode/qrcode"
-
+import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
   declarations: [
@@ -98,7 +98,7 @@ import { QrcodePage } from "../pages/qrcode/qrcode"
   providers: [
     StatusBar,
     ZBar,
-    // QRScanner,
+    Camera,
     BarcodeScanner,
     SplashScreen,
     Keyboard,

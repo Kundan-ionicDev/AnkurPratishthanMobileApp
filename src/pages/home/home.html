@@ -19,33 +19,9 @@
 </ion-header>
 
 <ion-content padding class="animated fadeIn common-bg">
-    <!-- <h1>Click Button To Scan</h1>
- 
-    <button ion-button (click)="scanCode()">
-      Scan Code
-    </button>
-   
-    <div *ngIf="scannedData">
-      <p>
-        Scanned Code Text : <b>{{ scannedData["text"] }}</b>
-      </p>
-      <p>
-        Scanned Code Format : <b>{{ scannedData["format"] }}</b>
-      </p>
-    </div>
-   
-    <h1>Enter Value to Create QR code</h1>
-    <ion-input type="text" [(ngModel)]="encodedData"></ion-input>
-   
-    <button ion-button (click)="encodedText()">
-      Create QR
-    </button>
-  <ion-item>
-  	<ion-input type="text" placeholder="My QR data" [(ngModel)]="qrData">	
-  	</ion-input>
-  </ion-item>
-  <button ion-button full (click)="scanCode()"><ion-icon name="qr-scanner"></ion-icon>ScanCode</button> -->
-
+    <button ion-button (click)="clickImage()">Capture Image</button>
+  <img src="{{clickedImagePath}}" />
+  
   <div class="ion-padding">
     <ion-card>
       <ion-card-header>

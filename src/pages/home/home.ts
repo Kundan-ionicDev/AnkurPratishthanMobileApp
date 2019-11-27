@@ -1,5 +1,5 @@
 import {Component, ViewChild, ElementRef} from "@angular/core";
-import {NavController, PopoverController} from "ionic-angular";
+import {NavController, PopoverController, AlertController} from "ionic-angular";
 import {Storage} from '@ionic/storage';
 import {NotificationsPage} from "../notifications/notifications";
 import {SettingsPage} from "../settings/settings";
@@ -7,6 +7,7 @@ import {SearchLocationPage} from "../search-location/search-location";
 import { Chart } from 'chart.js';
 import { BarcodeScannerOptions, BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { RestApiProvider } from "../../providers/rest-api/rest-api";
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'page-home',
@@ -14,6 +15,16 @@ import { RestApiProvider } from "../../providers/rest-api/rest-api";
 })
 
 export class HomePage {
+  // options: CameraOptions = {
+  //   quality: 100,
+  //   destinationType: this.camera.DestinationType.DATA_URL,
+  //   encodingType: this.camera.EncodingType.JPEG,
+  //   mediaType: this.camera.MediaType.PICTURE,
+  //   cameraDirection:0
+  // }
+  clickedImagePath:any;
+  private image: string;
+
   // search condition
   public search = {
     name: "Rio de Janeiro, Brazil",
@@ -36,6 +47,8 @@ export class HomePage {
   
 
   constructor(
+    private camera: Camera,
+    public alertCtrl: AlertController,
     public apiProvider: RestApiProvider,
     private barcodeScanner: BarcodeScanner,
     private storage: Storage, 
@@ -73,6 +86,7 @@ export class HomePage {
 
 
   ngOnInit() {
+    
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: "bar",
       data: {
@@ -178,6 +192,37 @@ export class HomePage {
     });
   }
 
+  clickImage(){
+    // this.camera.getPicture(this.options).then((imageData) => {
+    //   let base64Image = 'data:image/jpeg;base64,' + imageData;
+    //   this.clickedImagePath = 'data:image/jpeg;base64,' + imageData;
+    //  }, (err) => {
+    //  });
+
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      saveToPhotoAlbum: true,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.image = 'data:image/jpeg;base64,' + imageData;
+      }, (err) => {
+        this.displayErrorAlert(err);
+      });
+  }
+
+  displayErrorAlert(err){
+    console.log(err);
+    let alert = this.alertCtrl.create({
+       title: 'Error',
+       subTitle: 'Error while trying to capture picture',
+       buttons: ['OK']
+     });
+     alert.present();
+  }
+  
   // go to result page
   doSearch() {
     // this.nav.push(TripsPage);

@@ -10,9 +10,10 @@
 
 <ion-content padding>
     <div *ngIf="isclustadd == false && pagetitle == 'Librarian Management'">
-        <ion-list>
+      <ion-list>
           <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-          <ion-item *ngFor="let item of librariabdata">
+          <ion-item-sliding *ngFor="let item of librariabdata">
+          <ion-item>
             <ion-thumbnail item-start>
                 <img src="{{ item.Image }}">
               </ion-thumbnail>
@@ -24,13 +25,25 @@
               <p><b>Libririan :</b> {{ item.Librarian }}</p>
             </ion-label>
           </ion-item>
+          <ion-item-options>
+              <button ion-button color="light" icon-start>
+                <ion-icon name="ios-more"></ion-icon>
+                Edit
+              </button>
+              <button ion-button color="primary" icon-start>
+                <ion-icon name="text"></ion-icon>
+                Delete
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
         </ion-list>
     </div>
 
     <div *ngIf="isclustadd == false && pagetitle == 'Member Management'">
         <ion-list>
             <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-            <ion-item *ngFor="let item of librariabdata">
+            <ion-item-sliding *ngFor="let item of librariabdata">
+            <ion-item>
               <ion-thumbnail item-start>
                   <img src="{{ item.Image }}">
                 </ion-thumbnail>
@@ -42,13 +55,25 @@
                 <p><b>Libririan :</b> {{ item.Librarian }}</p>
               </ion-label>
             </ion-item>
+            <ion-item-options>
+                <button ion-button color="light" icon-start>
+                  <ion-icon name="ios-more"></ion-icon>
+                  Edit
+                </button>
+                <button ion-button color="primary" icon-start>
+                  <ion-icon name="text"></ion-icon>
+                  Delete
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
           </ion-list>
     </div>
 
     <div *ngIf="isclustadd == false && pagetitle == 'Cluster Management'">
         <ion-list>
             <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-            <ion-item *ngFor="let item of clustrdata" (click)="detailSelected(item)">
+            <ion-item-sliding *ngFor="let item of clustrdata" (click)="detailSelected(item)">
+            <ion-item>
               <ion-thumbnail item-start>
                   <img src="{{ item.Image }}">
                 </ion-thumbnail>
@@ -60,6 +85,17 @@
                 <p><b>Libririan :</b> {{ item.Librarian }}</p>
               </ion-label>
             </ion-item>
+            <ion-item-options>
+                <button ion-button color="light" icon-start>
+                  <ion-icon name="ios-more"></ion-icon>
+                  Edit
+                </button>
+                <button ion-button color="primary" icon-start>
+                  <ion-icon name="text"></ion-icon>
+                  Delete
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
           </ion-list>
     </div>
 
@@ -84,15 +120,15 @@
 
             <ion-item>
                 <ion-label floating>
-                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  <ion-icon name="compass" item-start class="text-primary"></ion-icon>
                   Address
                 </ion-label>
-                <ion-input type="text" formControlName="address" ></ion-input>
+                <ion-textarea type="text" formControlName="address" ></ion-textarea>
               </ion-item>
 
               <ion-item>
                   <ion-label floating>
-                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                    <ion-icon name="code" item-start class="text-primary"></ion-icon>
                     Cluster Code
                   </ion-label>
                   <ion-input type="text" formControlName="clustercode" ></ion-input>
@@ -100,7 +136,7 @@
 
             <ion-item>
               <ion-label floating>
-                <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                <ion-icon name="call" item-start class="text-primary"></ion-icon>
                 Mobile Number
               </ion-label>
               <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
@@ -141,10 +177,10 @@
         
             <ion-item>
                 <ion-label floating>
-                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  <ion-icon name="compass" item-start class="text-primary"></ion-icon>
                   Address
                 </ion-label>
-                <ion-input type="text" formControlName="address" ></ion-input>
+                <ion-textarea type="text" formControlName="address" ></ion-textarea>
               </ion-item>
 
               <ion-item>
@@ -157,7 +193,7 @@
 
               <ion-item>
                   <ion-label floating>
-                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                    <ion-icon name="call" item-start class="text-primary"></ion-icon>
                     Mobile Number
                   </ion-label>
                   <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
@@ -165,7 +201,7 @@
 
             <ion-item>
                   <ion-label floating>
-                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                    <ion-icon name="call" item-start class="text-primary"></ion-icon>
                     Alternate Mobile Number
                   </ion-label>
                   <ion-input type="tel" formControlName="alternatenumber" ></ion-input>
@@ -175,7 +211,7 @@
 
               <ion-item>
                   <ion-label floating>
-                    <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                    <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
                    Date of Birth
                   </ion-label>
                   <ion-input type="date" formControlName="dateofbirth" ></ion-input>
@@ -185,7 +221,7 @@
 
             <ion-item>
                 <ion-label floating>Assign Cluster</ion-label>
-                <ion-select>
+                <ion-select multiple="true">
                   <ion-option value="e">Sneha Sadan Orphanage Vinayalaya</ion-option>
                   <ion-option value="m">Sneha Sadan</ion-option>
                   <ion-option value="h">Home For The Aged</ion-option>
@@ -217,10 +253,10 @@
       
           <ion-item>
               <ion-label floating>
-                <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                <ion-icon name="compass" item-start class="text-primary"></ion-icon>
                 Address
               </ion-label>
-              <ion-input type="text" formControlName="address" ></ion-input>
+              <ion-textarea type="text" formControlName="address" ></ion-textarea>
             </ion-item>
 
             <ion-item>
@@ -233,7 +269,7 @@
 
             <ion-item>
                 <ion-label floating>
-                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  <ion-icon name="call" item-start class="text-primary"></ion-icon>
                   Mobile Number
                 </ion-label>
                 <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
@@ -241,7 +277,7 @@
 
           <ion-item>
                 <ion-label floating>
-                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  <ion-icon name="call" item-start class="text-primary"></ion-icon>
                   Alternate Mobile Number
                 </ion-label>
                 <ion-input type="tel" formControlName="alternatenumber" ></ion-input>
@@ -251,7 +287,7 @@
 
             <ion-item>
                 <ion-label floating>
-                  <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+                  <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
                  Date of Birth
                 </ion-label>
                 <ion-input type="date" formControlName="dateofbirth" ></ion-input>
