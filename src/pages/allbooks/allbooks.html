@@ -1,64 +1,37 @@
 <ion-content padding>
-    
     <div *ngIf="isbookadding == false">
-      <ion-searchbar showCancelButton="always"></ion-searchbar>
+      <ion-searchbar (ionInput)="getItems($event)" showCancelButton="always"></ion-searchbar>
       <ion-list>
-        <ion-list-header>
-            Anthology
-        </ion-list-header>
-        <ion-item-sliding (click)="bookDetails()">
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/books/Poets.jpeg">
-            </ion-thumbnail>
-            <h2>The Poets Laureate Anthology</h2>
-            <p>An anthology is a collection of series of works such as short stories, poems, essays, plays, etc. by different authors into a single volume for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.</p>
-            <p>by Elizabeth Hun Schmidt</p>
-          </ion-item>
-          <ion-item-options>
-            <button ion-button color="light" icon-start>
-              <ion-icon name="ios-more"></ion-icon>
-              Edit
-            </button>
-            <button ion-button color="primary" icon-start>
-              <ion-icon name="text"></ion-icon>
-              Delete
-            </button>
-            <!-- <button ion-button color="secondary" icon-start>
-              <ion-icon name="call"></ion-icon>
-              Update
-            </button> -->
-          </ion-item-options>
-        </ion-item-sliding>
-    
-        <ion-item-sliding>
-            <ion-item>
-              <ion-thumbnail item-start>
-                <img src="assets/img/books/ToKillaMockingbird.jpeg">
-              </ion-thumbnail>
-              <h2>To Kill a Mockingbird</h2>
-              <p>To Kill a Mockingbird. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.</p>
-              <p>by Harper Lee</p>
-            </ion-item>
-            <ion-item-options>
-              <button ion-button color="light" icon-start>
-                <ion-icon name="ios-more"></ion-icon>
-                Edit
-              </button>
-              <button ion-button color="primary" icon-start>
-                <ion-icon name="text"></ion-icon>
-                Delete
-              </button>
-              <!-- <button ion-button color="secondary" icon-start>
-                <ion-icon name="call"></ion-icon>
-                Update
-              </button> -->
-            </ion-item-options>
-          </ion-item-sliding>
-      </ion-list>
+          <div *ngFor="let item of items">
+             <!-- <ion-list-header>
+              {{ item.category }}
+              </ion-list-header> -->
+              <ion-item-sliding (click)="bookDetails()">
+                <ion-item>
+                  <ion-thumbnail item-start>
+                    <img src="{{ item.icon }}">
+                  </ion-thumbnail>
+                  <h2>{{ item.title }}</h2>
+                  <p>{{ item.subtitle }}</p>
+                  <p>{{ item.author }}</p>
+                </ion-item>
+                <ion-item-options>
+                  <button ion-button color="light" icon-start>
+                    <ion-icon name="ios-more"></ion-icon>
+                    Edit
+                  </button>
+                  <button ion-button color="primary" icon-start>
+                    <ion-icon name="text"></ion-icon>
+                    Delete
+                  </button>
+                </ion-item-options>
+              </ion-item-sliding>
+          </div>
+        </ion-list>
+
     
       
-      <ion-list>
+      <!--  <ion-list>
           <ion-list-header>
               Comic and Graphic Novel
           </ion-list-header>
@@ -80,10 +53,6 @@
                 <ion-icon name="text"></ion-icon>
                 Delete
               </button>
-              <!-- <button ion-button color="secondary" icon-start>
-                <ion-icon name="call"></ion-icon>
-                Update
-              </button> -->
             </ion-item-options>
           </ion-item-sliding>
       
@@ -105,34 +74,6 @@
                   <ion-icon name="text"></ion-icon>
                   Delete
                 </button>
-                <!-- <button ion-button color="secondary" icon-start>
-                  <ion-icon name="call"></ion-icon>
-                  Update
-                </button> -->
-              </ion-item-options>
-            </ion-item-sliding>
-            <ion-item-sliding>
-              <ion-item>
-                <ion-thumbnail item-start>
-                  <img src="assets/img/books/SherlockHolmes.jpeg">
-                </ion-thumbnail>
-                <h2>Sherlock Holmes</h2>
-                <p>Arthur Conan Doyle for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.</p>
-                <p>by Arthur Conan Doyle</p>
-              </ion-item>
-              <ion-item-options>
-                <button ion-button color="light" icon-start>
-                  <ion-icon name="ios-more"></ion-icon>
-                  Edit
-                </button>
-                <button ion-button color="primary" icon-start>
-                  <ion-icon name="text"></ion-icon>
-                  Delete
-                </button>
-                <!-- <button ion-button color="secondary" icon-start>
-                  <ion-icon name="call"></ion-icon>
-                  Update
-                </button> -->
               </ion-item-options>
             </ion-item-sliding>
             <ion-item-sliding>
@@ -155,7 +96,27 @@
                 </button>
               </ion-item-options>
             </ion-item-sliding>
-        </ion-list>
+            <ion-item-sliding>
+              <ion-item>
+                <ion-thumbnail item-start>
+                  <img src="assets/img/books/SherlockHolmes.jpeg">
+                </ion-thumbnail>
+                <h2>Sherlock Holmes</h2>
+                <p>Arthur Conan Doyle for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.</p>
+                <p>by Arthur Conan Doyle</p>
+              </ion-item>
+              <ion-item-options>
+                <button ion-button color="light" icon-start>
+                  <ion-icon name="ios-more"></ion-icon>
+                  Edit
+                </button>
+                <button ion-button color="primary" icon-start>
+                  <ion-icon name="text"></ion-icon>
+                  Delete
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+        </ion-list> -->
     </div>
 
     <div *ngIf="isbookadding == true">

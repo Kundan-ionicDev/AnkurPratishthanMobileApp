@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the ManageRequestsPage page.
@@ -14,12 +14,43 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'manage-requests.html',
 })
 export class ManageRequestsPage {
+  items: any;
+  message: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public toastController: ToastController,
+    public navParams: NavParams) {
+      this.items = [
+        { requested:'Prenav', requestedFor:"Kundan", requestedDate:"2019-11-01", bookname:"Harry Potter", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Poets.jpeg" } ,
+        { requested:'Udhav', requestedFor:"Ketan", requestedDate:"2019-11-02", bookname:"MIchael", author:"Harper Lee", icon:"assets/img/books/ToKillaMockingbird.jpeg" } ,
+        { requested:'Mahesh', requestedFor:"Anil", requestedDate:"2019-10-01", bookname:"Comic and Graphic Novel", author:"Frank Miller", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" } ,
+        { requested:'NGO', requestedFor:"Puesh", requestedDate:"2019-11-27", bookname:"SQuare Panda", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" },
+        { requested:'Prenav', requestedFor:"Kundan", requestedDate:"2019-11-01", bookname:"Harry Potter", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Poets.jpeg" } ,
+        { requested:'Udhav', requestedFor:"Ketan", requestedDate:"2019-11-02", bookname:"MIchael", author:"Harper Lee", icon:"assets/img/books/ToKillaMockingbird.jpeg" } ,
+        { requested:'Mahesh', requestedFor:"Anil", requestedDate:"2019-10-01", bookname:"Comic and Graphic Novel", author:"Frank Miller", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" } ,
+        { requested:'NGO', requestedFor:"Puesh", requestedDate:"2019-11-27", bookname:"SQuare Panda", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" },
+        { requested:'Prenav', requestedFor:"Kundan", requestedDate:"2019-11-01", bookname:"Harry Potter", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Poets.jpeg" } ,
+        { requested:'Udhav', requestedFor:"Ketan", requestedDate:"2019-11-02", bookname:"MIchael", author:"Harper Lee", icon:"assets/img/books/ToKillaMockingbird.jpeg" } ,
+        { requested:'Mahesh', requestedFor:"Anil", requestedDate:"2019-10-01", bookname:"Comic and Graphic Novel", author:"Frank Miller", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" } ,
+        { requested:'NGO', requestedFor:"Puesh", requestedDate:"2019-11-27", bookname:"SQuare Panda", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" }
+      ];
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ManageRequestsPage');
+    // console.log('ionViewDidLoad ManageRequestsPage');
   }
 
+  async action(id:any){
+    if(id == 1){
+      this.message = "Request Accepted....";
+    }else if(id == 2){
+      this.message = "Request Rejected...";
+    }
+    const toast = await this.toastController.create({
+      message: this.message,
+      duration: 6000
+    });
+    toast.present();
+  }
 }

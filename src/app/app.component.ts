@@ -62,7 +62,7 @@ export class MyApp {
       // Menu for Cluster
       { title: 'Book Circulation', component: ContactusPage, icon: 'md-call',roleId:2 },
       { title: 'Member Management', component: ContactusPage, icon: 'md-call',roleId:2 },
-      { title: 'View', component: ContactusPage, icon: 'md-call',roleId:2 },
+      { title: 'View', component: ContactusPage, icon: 'md-call',roleId:2 }
     ];
   }
 
@@ -71,8 +71,8 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
 
       //*** Control Splash Screen
-      // this.splashScreen.show();
-      // this.splashScreen.hide();
+      this.splashScreen.show();
+      this.splashScreen.hide();
 
       //*** Control Status Bar
       this.statusBar.styleDefault();

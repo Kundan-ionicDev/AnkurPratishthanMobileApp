@@ -3,11 +3,44 @@
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>manage-requests</ion-title>
+      <ion-title>Requests</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 
+    <ion-card *ngFor="let item of items">
+        <ion-item>
+          <h2>Requested For : {{ item.requestedFor }}</h2>
+          <p>Requested Date : {{ item.requestedDate }}</p>
+        </ion-item>
+        <ion-card-content>
+          <p>Book Name - {{ item.bookname }}</p>
+          <p>Author - {{ item.author }}</p>
+          <p>Requested By - {{ item.requested }}</p>
+        </ion-card-content>
+  
+        <ion-row>
+          <ion-col>
+            <button  ion-button icon-left clear small>
+              <ion-icon name="eye"></ion-icon>
+              <div>View</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button (click)="action(1)" ion-button icon-left clear small>
+              <ion-icon name="checkmark"></ion-icon>
+              <div>Accept</div>
+            </button>
+          </ion-col>
+          <ion-col>
+              <button (click)="action(2)" ion-button icon-left clear small>
+                  <ion-icon name="close"></ion-icon>
+                  <div>Reject</div>
+                </button>
+          </ion-col>
+        </ion-row>
+  
+      </ion-card>
 </ion-content>

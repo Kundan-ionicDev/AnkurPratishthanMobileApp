@@ -153,6 +153,31 @@
                 </ion-select>
             </ion-item>
 
+            <ion-item>
+                <ion-grid>
+                  <ion-row>
+                      <ion-col (click)="AccessGallery()">
+                            <ion-icon name="image" item-start class="text-primary">
+                              Gallery
+                            </ion-icon>
+                      </ion-col> 
+                      <ion-col (click)="AccessCamera()">
+                        <ion-icon name="camera" item-start class="text-primary">
+                          Camera
+                        </ion-icon>
+                      </ion-col>
+                  </ion-row>
+                      <ion-row>
+                          <ion-col text-center col-6 *ngFor="let photo of photos; let id = index">
+                              <ion-card >
+                                <ion-icon name="trash" (click)="deletePhoto(id)"></ion-icon>
+                                <img [src]="photo" *ngIf="photo" />
+                            </ion-card>
+                        </ion-col>
+                    </ion-row>
+                  </ion-grid>
+            </ion-item>
+
           <div margin-top>
               <button ion-button block color="dark" type="submit">
                 Save
@@ -166,6 +191,8 @@
 
     <!-- Add new Librarian -->
     <div *ngIf="isclustadd == true  && pagetitle == 'Librarian Management'">
+        <button ion-button (click)="scanQR()">Scan</button>
+        or else Enter details manually
         <form class="list-form" [formGroup]="librariadd" (ngSubmit)="register()"> 
             <ion-item>
               <ion-label floating>
@@ -180,7 +207,7 @@
                   <ion-icon name="compass" item-start class="text-primary"></ion-icon>
                   Address
                 </ion-label>
-                <ion-textarea type="text" formControlName="address" ></ion-textarea>
+                <ion-textarea type="text" formControlName="address" rows="6" cols="20"></ion-textarea>
               </ion-item>
 
               <ion-item>
@@ -199,7 +226,7 @@
                   <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
                 </ion-item>
 
-            <ion-item>
+              <ion-item>
                   <ion-label floating>
                     <ion-icon name="call" item-start class="text-primary"></ion-icon>
                     Alternate Mobile Number
@@ -214,10 +241,17 @@
                     <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
                    Date of Birth
                   </ion-label>
-                  <ion-input type="date" formControlName="dateofbirth" ></ion-input>
+                  <ion-input type="text" formControlName="dateofbirth" ></ion-input>
                 </ion-item>
 
             
+                <ion-item>
+                  <ion-label floating>
+                    <ion-icon name="at" item-start class="text-primary"></ion-icon>
+                    UID
+                  </ion-label>
+                  <ion-input type="tel" formControlName="uid" ></ion-input>
+                </ion-item>
 
             <ion-item>
                 <ion-label floating>Assign Cluster</ion-label>

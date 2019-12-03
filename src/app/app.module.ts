@@ -7,19 +7,15 @@ import { HttpModule } from '@angular/http';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
-
 import {ActivityService} from "../services/activity-service";
-
-
 import {MyApp} from "./app.component";
-
-import {SettingsPage} from "../pages/settings/settings";
-import {CheckoutTripPage} from "../pages/checkout-trip/checkout-trip";
-import {HomePage} from "../pages/home/home";
-import {LoginPage} from "../pages/login/login";
-import {NotificationsPage} from "../pages/notifications/notifications";
-import {RegisterPage} from "../pages/register/register";
-import {SearchLocationPage} from "../pages/search-location/search-location";
+import { SettingsPage} from "../pages/settings/settings";
+import { CheckoutTripPage} from "../pages/checkout-trip/checkout-trip";
+import { HomePage} from "../pages/home/home";
+import { LoginPage} from "../pages/login/login";
+import { NotificationsPage} from "../pages/notifications/notifications";
+import { RegisterPage} from "../pages/register/register";
+import { SearchLocationPage} from "../pages/search-location/search-location";
 import { ManageRequestsPage } from "../pages/manage-requests/manage-requests";
 import { AddusersPage } from "../pages/addusers/addusers";
 import { ManagebooksPage } from "../pages/managebooks/managebooks";
@@ -33,10 +29,11 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 import { SuperTabsModule } from 'ionic2-super-tabs';
 import { IonTextAvatar } from 'ionic-text-avatar';
 import { RestApiProvider } from '../providers/rest-api/rest-api';
-// import { QRScanner } from '@ionic-native/qr-scanner';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { QrcodePage } from "../pages/qrcode/qrcode"
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera } from '@ionic-native/camera';
+import { BookdetailsPage } from "../pages/bookdetails/bookdetails";
+import { ManageOrphanedetailsPage } from "../pages/manage-orphanedetails/manage-orphanedetails";
 
 @NgModule({
   declarations: [
@@ -56,7 +53,9 @@ import { Camera } from '@ionic-native/camera/ngx';
     FaqsPage,
     QrcodePage,
     IonTextAvatar,
-    ContactusPage
+    ContactusPage,
+    ManageOrphanedetailsPage,
+    BookdetailsPage
   ],
   imports: [
     BrowserModule,
@@ -93,6 +92,8 @@ import { Camera } from '@ionic-native/camera/ngx';
     ManagebooksPage,
     HelpPage,
     FaqsPage,
+    BookdetailsPage,
+    ManageOrphanedetailsPage,
     ContactusPage
   ],
   providers: [

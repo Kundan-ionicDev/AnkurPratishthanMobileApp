@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { RestApiProvider } from '../../providers/rest-api/rest-api';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 
 /**
  * Generated class for the AddusersPage page.
@@ -16,6 +18,7 @@ import { RestApiProvider } from '../../providers/rest-api/rest-api';
   templateUrl: 'addusers.html',
 })
 export class AddusersPage {
+  xml:any;
   iconName: string="add";
   isclustadd: boolean = false;
   clustrdata =[
@@ -45,14 +48,23 @@ export class AddusersPage {
   librariadd: FormGroup;
   memberadd: FormGroup;
   pagetitle: any;
+  image: string;
+  base64Image: any;
+  picture: any;
+  photos = [];
+  returndata: any;
+  finaldata: any;
 
   constructor(
+    private camera: Camera,
+    private barcodeScanner: BarcodeScanner,
+    public alertCtrl: AlertController,
     public navCtrl: NavController, 
     public apiProvider: RestApiProvider,
     private formBuilder: FormBuilder,
     public navParams: NavParams) {
-    // Cluster
-    this.clusteradd = this.formBuilder.group({
+      // Cluster
+     this.clusteradd = this.formBuilder.group({
       fullname: ['',Validators.required],
       emailaddress: new FormControl('', Validators.compose([
         Validators.required,
@@ -73,6 +85,7 @@ export class AddusersPage {
       address: ['',Validators.required],
       mobilenumber: ['',Validators.required],
       alternatenumber: ['',Validators.required],
+      uid: ['',Validators.required],
       dateofbirth: ['',Validators.required],
     });
 
@@ -107,6 +120,82 @@ export class AddusersPage {
     }
   }
 
+  deletePhoto(index) {
+    // this.photos.splice(index, 1);
+    let confirm = this.alertCtrl.create({
+      title: 'Sure you want to delete this photo? There is NO undo!',
+      message: '',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            console.log('Agree clicked');
+            this.photos.splice(index, 1);
+          }
+        }
+      ]
+    });
+  confirm.present();
+   }
+
+   
+  AccessGallery(){
+    this.camera.getPicture({
+       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+       destinationType: this.camera.DestinationType.DATA_URL
+      }).then((imageData) => {
+       // alert('imageData'+ JSON.stringify(imageData));
+        this.image = 'data:image/jpeg;base64,'+imageData;
+        // alert('image : '+ this.image);
+        this.photos.push(
+          this.image
+        );
+        // alert('photos : '+ JSON.stringify(this.photos));
+        this.photos.reverse();
+        this.picture = imageData;
+           }, (err) => {
+            this.displayErrorAlert(err);
+      });
+   }
+   
+   AccessCamera(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      saveToPhotoAlbum: true,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+      // alert('imageData'+ JSON.stringify(imageData));
+      this.image = 'data:image/jpeg;base64,' + imageData;
+      // alert('image : '+ this.image);
+      this.photos.push(
+        this.image
+      );
+      // alert('photos' + JSON.stringify(this.photos));
+      this.photos.reverse();
+      }, (err) => {
+        this.displayErrorAlert(err);
+      });
+    
+  }
+
+  displayErrorAlert(err){
+    console.log(err);
+    let alert = this.alertCtrl.create({
+       title: 'Error',
+       subTitle: 'Error while trying to capture picture',
+       buttons: ['OK']
+     });
+     alert.present();
+  }
+
   register(){
     if(this.clusteradd.valid){
       this.addcategory()
@@ -117,5 +206,73 @@ export class AddusersPage {
 
   detailSelected(item:any){
     this.navCtrl.push('ManageOrphanedetailsPage');
+  }
+
+ 
+  xmlToJson(xml) {
+	
+    // Create the return object
+    var obj = {};
+  
+    if (xml.nodeType == 1) { // element
+      // do attributes
+      if (xml.attributes.length > 0) {
+      obj = {};
+        for (var j = 0; j < xml.attributes.length; j++) {
+          var attribute = xml.attributes.item(j);
+          obj [attribute.nodeName] = attribute.nodeValue;
+        }
+      }
+    } else if (xml.nodeType == 3) { // text
+      obj = xml.nodeValue;
+    }
+  
+    // do children
+    if (xml.hasChildNodes()) {
+      for(var i = 0; i < xml.childNodes.length; i++) {
+        var item = xml.childNodes.item(i);
+        var nodeName = item.nodeName;
+        if (typeof(obj[nodeName]) == "undefined") {
+          obj[nodeName] = this.xmlToJson(item);
+        } else {
+          if (typeof(obj[nodeName].push) == "undefined") {
+            var old = obj[nodeName];
+            obj[nodeName] = [];
+            obj[nodeName].push(old);
+          }
+          obj[nodeName].push(this.xmlToJson(item));
+        }
+      }
+    }
+    return obj;
+  };
+
+
+
+  scanQR(){
+    this.barcodeScanner.scan().then(barcodeData => {
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(barcodeData.text, "application/xml");
+      this.returndata = this.xmlToJson(xml);
+      this.finaldata = this.returndata.PrintLetterBarcodeData;
+      if(this.finaldata.length >0){
+        this.librariadd = this.formBuilder.group({
+          fullname: [this.finaldata.name,Validators.required],
+          emailaddress: new FormControl('', Validators.compose([
+            Validators.required,
+            Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+          ])),
+          address: [this.finaldata.house + ' ' + this.finaldata.street + ' ' + this.finaldata.lm + ' ' + this.finaldata.loc + ' ' + this.finaldata.vtc +' '+ this.finaldata.po + ' ' + this.finaldata.dist + ' ' + this.finaldata.state + ' '+ this.finaldata.pc ,Validators.required],
+          mobilenumber: ['',Validators.required],
+          alternatenumber: ['',Validators.required],
+          uid : [this.finaldata.uid, Validators.required],
+          dateofbirth: [this.finaldata.dob,Validators.required],
+        });
+      }
+        
+
+     }).catch(err => {
+         alert('Please scan adhar card...');
+     });
   }
 }

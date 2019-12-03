@@ -13,10 +13,10 @@ export let TRIPS = [
       description: "The beginnings were small and hesitant. The first house of Snehasadan began in a make-shift hut at Kajuwadi in Chakala, Andheri with just five boys, who all ran away after the very first night. But as word went around and Snehasadan too got better known, other children came. The home stabilised and expanded and soon another house was needed. On 4th April, 1963, the second Snehasadan home was started with a childless couple as houseparents in Gundowli village in a rented building with donated materials. The idea seemed to have caught and Snehasadan's experiment was on its way. The expansion now was sustained and supported by many well wishers.",
       location: "Vinayalaya Rd, Gundavali, Andheri East, Mumbai, Maharashtra 400093",
       images: [
-        "assets/img/books/ngo.jpeg",
-        "assets/img/books/ngo1.jpeg",
-        "assets/img/books/ngo2.jpeg",
-        "assets/img/books/ngo3.jpeg",
+        "assets/img/trip/thumb/trip_1.jpg",
+        "assets/img/trip/thumb/trip_2.jpg",
+        "assets/img/trip/thumb/trip_3.jpg",
+        "assets/img/trip/thumb/trip_4.jpg",
       ],
       highlights: [
         "MISSION: To be a home for homeless children, regardless of caste or creed, provide a shelter for the numberless homeless orphans, waifs, destitute and delinquents who roam almost every quarter of India's First City.",

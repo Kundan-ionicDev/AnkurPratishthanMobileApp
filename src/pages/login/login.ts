@@ -38,11 +38,23 @@ export class LoginPage {
   }
 
   // login and go to home page
-  async login() {
-    console.log(this.user.value);
+  async login(userdata) {
+    // console.log(this.user.value);
     if(this.user.valid){
       localStorage.removeItem('UserRoleId');
       this.apiProvider.UserRoleId = 0;
+      // if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
+      //   localStorage.removeItem('UserRoleId');
+      //   this.apiProvider.UserRoleId = 0;
+      // }else if(this.user.value.emailaddress =="cluster@ap.com" && this.user.value.password == "123"){
+      //   localStorage.removeItem('UserRoleId');
+      //   this.apiProvider.UserRoleId = 1;
+      // } else if(this.user.value.emailaddress =="lib@ap.com" && this.user.value.password == "123"){
+      //   localStorage.removeItem('UserRoleId');
+      //   this.apiProvider.UserRoleId = 2;
+      // }
+      // localStorage.removeItem('UserRoleId');
+      // this.apiProvider.UserRoleId = 0;
       // Check if Fingerprint or Face  is available
       this.faio.isAvailable()
       .then(result => {
@@ -65,8 +77,8 @@ export class LoginPage {
           /// 1 - Librarian
           /// 2 - Cluster
           /// 3 - Member
-          localStorage.setItem('UserRoleId','0');
-          this.apiProvider.UserRoleId = 0;
+          // localStorage.setItem('UserRoleId','0');
+          // this.apiProvider.UserRoleId = 0;
           this.nav.setRoot(HomePage);
         }
         else {
