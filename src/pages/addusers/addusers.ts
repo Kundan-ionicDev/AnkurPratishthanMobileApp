@@ -54,6 +54,7 @@ export class AddusersPage {
   photos = [];
   returndata: any;
   finaldata: any;
+  roleId: number;
 
   constructor(
     private camera: Camera,
@@ -101,7 +102,7 @@ export class AddusersPage {
       alternatenumber: ['',Validators.required],
       dateofbirth: ['',Validators.required],
     });
-
+    this.roleId = this.apiProvider.UserRoleId;
     this.pagetitle = this.apiProvider._selectedtitle;
   }
 

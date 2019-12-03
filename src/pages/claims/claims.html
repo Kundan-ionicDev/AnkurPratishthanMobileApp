@@ -1,0 +1,43 @@
+<ion-content padding>
+    <ion-card *ngFor="let item of items">
+        <ion-item>
+          <h2>Requested For : {{ item.requestedFor }}</h2>
+          <p>Requested Date : {{ item.requestedDate }}</p>
+        </ion-item>
+        <ion-card-content>
+          <p>Book Name - {{ item.bookname }}</p>
+          <p>Author - {{ item.author }}</p>
+          <p>Requested By - {{ item.requested }}</p>
+        </ion-card-content>
+  
+        <ion-row>
+          <ion-col>
+            <button (click)="action(1)" ion-button color="light">
+              <!-- <ion-icon name="checkmark"></ion-icon>
+              <div>
+                Accept
+              </div> -->
+              Accept
+            </button>
+          </ion-col>
+          <ion-col>
+              <button (click)="action(2)" ion-button >
+                  <!-- <ion-icon name="close"></ion-icon>
+                  <div>Reject</div> -->
+                    Return
+                </button>
+          </ion-col>
+
+          <ion-col>
+              <button (click)="action(0)" ion-button color="danger">
+                <!-- <ion-icon name="checkmark"></ion-icon>
+                <div>
+                  Accept
+                </div> -->
+                Cancel
+              </button>
+            </ion-col>
+        </ion-row>
+  
+      </ion-card>
+</ion-content>

@@ -14,6 +14,7 @@ import { ContactusPage } from "../pages/contactus/contactus";
 import { QrcodePage } from "../pages/qrcode/qrcode";
 import { RestApiProvider } from "../providers/rest-api/rest-api";
 
+
 export interface MenuItem {
     title: string;
     component: any;
@@ -39,7 +40,7 @@ export class MyApp {
     public keyboard: Keyboard,
     public apiProvider: RestApiProvider
   ) {
-    this.apiProvider.UserRoleId = 9;
+    this.apiProvider.UserRoleId = 1;
     this.initializeApp();
     this.appMenuItems = [
       // Menu for Admin
@@ -55,14 +56,22 @@ export class MyApp {
       { title: 'Contact us', component: ContactusPage, icon: 'md-call',roleId:0 },
 
       // Menu for Librarian 
-      { title: 'Book Circulation', component: ContactusPage, icon: 'md-call',roleId:1 },
-      { title: 'Member Management', component: ContactusPage, icon: 'md-call',roleId:1 },
-      { title: 'View', component: ContactusPage, icon: 'md-call',roleId:1 },
+      { title: 'Home', component: HomePage, icon: 'home',roleId:1 },
+      { title: 'Book Circulation', component: ManagebooksPage, icon: 'sync',roleId:1 },
+      { title: 'Member Management', component: AddusersPage, icon: 'people',roleId:1 },
+      // { title: 'View', component: ContactusPage, icon: 'logo-vimeo',roleId:1 },
 
       // Menu for Cluster
-      { title: 'Book Circulation', component: ContactusPage, icon: 'md-call',roleId:2 },
-      { title: 'Member Management', component: ContactusPage, icon: 'md-call',roleId:2 },
-      { title: 'View', component: ContactusPage, icon: 'md-call',roleId:2 }
+      { title: 'Home', component: HomePage, icon: 'home',roleId:2 },
+      { title: 'Book Circulation', component: ManagebooksPage, icon: 'sync',roleId:2 },
+      { title: 'Member Management', component: AddusersPage, icon: 'people',roleId:2 },
+      // { title: 'View', component: ContactusPage, icon: 'logo-vimeo',roleId:2 },
+
+      // Menu for members
+      { title: 'Home', component: HomePage, icon: 'home',roleId:3 },
+      { title: 'Books', component: ManagebooksPage, icon: 'sync',roleId:3 },
+      { title: 'Request', component: ContactusPage, icon: 'git-pull-request',roleId:3 },
+      // { title: 'View', component: ContactusPage, icon: 'logo-vimeo',roleId:3 },
     ];
   }
 

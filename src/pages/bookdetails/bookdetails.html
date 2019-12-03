@@ -69,7 +69,7 @@
                 <ion-icon style="font-size: 3.2em;" name="thumbs-down"></ion-icon>&nbsp;
                 <ion-icon style="font-size: 3.2em;" name="thumbs-up"></ion-icon>
           </ion-item>
-          <ion-item text-center>
+          <ion-item text-center *ngIf="roleId == 0">
               <button ion-button color="light">
                   <ion-icon name="ios-more"></ion-icon>
                   Edit
@@ -77,6 +77,20 @@
                 <button ion-button color="primary">
                   <ion-icon name="text"></ion-icon>
                   Delete
+                </button>
+          </ion-item>
+          <ion-item *ngIf="roleId != 0">
+              <ion-label floating>Claim for (member):</ion-label>
+              <ion-select>
+                <ion-option value="e">Jagruti</ion-option>
+                <ion-option value="m">Sneha</ion-option>
+                <ion-option value="h">Anoop</ion-option>
+                <ion-option value="g">Kundan</ion-option>
+              </ion-select>
+          </ion-item>
+          <ion-item text-center *ngIf="roleId != 0">
+              <button ion-button icon-start block color="dark" >
+                  Claim
                 </button>
           </ion-item>
         </ion-list>

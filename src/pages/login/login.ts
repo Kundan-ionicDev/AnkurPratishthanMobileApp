@@ -24,7 +24,7 @@ export class LoginPage {
     private faio: FingerprintAIO) {
       this.menu.swipeEnable(false);
       this.user = this.formBuilder.group({
-        emailaddress: new FormControl('kundan@gmail.com', Validators.compose([
+        emailaddress: new FormControl('', Validators.compose([
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
@@ -39,20 +39,21 @@ export class LoginPage {
 
   // login and go to home page
   async login(userdata) {
-    // console.log(this.user.value);
+    console.log(this.user.value);
     if(this.user.valid){
       localStorage.removeItem('UserRoleId');
-      this.apiProvider.UserRoleId = 0;
-      // if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
-      //   localStorage.removeItem('UserRoleId');
-      //   this.apiProvider.UserRoleId = 0;
-      // }else if(this.user.value.emailaddress =="cluster@ap.com" && this.user.value.password == "123"){
-      //   localStorage.removeItem('UserRoleId');
-      //   this.apiProvider.UserRoleId = 1;
-      // } else if(this.user.value.emailaddress =="lib@ap.com" && this.user.value.password == "123"){
-      //   localStorage.removeItem('UserRoleId');
-      //   this.apiProvider.UserRoleId = 2;
-      // }
+      // this.apiProvider.UserRoleId = 1;
+
+      if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
+        localStorage.removeItem('UserRoleId');
+        this.apiProvider.UserRoleId = 0;
+      }else if(this.user.value.emailaddress =="cluster@ap.com" && this.user.value.password == "123"){
+        localStorage.removeItem('UserRoleId');
+        this.apiProvider.UserRoleId = 1;
+      } else if(this.user.value.emailaddress =="lib@ap.com" && this.user.value.password == "123"){
+        localStorage.removeItem('UserRoleId');
+        this.apiProvider.UserRoleId = 2;
+      }
       // localStorage.removeItem('UserRoleId');
       // this.apiProvider.UserRoleId = 0;
       // Check if Fingerprint or Face  is available
@@ -79,7 +80,7 @@ export class LoginPage {
           /// 3 - Member
           // localStorage.setItem('UserRoleId','0');
           // this.apiProvider.UserRoleId = 0;
-          this.nav.setRoot(HomePage);
+          // this.nav.setRoot(HomePage);
         }
         else {
           // Fingerprint/Face was not successfully verified
@@ -104,6 +105,7 @@ export class LoginPage {
     
   forgotPass() {
     let forgot = this.forgotCtrl.create({
+      enableBackdropDismiss:false,
       title: 'Forgot Password?',
       message: "Enter you email address to send a reset link password.",
       inputs: [
@@ -125,7 +127,7 @@ export class LoginPage {
           handler: data => {
             console.log('Send clicked');
             let toast = this.toastCtrl.create({
-              message: 'Email was sended successfully',
+              message: 'Password is reset sucessfully. Please check your email.',
               duration: 3000,
               position: 'top',
               cssClass: 'dark-trans',

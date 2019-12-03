@@ -9,11 +9,14 @@
 
 
 <ion-content>
-    <super-tabs scrollable="true" tabsPlacement="top" toolbarColor="light" indicatorColor="light"
+    <!-- <super-tabs scrollable="true" tabsPlacement="top" toolbarColor="light" indicatorColor="light"
       (tabSelect)="onTabSelect($event)">
-          <super-tab *ngFor="let page of pages" [root]="page.pageName" [title]="page.title" [id]="page.id">
+          <super-tab *ngFor="let page of pages"  [root]="page.pageName" [title]="page.title" [id]="page.id">
       </super-tab>
-    </super-tabs>
-  
- 
+    </super-tabs> -->
+    <ion-tabs tabsPlacement="top" toolbarColor="light" indicatorColor="light">
+      <div *ngFor="let page of pages"> 
+        <ion-tab *ngIf="page.role == roleId" [root]="page.pageName" [tabTitle]="page.title" [tabIcon]="page.icon"></ion-tab>  
+      </div>
+    </ion-tabs>
 </ion-content>

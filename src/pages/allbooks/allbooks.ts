@@ -4,6 +4,7 @@ import { App } from 'ionic-angular';
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { BookdetailsPage } from '../bookdetails/bookdetails';
 import { SettingsPage } from '../settings/settings';
+import { RestApiProvider } from '../../providers/rest-api/rest-api';
 
 
 /**
@@ -24,12 +25,15 @@ export class AllbooksPage {
   encodeData: any;
   bookname:any;
   items: any;
+  usrRoleId: number;
 
   constructor(
     public navCtrl: NavController, 
     public app:App,
+    public apiProvider: RestApiProvider,
     private barcodeScanner: BarcodeScanner,
     public navParams: NavParams) {
+      this.usrRoleId = this.apiProvider.UserRoleId;
       this.initializeItems()
   }
 

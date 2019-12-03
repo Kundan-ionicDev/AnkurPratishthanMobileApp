@@ -65,7 +65,7 @@ import { ManageOrphanedetailsPage } from "../pages/manage-orphanedetails/manage-
     SuperTabsModule.forRoot(),
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
-      scrollPadding: false,
+      scrollPadding: true,
       scrollAssist: true,
       autoFocusAssist: false
     }),
