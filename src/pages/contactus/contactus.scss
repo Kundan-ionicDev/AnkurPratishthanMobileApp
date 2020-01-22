@@ -1,34 +1,36 @@
 page-contactus {
-    .contact {
-        // background: url("../../assets/img/bg.jpg") no-repeat center;
-        background-size: cover;
-      }
-      .contact-head {
-        margin-top: 2em;
-        text-align: center;
-        color: #ffffff;
-        font-size: 2.5rem;
-      }
-      .submit-btn {
-        width: 80%;
-        display: block;
-        margin: 0 auto;
-        border-radius: 5px;
-        height: 4.4rem;
-        background-color: rgb(229, 229, 238);
-      }
-      .item {
-        background-color: rgba(242, 246, 248, 0.6);
-        width: 80%;
-        display: block;
-        margin: 0 auto;
-        color:black;
-        border-radius: 5px;
-      }
-      .item.item-block .item-inner {
-        border-bottom: 0px;
-      }
-      .item-input .label {
-        color: #44cc71;
-      }
+    ion-input {
+        background-color: (#ffffff, light);
+        padding-left: 10px;
+        color: #6c6c6c;
+        border-block-end: 1px solid #d4c7c7;
+    }
+
+    ion-label {
+        color: #6c6c6c;
+        
+    }
+
+    ion-select{
+        background-color: (#ffffff, light);
+        padding-left: 10px;
+        color: #6c6c6c;
+        border-block-end: 1px solid #d4c7c7;
+    }
+
+    ion-textarea {
+        background-color: (#ffffff, light);
+        padding-left: 10px;
+        color: #6c6c6c;
+        border-block-end: 1px solid #d4c7c7;
+    }
+
+    [floating] {
+        margin-left: 10px;
+    }
+
+    button {
+        float: right;
+        margin-right: 20px;
+    }
 }

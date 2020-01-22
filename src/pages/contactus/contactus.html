@@ -7,38 +7,70 @@
         <ion-title>Contact Us</ion-title>
     </ion-navbar>
   </ion-header>
-<ion-content padding class="contact">
-    <form class="list-form">
-        <ion-item>
-          <ion-label floating>
-            <ion-icon name="person" item-start class="text-primary"></ion-icon>
-            Full Name
-          </ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label floating>
-            <ion-icon name="mail" item-start class="text-primary"></ion-icon>
-            Email
-          </ion-label>
-          <ion-input type="email"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label floating>
-            <ion-icon name="lock" item-start class="text-primary"></ion-icon>
-            Message
-          </ion-label>
-          <ion-textarea rows="6" lineHeight="42" name="message" id="message" required></ion-textarea>
-        </ion-item>
-      </form>
-    
-      <div margin-top>
-        <button ion-button block color="dark" tappable (click)="submit()">
-          Submit
-        </button>
-    
-        <p text-center ion-text color="secondary">Clear</p>
-      </div>
+<ion-content>
+  <ion-card>
+      <ion-card-header>
+          <h3><b>Reach out to us for any help or suggestions.</b></h3>
+        </ion-card-header>
+    <ion-card-content>
+     
+      <p>
+          <ion-icon name="call" item-start></ion-icon>
+          Phone : +91-9960097184
+      </p>
+      <hr>
+      <p>
+        <ion-icon name="mail" item-start></ion-icon>
+        Email : work@credencetechnology.com
+      </p>
+      <hr>
+      <p>
+          <ion-icon name="link" item-start></ion-icon>
+          Website:  <a href="http://credencetechnology.com">http://credencetechnology.com</a>
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Write to us
+    </ion-card-header>
+    <ion-card-content>
+        <ion-list no-lines>
+
+            <ion-item>
+              <ion-label stacked>Full Name</ion-label>
+              <ion-input type="text" [(ngModel)]="fullname"></ion-input>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label stacked>Phone Number</ion-label>
+              <ion-input type="tel" [(ngModel)]="phonenumber"></ion-input>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label stacked>Email Id</ion-label>
+              <ion-input type="email" [(ngModel)]="emailid"></ion-input>
+            </ion-item>
+      
+            <ion-item>
+                <ion-label stacked>Select Subject</ion-label>
+                <ion-select>
+                    <ion-option value="1">Feedback</ion-option>
+                    <ion-option value="2">Complaint</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Comments</ion-label>
+              <ion-textarea col="2" type="text" [(ngModel)]="comments"></ion-textarea>
+            </ion-item>
+      
+           <ion-item>
+              <button ion-button block color="dark" tappable (click)="submit()">
+                  Submit
+                </button>
+           </ion-item>
+          </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
