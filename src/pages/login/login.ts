@@ -17,6 +17,7 @@ export class LoginPage {
   constructor(
     private formBuilder: FormBuilder,
     public nav: NavController, 
+    public api: RestApiProvider,
     public forgotCtrl: AlertController, 
     public menu: MenuController, 
     public toastCtrl: ToastController,
@@ -44,6 +45,13 @@ export class LoginPage {
       localStorage.removeItem('UserRoleId');
       // this.apiProvider.UserRoleId = 1;
 
+      this.api._postAPI("","").subscribe(res => {
+        // User exists
+        
+      },(err) => {
+          alert('Error:'+err);
+      });
+      
       if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
         localStorage.removeItem('UserRoleId');
         this.apiProvider.UserRoleId = 0;
