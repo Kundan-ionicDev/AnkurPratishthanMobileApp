@@ -18,8 +18,64 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="animated fadeIn common-bg">
-  <div class="ion-padding">
+<ion-content >
+  <div class="header-banner">
+  <ion-slides pager>
+    <ion-slide *ngFor="let slide of slides" initialSlide=0 speed="3000" loop="true" pager="true" dir="rtl">
+      <!-- <ion-toolbar>
+        <ion-buttons end>
+          <button ion-button color="primary">Skip</button>
+        </ion-buttons>
+      </ion-toolbar> -->
+      <div class="overlay">
+        <img [src]="slide.image" class="slider-img"/>
+      </div>
+    
+      <!-- <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p> -->
+    </ion-slide>
+    <!-- <ion-slide>
+      <ion-toolbar>
+      </ion-toolbar>
+      <img src="../../assets/img/avatar.jpeg" class="slide-image"/>
+      <h2 class="slide-title">Ready to Play?</h2>
+      <button ion-button large clear icon-end color="primary">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide> -->
+  </ion-slides>
+</div>
+<ion-grid class="grid">
+<ion-row class="categories">
+  <ion-col col-6 (click)="navigate(0)">
+    <div style="background-color:darkcyan;">
+        <ion-icon style="text-align: center;margin-top:20px"  ios="ios-book" md="md-book"></ion-icon>
+      </div>
+    <p class="text-over-img">Book Managment</p>
+  </ion-col>
+  <ion-col col-6 (click)="navigate(1)" >
+    <div style="background-color:fuchsia;">
+      <ion-icon style="text-align: center;margin-top:20px" ios="ios-infinite" md="md-infinite"></ion-icon>
+    </div>
+    <p class="text-over-img">Cluster Managment</p>
+  </ion-col>
+  <ion-col col-6 (click)="navigate(4)">
+    <div style="background-color:deepskyblue;">
+      <ion-icon style="text-align: center;margin-top:20px" ios="ios-card" md="md-card"></ion-icon>
+    </div>
+    <p class="text-over-img">Check Requests</p>
+  </ion-col>
+  <ion-col col-6 (click)="navigate(6)">
+    <div style="background-color:darkblue;">
+        <ion-icon style="text-align: center;margin-top:20px" name="ios-information-circle"></ion-icon>
+      </div>
+    <p class="text-over-img">Librarian Managment</p>
+  </ion-col>
+</ion-row>
+</ion-grid>
+  
+ <!--  <div class="ion-padding">
     <ion-card>
       <ion-card-header>
         Orphane
@@ -45,6 +101,7 @@
       <ion-card-content>
         <canvas #lineCanvas></canvas>
       </ion-card-content>
-    </ion-card>
-  </div>
+    </ion-card> 
+    
+  </div>-->
 </ion-content>

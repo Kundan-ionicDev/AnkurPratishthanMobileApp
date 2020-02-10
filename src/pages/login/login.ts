@@ -44,10 +44,18 @@ export class LoginPage {
     if(this.user.valid){
       localStorage.removeItem('UserRoleId');
       // this.apiProvider.UserRoleId = 1;
+      let params = {
+          "EmailID":"kundansakpal@gmail.com",
+          "Password":"password",
+          "deviceinfo":"Android9",
+          "isnewapp":"111"
+      };
 
-      this.api._postAPI("","").subscribe(res => {
+      // let params = {"username":"SP005","password":"123"};
+
+      this.api._postAPI("GetMembers",params).subscribe(res => {
         // User exists
-        
+        alert('res'+ JSON.stringify(res));
       },(err) => {
           alert('Error:'+err);
       });
