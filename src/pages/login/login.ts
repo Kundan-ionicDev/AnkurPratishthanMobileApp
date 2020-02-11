@@ -25,7 +25,7 @@ export class LoginPage {
     private faio: FingerprintAIO) {
       this.menu.swipeEnable(false);
       this.user = this.formBuilder.group({
-        emailaddress: new FormControl('admin@ap.com', Validators.compose([
+        emailaddress: new FormControl('cluster@ap.com', Validators.compose([
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
@@ -44,16 +44,16 @@ export class LoginPage {
     if(this.user.valid){
       localStorage.removeItem('UserRoleId');
       // this.apiProvider.UserRoleId = 1;
-      let params = {
-          "EmailID":"kundansakpal@gmail.com",
-          "Password":"password",
-          "deviceinfo":"Android9",
-          "isnewapp":"111"
-      };
+      // let params = {
+      //     "EmailID":"kundansakpal@gmail.com",
+      //     "Password":"password",
+      //     "deviceinfo":"Android9",
+      //     "isnewapp":"111"
+      // };
 
-      // let params = {"username":"SP005","password":"123"};
+      let params = {"username":"SP005","password":"123"};
 
-      this.api._postAPI("GetMembers",params).subscribe(res => {
+      this.api._postAPI("user/login",params).subscribe(res => {
         // User exists
         alert('res'+ JSON.stringify(res));
       },(err) => {

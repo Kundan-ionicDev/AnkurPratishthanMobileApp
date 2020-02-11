@@ -10,19 +10,20 @@ export class RestApiProvider {
 
   httpOptions = {
       headers: new HttpHeaders({
-        'Host':'ec2-3-6-173-252.ap-south-1.compute.amazonaws.com',    
-        'Origin':'http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com',    
+        // 'Host':'admin-abe.squarepanda.com',    
+        // 'Origin':'https://admin-abe.squarepanda.com',    
         'Content-Type': 'application/json',
         //'Access-Control-Allow-Origin' : 'http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com/APService.svc/',
-        "Access-Control-Request-Headers": "Content-Type",
-        'Access-Control-Request-Method': 'POST',
-        "Accept": 'application/json'
+        // "Access-Control-Request-Headers": "Content-Type",
+        // 'Access-Control-Request-Method': 'POST',
+        // "Accept": 'application/json'
     })
   };
 
 
-  public _apiURL = "http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com/APService.svc/";
+  // public _apiURL = "http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com/APService.svc/";
   // public _apiURL ="https://admin-abe-dev.squarepanda.com/admin/v1/";
+  public _apiURL = "https://admin-abe-dev.squarepanda.com/admin/v1/";
   constructor(
     private http: HttpClient
   ) { 
