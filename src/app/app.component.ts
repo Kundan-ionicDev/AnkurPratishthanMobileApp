@@ -13,6 +13,7 @@ import { HelpPage } from "../pages/help/help";
 import { ContactusPage } from "../pages/contactus/contactus";
 import { QrcodePage } from "../pages/qrcode/qrcode";
 import { RestApiProvider } from "../providers/rest-api/rest-api";
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 export interface MenuItem {
@@ -34,6 +35,7 @@ export class MyApp {
   appMenuItems: Array<MenuItem>;
 
   constructor(
+    private fcm: FCM,
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
@@ -92,6 +94,26 @@ export class MyApp {
 
       //*** Control Keyboard
       // this.keyboard.disableScroll(true);
+
+      this.fcm.subscribeToTopic('marketing');
+
+      this.fcm.getToken().then(token => {
+        console.log(token);
+      });
+
+      this.fcm.onNotification().subscribe(data => {
+        if(data.wasTapped){
+          console.log("Received in background");
+        } else {
+          console.log("Received in foreground");
+        };
+      });
+
+      this.fcm.onTokenRefresh().subscribe(token => {
+        console.log(token);
+      });
+
+      this.fcm.unsubscribeFromTopic('marketing');
     });
   }
 

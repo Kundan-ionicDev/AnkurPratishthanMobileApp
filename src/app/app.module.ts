@@ -34,6 +34,8 @@ import { QrcodePage } from "../pages/qrcode/qrcode"
 import { Camera } from '@ionic-native/camera';
 import { BookdetailsPage } from "../pages/bookdetails/bookdetails";
 import { ManageOrphanedetailsPage } from "../pages/manage-orphanedetails/manage-orphanedetails";
+import { FCM } from '@ionic-native/fcm/ngx';
+
 
 @NgModule({
   declarations: [
@@ -106,6 +108,7 @@ import { ManageOrphanedetailsPage } from "../pages/manage-orphanedetails/manage-
     ActivityService,
     FingerprintAIO,
     RestApiProvider,
+    FCM
   ]
 })
 

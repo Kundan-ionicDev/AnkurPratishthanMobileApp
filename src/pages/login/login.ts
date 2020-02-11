@@ -76,7 +76,6 @@ export class LoginPage {
       this.faio.isAvailable()
       .then(result => {
       if(result === "finger" || result === "face"){
-
         // Fingerprint or Face Auth is available
         this.faio.show({
           clientId: 'AnkurBioAuthApp',
