@@ -57,7 +57,8 @@ import { FCM } from '@ionic-native/fcm/ngx';
     IonTextAvatar,
     ContactusPage,
     ManageOrphanedetailsPage,
-    BookdetailsPage
+    BookdetailsPage,
+    
   ],
   imports: [
     BrowserModule,

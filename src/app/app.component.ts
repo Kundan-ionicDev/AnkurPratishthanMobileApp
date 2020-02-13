@@ -99,11 +99,13 @@ export class MyApp {
 
       this.fcm.getToken().then(token => {
         console.log(token);
+        alert('getToken :' + token)
       });
 
       this.fcm.onNotification().subscribe(data => {
         if(data.wasTapped){
           console.log("Received in background");
+          alert('data :' + data)
         } else {
           console.log("Received in foreground");
         };
@@ -111,9 +113,10 @@ export class MyApp {
 
       this.fcm.onTokenRefresh().subscribe(token => {
         console.log(token);
+        alert('onTokenRefresh :' + token)
       });
 
-      this.fcm.unsubscribeFromTopic('marketing');
+      // this.fcm.unsubscribeFromTopic('marketing');
     });
   }
 

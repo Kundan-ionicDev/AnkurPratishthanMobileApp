@@ -1,0 +1,10 @@
+{
+  "name": "ec2-3-6-173-252.ap-south-1.compute.amazonaws.com:8443",
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com:8443/APService.svc"
+    }
+  ]
+}

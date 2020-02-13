@@ -8,27 +8,48 @@ export class RestApiProvider {
   public UserRoleId: number;
   public _selectedtitle:any;
 
+  //------- API Resource( Method Names) ---------------------------------------------
+  public _UserLogin:string ="UserLogin"; //------------------------------------------- POST 
+  public _UserLogout:string ="UserLogout"; //-------------------------------- POST
+  public _UserRegister:string ="UserRegister"; //-------------------------------- POST
+  public _ForgotPassword:string ="ForgotPassword"; //---------------------------------------- POST
+  public _GetBooks:string ="GetBooks"; //--------------------------------------- POST
+  public _ManageBooks:string ="ManageBooks"; //---------------------------------------- GET
+  public _ManageCategories:string = "ManageCategories"; //------------------------------------ GET for searching specific based on Id eg : users/3340174
+  public _ManageLanguages:string ="ManageLanguages"; //---------------------------------------- POST eg. users/3340174 
+  public _ManagePublishers:string ="ManagePublishers"; //---------------------------------- POST
+  public _GetClusters:string ="GetClusters"; //-------------------------------- POST
+  public _ManageClusters:string ="ManageClusters"; //---------------------------- POST
+  public _GetLibrarians:string ="GetLibrarians"; //---------------------- POST
+  public _GetRequests:string ="GetRequests"; //--------------- POST
+  public _ManageLibrarians:string ="ManageLibrarians"; //--------------------- POST
+  public _ManageMembers: string ="ManageMembers"; //----------------------------------------- GET
+  public _ManageRequests: string ="ManageRequests"; //------- GET
+  //------- End of API Resource ---------------------------------------
+  
   httpOptions = {
       headers: new HttpHeaders({
-        // 'Host':'admin-abe.squarepanda.com',    
-        // 'Origin':'https://admin-abe.squarepanda.com',    
+        // 'Host':'ankurpratishthan.com',    
+        // 'Origin':'https://ankurpratishthan.com/',    
         'Content-Type': 'application/json',
-        //'Access-Control-Allow-Origin' : 'http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com/APService.svc/',
-        // "Access-Control-Request-Headers": "Content-Type",
-        // 'Access-Control-Request-Method': 'POST',
-        // "Accept": 'application/json'
+        'Access-Control-Allow-Origin' : '*',
+        // 'Access-Control-Request-Headers': "Content-Type",
+        // 'Access-Control-Request-Method': 'POST'
+        // 'Accept': 'application/json'
+        // 'Access-Control-Allow-Origin':'https://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com:8443',
+        // 'Access-Control-Allow-Methods':'POST',
+        // 'Access-Control-Allow-Headers':'headers',
+        // 'Access-Control-Allow-Credentials':'false'
     })
   };
 
 
   // public _apiURL = "http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com/APService.svc/";
-  // public _apiURL ="https://admin-abe-dev.squarepanda.com/admin/v1/";
-  public _apiURL = "https://admin-abe-dev.squarepanda.com/admin/v1/";
+  public _apiURL ="https://ankurpratishthan.com/APService.svc/";
+  // public _apiURL = "https://admin-abe-dev.squarepanda.com/admin/v1/";
   constructor(
     private http: HttpClient
-  ) { 
-   
-  }
+  ) { }
  
   // Calling POST Method's 
   _postAPI(methodname:string, params: any): Observable<any> {
