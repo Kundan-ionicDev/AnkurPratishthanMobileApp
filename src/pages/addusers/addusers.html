@@ -15,14 +15,14 @@
           <ion-item-sliding *ngFor="let item of librariabdata">
           <ion-item>
             <ion-thumbnail item-start>
-                <img src="{{ item.Image }}">
+              <img src="assets/icon/thumbnail.png">
               </ion-thumbnail>
             <ion-label>
-              <h3>{{ item.Name}}</h3>
+              <h3>{{ item.LibrarianName}}</h3>
               <p><b>Address:</b> {{ item.Address }}</p>
-              <p><b>Phone:</b>{{ item.ContactNumber }}</p>
-              <p><b>Email Id :</b>{{ item.EmailId }}</p>
-              <p><b>Libririan :</b> {{ item.Librarian }}</p>
+              <p><b>Phone:</b>{{ item.MobileNo }}</p>
+              <p><b>Email Id :</b>{{ item.EmailID }}</p>
+              <p><b>Cluster Name :</b> {{ item.ClusterName }}</p>
             </ion-label>
           </ion-item>
           <ion-item-options>
@@ -42,17 +42,17 @@
     <div *ngIf="isclustadd == false && pagetitle == 'Member Management'">
         <ion-list>
             <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-            <ion-item-sliding *ngFor="let item of librariabdata">
+            <ion-item-sliding *ngFor="let item of memberdata">
             <ion-item>
               <ion-thumbnail item-start>
-                  <img src="{{ item.Image }}">
+                <img src="assets/icon/thumbnail.png">
                 </ion-thumbnail>
               <ion-label>
-                <h3>{{ item.Name}}</h3>
+                <h3>{{ item.MemberName}}</h3>
                 <p><b>Address:</b> {{ item.Address }}</p>
-                <p><b>Phone:</b>{{ item.ContactNumber }}</p>
-                <p><b>Email Id :</b>{{ item.EmailId }}</p>
-                <p><b>Libririan :</b> {{ item.Librarian }}</p>
+                <p><b>Phone:</b>{{ item.MobileNo }}</p>
+                <p><b>Email Id :</b>{{ item.EmailID }}</p>
+                <p><b>Cluster Name :</b> {{ item.ClusterName }}</p>
               </ion-label>
             </ion-item>
             <ion-item-options>
@@ -75,13 +75,13 @@
             <ion-item-sliding *ngFor="let item of clustrdata" (click)="detailSelected(item)">
             <ion-item>
               <ion-thumbnail item-start>
-                  <img src="{{ item.Image }}">
+                <img src="assets/icon/thumbnail.png">
                 </ion-thumbnail>
               <ion-label>
-                <h3>{{ item.Name}}</h3>
+                <h3>{{ item.ClusterName}}</h3>
                 <p><b>Address:</b> {{ item.Address }}</p>
-                <p><b>Phone:</b>{{ item.ContactNumber }}</p>
-                <p><b>Members :</b>{{ item.MemberCount }}</p>
+                <p><b>Phone:</b>{{ item.MobileNo }}</p>
+                <p><b>Members :</b>{{ item.Members }}</p>
                 <p><b>Libririan :</b> {{ item.Librarian }}</p>
               </ion-label>
             </ion-item>
@@ -101,7 +101,7 @@
 
     <!-- Add New Cluster-->
     <div *ngIf="isclustadd == true  && pagetitle == 'Cluster Management'">
-        <form class="list-form" [formGroup]="clusteradd" (ngSubmit)="register()"> 
+        <form class="list-form" [formGroup]="clusteradd" (ngSubmit)="register(1)"> 
             <ion-item>
               <ion-label floating>
                 <ion-icon name="person" item-start class="text-primary"></ion-icon>
@@ -143,8 +143,16 @@
             </ion-item>
 
             <ion-item>
+              <ion-label floating>
+                <ion-icon name="call" item-start class="text-primary"></ion-icon>
+                Members
+              </ion-label>
+              <ion-input type="tel" formControlName="members" ></ion-input>
+            </ion-item>
+
+            <ion-item>
                 <ion-label floating>Assign Librarian</ion-label>
-                <ion-select>
+                <ion-select formControlName="librarianId">
                   <ion-option value="e">Udhav</ion-option>
                   <ion-option value="m">Kundan</ion-option>
                   <ion-option value="h">Pranav</ion-option>
@@ -193,7 +201,7 @@
     <div *ngIf="isclustadd == true  && pagetitle == 'Librarian Management'">
         <button ion-button (click)="scanQR()">Scan</button>
         or else Enter details manually
-        <form class="list-form" [formGroup]="librariadd" (ngSubmit)="register()"> 
+        <form class="list-form" [formGroup]="librariadd" (ngSubmit)="register(2)"> 
             <ion-item>
               <ion-label floating>
                 <ion-icon name="person" item-start class="text-primary"></ion-icon>
@@ -276,7 +284,7 @@
 
   <!-- Add New Member -->
   <div *ngIf="isclustadd == true  && pagetitle == 'Member Management'">
-      <form class="list-form" [formGroup]="memberadd" (ngSubmit)="register()"> 
+      <form class="list-form" [formGroup]="memberadd" (ngSubmit)="register(3)"> 
           <ion-item>
             <ion-label floating>
               <ion-icon name="person" item-start class="text-primary"></ion-icon>

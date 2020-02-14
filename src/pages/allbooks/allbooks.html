@@ -3,14 +3,14 @@
       <ion-searchbar (ionInput)="getItems($event)" showCancelButton="always"></ion-searchbar>
       <ion-list>
           <div *ngFor="let item of items">
-              <ion-item-sliding (click)="bookDetails()">
+              <ion-item-sliding (click)="bookDetails(item)">
                 <ion-item>
                   <ion-thumbnail item-start>
-                    <img src="{{ item.icon }}">
+                    <img src="assets/icon/thumbnail.png">
                   </ion-thumbnail>
-                  <h2>{{ item.title }}</h2>
-                  <p>{{ item.subtitle }}</p>
-                  <p>{{ item.author }}</p>
+                  <h2>{{ item.BookName }}</h2>
+                  <p>@ {{ item.Language }}</p>
+                  <p>Author :{{ item.AuthorName }}</p>
                 </ion-item>
                 <ion-item-options *ngIf="usrRoleId == 0">
                   <button ion-button color="light" icon-start>
@@ -28,13 +28,13 @@
     </div>
 
     <div *ngIf="isbookadding == true">
-      <form (ngSubmit)="encodedText($event)">
+      <form [formGroup]="frmbooks" novalidate (ngSubmit)="addBook(frmbooks)">
         <ion-item>
           <ion-label floating>
-            <ion-icon name="email" [(ngModel)]="bookname" item-start class="text-primary"></ion-icon>
+            <ion-icon name="email"  item-start class="text-primary"></ion-icon>
             Book Name
           </ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input formControlName="bookname" type="text"></ion-input>
         </ion-item>
   
         <ion-item>
@@ -42,7 +42,7 @@
             <ion-icon name="email" item-start class="text-primary"></ion-icon>
             Publisher
           </ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input formControlName="publisher" type="text"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -50,7 +50,7 @@
             <ion-icon name="email" item-start class="text-primary"></ion-icon>
             Author
           </ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input formControlName ="author" type="text"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -58,38 +58,52 @@
             <ion-icon name="email" item-start class="text-primary"></ion-icon>
             Price
           </ion-label>
-          <ion-input type="number"></ion-input>
+          <ion-input formControlName="price" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>
+            <ion-icon name="email" item-start class="text-primary"></ion-icon>
+            Quantity
+          </ion-label>
+          <ion-input formControlName="quantity" type="number"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>Category</ion-label>
-            <ion-select >
-              <ion-option value="a">Arts & Music</ion-option>
-              <ion-option value="b">Biographies</ion-option>
-              <ion-option value="bu">Business</ion-option>
-              <ion-option value="k">Kids</ion-option>
-              <ion-option value="c">Comics</ion-option>
-              <ion-option value="ct">Computers & Tech</ion-option>
-              <ion-option value="ck">Cooking</ion-option>
+            <ion-select formControlName="Category">
+              <ion-option value="1">Arts & Music</ion-option>
+              <ion-option value="2">Biographies</ion-option>
+              <ion-option value="3">Business</ion-option>
+              <ion-option value="4">Kids</ion-option>
+              <ion-option value="5">Comics</ion-option>
+              <ion-option value="6">Computers & Tech</ion-option>
+              <ion-option value="7">Cooking</ion-option>
             </ion-select>
         </ion-item>
         
         <ion-item>
             <ion-label floating>Language</ion-label>
-            <ion-select>
-              <ion-option value="e">English</ion-option>
-              <ion-option value="m">Marathi</ion-option>
-              <ion-option value="h">Hindi</ion-option>
-              <ion-option value="g">Gujrati</ion-option>
-              <ion-option value="u">Urdu</ion-option>
+            <ion-select formControlName="language">
+              <ion-option value="1">English</ion-option>
+              <ion-option value="2">Marathi</ion-option>
+              <ion-option value="3">Hindi</ion-option>
+              <ion-option value="4">Gujrati</ion-option>
+              <ion-option value="5">Urdu</ion-option>
             </ion-select>
         </ion-item>
-       
+      
+        <button type="submit" ion-button block color="primary" [disabled]="frmbooks.invalid">
+          Save
+        </button>
 
-        <button ion-button icon-start block color="dark" type="submit">
+
+        <!-- <button ion-button icon-start block color="dark" [disabled]="!frmbooks.valid" type="submit">
             <ion-icon name="save"></ion-icon>
             Save
-        </button>
+        </button> -->
+
+
         <p>Please go to QRCODE screen to get pdf generated and send email to print QR Code Stickers.</p>
       </form>
     </div>

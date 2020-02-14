@@ -25,11 +25,11 @@ export class LoginPage {
     private faio: FingerprintAIO) {
       this.menu.swipeEnable(false);
       this.user = this.formBuilder.group({
-        emailaddress: new FormControl('cluster@ap.com', Validators.compose([
+        emailaddress: new FormControl('kundansakpal@gmail.com', Validators.compose([
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
-        password: ['123',Validators.required]
+        password: ['ipr1u',Validators.required]
       });
   }
 
@@ -43,33 +43,31 @@ export class LoginPage {
     console.log(this.user.value);
     if(this.user.valid){
       localStorage.removeItem('UserRoleId');
-      // this.apiProvider.UserRoleId = 1;
-      let params = {
-          "EmailID":"kundansakpal@gmail.com",
-          "Password":"password",
-          "deviceinfo":"Android9",
-          "isnewapp":"111"
-      };
+      this.apiProvider.UserRoleId = 0;
+      let params = { 
+                    "EmailID":this.user.value.emailaddress,
+                    "Password": this.user.value.password,
+                    "deviceinfo":"Android",
+                    "isnewapp":"Y" };
 
       // let params = {"username":"SP005","password":"123"};
-
       this.api._postAPI("UserLogin",params).subscribe(res => {
         // User exists
-        alert('Login Data ::'+ JSON.stringify(res));
+        // alert('Login Data ::'+ JSON.stringify(res));
       },(err) => {
           alert('Error:'+err);
       });
       
-      if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
-        localStorage.removeItem('UserRoleId');
-        this.apiProvider.UserRoleId = 0;
-      }else if(this.user.value.emailaddress =="cluster@ap.com" && this.user.value.password == "123"){
-        localStorage.removeItem('UserRoleId');
-        this.apiProvider.UserRoleId = 1;
-      } else if(this.user.value.emailaddress =="lib@ap.com" && this.user.value.password == "123"){
-        localStorage.removeItem('UserRoleId');
-        this.apiProvider.UserRoleId = 2;
-      }
+      // if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
+      //   localStorage.removeItem('UserRoleId');
+      //   this.apiProvider.UserRoleId = 0;
+      // }else if(this.user.value.emailaddress =="cluster@ap.com" && this.user.value.password == "123"){
+      //   localStorage.removeItem('UserRoleId');
+      //   this.apiProvider.UserRoleId = 1;
+      // } else if(this.user.value.emailaddress =="lib@ap.com" && this.user.value.password == "123"){
+      //   localStorage.removeItem('UserRoleId');
+      //   this.apiProvider.UserRoleId = 2;
+      // }
       // localStorage.removeItem('UserRoleId');
       // this.apiProvider.UserRoleId = 0;
       // Check if Fingerprint or Face  is available

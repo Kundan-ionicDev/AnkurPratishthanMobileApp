@@ -22,28 +22,10 @@
   <div class="header-banner">
   <ion-slides pager>
     <ion-slide *ngFor="let slide of slides" initialSlide=0 speed="3000" loop="true" pager="true" dir="rtl">
-      <!-- <ion-toolbar>
-        <ion-buttons end>
-          <button ion-button color="primary">Skip</button>
-        </ion-buttons>
-      </ion-toolbar> -->
-      <div class="overlay">
+        <div class="overlay">
         <img [src]="slide.image" class="slider-img"/>
       </div>
-    
-      <!-- <h2 class="slide-title" [innerHTML]="slide.title"></h2>
-      <p [innerHTML]="slide.description"></p> -->
     </ion-slide>
-    <!-- <ion-slide>
-      <ion-toolbar>
-      </ion-toolbar>
-      <img src="../../assets/img/avatar.jpeg" class="slide-image"/>
-      <h2 class="slide-title">Ready to Play?</h2>
-      <button ion-button large clear icon-end color="primary">
-        Continue
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-slide> -->
   </ion-slides>
 </div>
 <ion-grid class="grid">
@@ -74,7 +56,10 @@
   </ion-col>
 </ion-row>
 </ion-grid>
-  
+<marquee style="font-size: 12px;
+font-weight: 800;
+color: #ffffff;background-color: darkblue; padding: 10px; position: fixed; bottom: 0; width: 100%;
+font-family: sans-serif;">Ankur Pratishthan is a diverse collective of individuals from various professional backgrounds strung together through similar ideas and passion for making a catalytic change in the lives of destitute children.</marquee>
  <!--  <div class="ion-padding">
     <ion-card>
       <ion-card-header>
@@ -104,4 +89,6 @@
     </ion-card> 
     
   </div>-->
+
+  
 </ion-content>

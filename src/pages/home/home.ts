@@ -19,17 +19,22 @@ export class HomePage {
     {
       title: "Welcome to the Docs!",
       description: "The <b>Ionic Component Documentation</b> showcases a number of useful components that are included out of the box with Ionic.",
-      image: "assets/img/trip/thumb/trip_1.jpg",
+      image: "assets/img/slider/slider1.jpg",
     },
     {
       title: "What is Ionic?",
       description: "<b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.",
-      image: "assets/img/trip/thumb/trip_2.jpg",
+      image: "assets/img/slider/slider2.jpg",
     },
     {
       title: "What is Ionic Cloud?",
       description: "The <b>Ionic Cloud</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.",
-      image: "assets/img/trip/thumb/trip_3.jpg",
+      image: "assets/img/slider/slider3.jpg",
+    },
+    {
+      title: "What is Ionic Cloud?",
+      description: "The <b>Ionic Cloud</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.",
+      image: "assets/img/slider/slider4.jpg",
     }
   ];
   clickedImagePath:any;
@@ -62,8 +67,8 @@ export class HomePage {
     private storage: Storage, 
     public nav: NavController,
     public popoverCtrl: PopoverController) {
-      this.encodeData = "https://www.kundan.com";
-      //Options
+      this.encodeData = "https://www.ankurpratishthan.org";
+      // Options
       this.barcodeScannerOptions = {
         showTorchButton: true,
         showFlipCameraButton: true

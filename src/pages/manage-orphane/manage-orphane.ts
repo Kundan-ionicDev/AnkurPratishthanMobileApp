@@ -34,12 +34,18 @@ export class ManageOrphanePage {
     { title:'St Catherines Home', subtitle:"Belapur", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
     { title:'MA Niketan' , subtitle:"Sion", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
   ];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    
+    public navParams: NavParams) {
+     
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ManageOrphanePage');
   }
+
+  
 
   itemSelected(item:any){
     this.navCtrl.push('ManageOrphanedetailsPage');

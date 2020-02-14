@@ -1,5 +1,6 @@
 page-home,
 .home {
+  
   ion-list {
     border-radius: 1rem;
     overflow: hidden;
@@ -106,12 +107,13 @@ page-home,
       }
       .text-over-img {
         color: #fff;
-        font-size: 18px;
+        font-size: 15px;
         padding: 5px;
         background-color: rgba(119, 119, 119, 0.6);
         position: relative;
         width: 100%;
-        margin: -34px 0px 0px 0px;
+        // margin: -34px 0px 0px 0px;
+        margin: -28px 0 0;
         text-align: center;
 
       }

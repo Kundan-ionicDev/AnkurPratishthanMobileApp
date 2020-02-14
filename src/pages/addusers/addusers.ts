@@ -21,28 +21,11 @@ export class AddusersPage {
   xml:any;
   iconName: string="add";
   isclustadd: boolean = false;
-  clustrdata =[
-    { Name: 'Sneha Sadan Orphanage Vinayalaya', Address:'Vinayalaya Rd, Gundavali, Andheri East, Mumbai, Maharashtra 400093', ContactNumber : '9876789877', MemberCount : 12, Image:'assets/img/books/ngo.jpeg',Librarian:"Udhav " },
-    { Name: 'Sneha Sadan', Address:'5-C, Western Express Hwy, Salsette Parsi Colony, Parsi Colony, Jogeshwari East, Mumbai, Maharashtra 400047', ContactNumber : '022 2687 3694', MemberCount : 5 ,Image:'assets/img/books/ngo1.jpeg', Librarian:"Pranav "},
-    { Name: 'Home For The Aged', Address:'Gokul Nandanvan Co-operative Society, Radha Krishna Nagar, Aghadi Nagar, Andheri East, Mumbai, Maharashtra 400047', ContactNumber : '022 2838 2535', MemberCount : 1 ,Image:'assets/img/books/ngo2.jpeg',Librarian:"Kundan " },
-    { Name: 'Sishu Bhavan', Address:'Missionaries of Charity - Childrens Orphanage, Station, Church Rd, LIC Colony, Suresh Colony, Vile Parle West, Mumbai, Maharashtra 400056', ContactNumber : '022 2618 4068', MemberCount : 19 ,Image:'assets/img/books/ngo3.jpeg', Librarian:"Siddhesh " },
-    { Name: 'Voluntary Organisation In Community Enterprise', Address:'C-2, Gilbert Hall, Triveni, J P Road, Andheri(W), Mumbai, Maharashtra 400058', ContactNumber : '022 2624 4304', MemberCount : 12 ,Image:'assets/img/books/ngo4.jpeg',Librarian:"?" },
-  ];
+  clustrdata :any;
 
-  memberdata =[
-    { Name: 'Sneha Sadan Orphanage Vinayalaya', Address:'Vinayalaya Rd, Gundavali, Andheri East, Mumbai, Maharashtra 400093', ContactNumber : '9876789877', MemberCount : 12, Image:'assets/img/books/ngo.jpeg',Librarian:"Udhav " },
-    { Name: 'Sneha Sadan', Address:'5-C, Western Express Hwy, Salsette Parsi Colony, Parsi Colony, Jogeshwari East, Mumbai, Maharashtra 400047', ContactNumber : '022 2687 3694', MemberCount : 5 ,Image:'assets/img/books/ngo1.jpeg', Librarian:"Pranav "},
-    { Name: 'Home For The Aged', Address:'Gokul Nandanvan Co-operative Society, Radha Krishna Nagar, Aghadi Nagar, Andheri East, Mumbai, Maharashtra 400047', ContactNumber : '022 2838 2535', MemberCount : 1 ,Image:'assets/img/books/ngo2.jpeg',Librarian:"Kundan " },
-    { Name: 'Sishu Bhavan', Address:'Missionaries of Charity - Childrens Orphanage, Station, Church Rd, LIC Colony, Suresh Colony, Vile Parle West, Mumbai, Maharashtra 400056', ContactNumber : '022 2618 4068', MemberCount : 19 ,Image:'assets/img/books/ngo3.jpeg', Librarian:"Siddhesh " },
-    { Name: 'Voluntary Organisation In Community Enterprise', Address:'C-2, Gilbert Hall, Triveni, J P Road, Andheri(W), Mumbai, Maharashtra 400058', ContactNumber : '022 2624 4304', MemberCount : 12 ,Image:'assets/img/books/ngo4.jpeg',Librarian:"?" },
-  ];
+  memberdata : any;
 
-  librariabdata =[
-    { Name: 'Udhav', Address:'Andheri East, Mumbai, Maharashtra 400093', ContactNumber : '9876789877', MemberCount : 12, Image:'assets/img/avatar.jpeg',EmailId:"Udhav@gmail.com",AlternateNumber:12312113131, DOB:"24-04-1988" },
-    { Name: 'Pranav Bhonde', Address:'Jogeshwari East, Mumbai, Maharashtra 400047', ContactNumber : '022 2687 3694', MemberCount : 5 ,Image:'assets/img/logo.png', EmailId:"pranav@gmail.com ",AlternateNumber:12312113131, DOB:"17-03-1991"},
-    { Name: 'Pratik parmar', Address:'Aghadi Nagar, Andheri East, Mumbai, Maharashtra 400047', ContactNumber : '022 2838 2535', MemberCount : 1 ,Image:'assets/img/barcode.png',EmailId:"Kundan@gmail.com",AlternateNumber:12312113131, DOB:"11-01-1988" },
-    { Name: 'Siddhesh Bhavan', Address:'Vile Parle West, Mumbai, Maharashtra 400056', ContactNumber : '022 2618 4068', MemberCount : 19 ,Image:'assets/img/bg.jpg', EmailId:"Siddhesh@gmail.com",AlternateNumber:12312113131, DOB:"01-02-2004" }
-  ];
+  librariabdata : any;
 
   clusteradd: FormGroup;
   librariadd: FormGroup;
@@ -57,6 +40,7 @@ export class AddusersPage {
   roleId: number;
 
   constructor(
+    public api: RestApiProvider,
     private camera: Camera,
     private barcodeScanner: BarcodeScanner,
     public alertCtrl: AlertController,
@@ -74,6 +58,8 @@ export class AddusersPage {
       address: ['',Validators.required],
       clustercode: ['',Validators.required],
       mobilenumber: ['',Validators.required],
+      librarianId : ['',Validators.required],
+      members : ['',Validators.required],
     });
 
     // Librarian
@@ -104,8 +90,46 @@ export class AddusersPage {
     });
     this.roleId = this.apiProvider.UserRoleId;
     this.pagetitle = this.apiProvider._selectedtitle;
+    this.initialize();
   }
 
+  initialize(){
+    if(this.pagetitle == 'Cluster Management'){
+      this.api._postAPI('GetClusters', '').subscribe(res => {
+        // Clusters list
+        if (res.GetClustersResult.length > 0) {
+          this.clustrdata = res.GetClustersResult;
+        } else {
+          alert('No data available.')
+        }
+      }, (err) => {
+        alert('Error:' + err);
+      });
+    }else if(this.pagetitle == 'Librarian Management'){
+      this.api._postAPI('GetLibrarians', '').subscribe(res => {
+        // Get Librarians
+        if (res.GetLibrariansResult.length > 0) {
+          this.librariabdata = res.GetLibrariansResult;
+        } else {
+          alert('No data available.')
+        }
+      }, (err) => {
+        alert('Error:' + err);
+      });
+    }else if(this.pagetitle == 'Member Management'){
+      this.api._postAPI('GetMembers', '').subscribe(res => {
+        // Get Members
+        if (res.GetMembersResult.length > 0) {
+          this.memberdata = res.GetMembersResult;
+        } else {
+          alert('No data available.')
+        }
+      }, (err) => {
+        alert('Error:' + err);
+      });
+    }
+    
+  }
   
   ionViewDidLoad() {
     // console.log('ionViewDidLoad AddusersPage');
@@ -197,7 +221,80 @@ export class AddusersPage {
      alert.present();
   }
 
-  register(){
+  register(id:any){
+    // Add New Cluster 
+    if(id == 1){
+      if(this.clusteradd.valid){
+        let params = {
+          "ClusterName": this.clusteradd.value.fullname,
+          "ClusterCode": this.clusteradd.value.clustercode,
+          "EmailID": this.clusteradd.value.emailaddress,
+          "Address": this.clusteradd.value.address,
+          "MobileNo": this.clusteradd.value.mobilenumber,
+          "LibEmailID": this.clusteradd.value.librarianId,
+          "Members": this.clusteradd.value.members,
+          "AdminEmailID": 'kundansakpal@gmail.com',
+          "cmd": "1",
+          "ClusterID": "8"
+        };
+        this.api._postAPI('ManageClusters', params).subscribe(res => {
+          alert('Added new cluster');
+        }, (err) => {
+          alert('Error:' + err);
+        });
+      }else{
+        alert('All fields are mandatory');
+      }
+    }
+    // Add new Librarian
+    else if(id == 2){
+      if(this.librariadd.valid){
+        let params = {
+          "cmd": "1",
+          "FirstName": "Test2Librarian2",
+          "LastName": "TestLibrarian2",
+          "EmailID": "TestLib2@test.com",
+          "Address": "santacruz",
+          "MobileNo": "9876",
+          "AltMobileNo": "12345",
+          "ClusterID": "1",
+          "AdminEmailID": "kundansakpal@gmail.com",
+          "LibrarianID": ""
+        };
+        this.api._postAPI('ManageLibrarians', params).subscribe(res => {
+          alert('Added New Librarian');
+        }, (err) => {
+          alert('Error:' + err);
+        });
+      }else{
+        alert('All fields are mandatory');
+      }
+    }
+    // Add New Member
+    else if(id == 3){
+      if(this.memberadd.valid){
+        let params = {
+          "cmd": "1",
+          "FirstName": "",
+          "LastName": "",
+          "EmailID": "",
+          "Address": "",
+          "MobileNo": "",
+          "AltMobileNo": "",
+          "ClusterID": "2",
+          "DOB": "6-11-2020",
+          "AdminEmailID": "kundansakpal@gmail.com",
+          "MemberID": "7"
+        };
+        this.api._postAPI('ManageMembers', params).subscribe(res => {
+          alert('Added New Member');
+        }, (err) => {
+          alert('Error:' + err);
+        }); 
+      }else{
+        alert('All fields are mandatory');
+      }
+    }
     if(this.clusteradd.valid){
       this.addcategory()
     }else{
