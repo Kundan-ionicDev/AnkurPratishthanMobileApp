@@ -23,22 +23,22 @@ export class ManagebooksPage {
   };
   pages = [
     // Adim Book Management Pages
-    { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:0 },
-    { pageName: 'AddcategoryPage', title: 'Category', icon: 'basket', id: 'aboutTab', role:0 },
-    { pageName: 'AddpublisherPage', title: 'Publisher', icon: 'appstore', id: 'accountTab', role:0 },
-    { pageName: 'AddlanguagePage', title: 'Language', icon: 'at', id: 'accountTab', role:0 },
+    { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:1 },
+    { pageName: 'AddcategoryPage', title: 'Category', icon: 'basket', id: 'aboutTab', role:1 },
+    { pageName: 'AddpublisherPage', title: 'Publisher', icon: 'appstore', id: 'accountTab', role:1 },
+    { pageName: 'AddlanguagePage', title: 'Language', icon: 'at', id: 'accountTab', role:1 },
 
     // Cluster Book Management Pages
-    { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:1 },
-    { pageName: 'ClaimsPage', title: 'Claim(s)', icon: 'closed-captioning', id: 'newsTab', role:1 },
+    { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:2 },
+    { pageName: 'ClaimsPage', title: 'Claim(s)', icon: 'closed-captioning', id: 'newsTab', role:2 },
 
      // Librarian Book Management Pages
-     { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:2 },
-     { pageName: 'ClaimsPage', title: 'Claim(s)', icon: 'closed-captioning', id: 'newsTab', role:2 },
+     { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:3 },
+     { pageName: 'ClaimsPage', title: 'Claim(s)', icon: 'closed-captioning', id: 'newsTab', role:3 },
 
       // Member Book Management Pages
-    { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:3 },
-    { pageName: 'ClaimsPage', title: 'My Claim(s)', icon: 'closed-captioning', id: 'newsTab', role:3 }
+    { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:4 },
+    { pageName: 'ClaimsPage', title: 'My Claim(s)', icon: 'closed-captioning', id: 'newsTab', role:4 }
   ];
  
   selectedTab = 0;
@@ -58,6 +58,7 @@ export class ManagebooksPage {
     public apiProvider: RestApiProvider,
     public service: ActivityService,
     public navParams: NavParams) {
+      this.initialize();
       this.trip = service.getItem(1);
       this.roleId = this.apiProvider.UserRoleId;
   }
@@ -70,4 +71,16 @@ export class ManagebooksPage {
     // console.log('ionViewDidLoad ManagebooksPage');
   }
 
+
+  initialize(){
+    this.apiProvider._postAPI("GetBooksData", '').subscribe(res => {
+      // alert('Books Data ::'+ JSON.stringify(res.GetBooksDataResult));
+      // this.apiProvider.booksData = res.GetBooksDataResult;
+      let obj = res.GetBooksDataResult;
+      localStorage.setItem('BooksData',JSON.stringify(obj))
+
+    }, (err) => {
+      alert('Error:' + err);
+    });
+  }
 }

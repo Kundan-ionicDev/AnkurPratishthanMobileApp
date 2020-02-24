@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { RestApiProvider } from '../../providers/rest-api/rest-api';
+
 
 /**
  * Generated class for the AddcategoryPage page.
@@ -14,20 +16,47 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'addcategory.html',
 })
 export class AddcategoryPage {
-  items = [
-    { title:'Arts & Music', subtitle:"Dadar",suffix:"A", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
-    { title:'Biographies' , subtitle:"Andheri",suffix:"B", address:"", icon:"../../assets/img/trip/thumb/trip_2.jpg" },
-    { title:'Business', subtitle:"Bandra",suffix:"B", address:"", icon:"../../assets/img/trip/thumb/trip_3.jpg" } ,
-    { title:'Kids' , subtitle:"Sion",suffix:"K", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
-    { title:'Comics' , subtitle:"", suffix:"C", address:"Virar", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
-    { title:'Computers & Tech', suffix:"C", subtitle:"", address:"Dahisar", icon:"../../assets/img/trip/thumb/trip_4.jpg" } ,
-    { title:'Cooking', subtitle:"Panvel",suffix:"C", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
-    { title:'Hobbies & Crafts', subtitle:"Kolad",suffix:"H", address:"", icon:"../../assets/img/trip/thumb/trip_5.jpg" }
-  ];
+  // items = [
+  //   { title:'Arts & Music', subtitle:"Dadar",suffix:"A", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
+  //   { title:'Biographies' , subtitle:"Andheri",suffix:"B", address:"", icon:"../../assets/img/trip/thumb/trip_2.jpg" },
+  //   { title:'Business', subtitle:"Bandra",suffix:"B", address:"", icon:"../../assets/img/trip/thumb/trip_3.jpg" } ,
+  //   { title:'Kids' , subtitle:"Sion",suffix:"K", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
+  //   { title:'Comics' , subtitle:"", suffix:"C", address:"Virar", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
+  //   { title:'Computers & Tech', suffix:"C", subtitle:"", address:"Dahisar", icon:"../../assets/img/trip/thumb/trip_4.jpg" } ,
+  //   { title:'Cooking', subtitle:"Panvel",suffix:"C", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
+  //   { title:'Hobbies & Crafts', subtitle:"Kolad",suffix:"H", address:"", icon:"../../assets/img/trip/thumb/trip_5.jpg" }
+  // ];
   iscatadd: boolean = false;
   iconName: string="add";
+  items : any;
+  booksdata: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public api: RestApiProvider,
+    public navCtrl: NavController, 
+    public loadingCtrl: LoadingController,
+    public navParams: NavParams) {
+      this.initialize();
+  }
+
+  initialize(){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
+    // this.api._postAPI("GetBooksData",{"Mode":"C"}).subscribe(res => {
+    //   // alert('GetBooksData ::'+ JSON.stringify(res));
+    //   this.items = res.GetBooksDataResult;
+    // },(err) => {
+    //     alert('Error:'+err);
+    // });
+    // this.items = this.api.booksData.Categories;
+    // this.booksdata = localStorage.getItem('BooksData');
+    // this.items = this.booksdata;
+    this.items = JSON.parse(localStorage.getItem('BooksData'));
+    // alert('items' + JSON.stringify(this.items));
+    loading.dismiss();
   }
 
   ionViewDidLoad() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { AlertController } from 'ionic-angular';
+import { AlertController, LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class RestApiProvider {
@@ -26,6 +26,9 @@ export class RestApiProvider {
   public _ManageLibrarians:string ="ManageLibrarians"; //-------------------- POST
   public _ManageMembers: string ="ManageMembers"; //------------------------- POST
   public _ManageRequests: string ="ManageRequests"; //----------------------- POST
+  public _ValidateOTP: string ="ValidateOTP"; //----------------------------- POST
+  public _SendOTPEmail: string ="SendOTPEmail"; //--------------------------- POST
+  public _GetBooksData : string ="GetBooksData"; //-------------------------- POST
   //------- End of API Resource -------------------------------------------------------------------------------------
 
   httpOptions = {
@@ -35,20 +38,23 @@ export class RestApiProvider {
     })
   };
 
+  public booksData :any;
 
   // public _apiURL = "http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com/APService.svc/";
   public _apiURL ="https://ankurpratishthan.com:8443/APService.svc/";
   // public _apiURL = "https://admin-abe-dev.squarepanda.com/admin/v1/";
   constructor(
     private http: HttpClient,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) { }
  
   // Calling POST Method's 
   _postAPI(methodname:string, params: any): Observable<any> {
     return this.http.post<any>(this._apiURL+methodname,params,  this.httpOptions).pipe(
       tap(_ => 
-        this.log(methodname)),
+        this.log(methodname)
+        ),
         catchError(
          this.handleError(methodname, [])
         )
@@ -68,11 +74,12 @@ export class RestApiProvider {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       // alert('Error :'+ JSON.stringify(error.status + ' '+ error.statusText) + JSON.stringify(error) + error.error.error); // log to console instead
-     //  this.globVarible.httpErrorcode = error.status + ' '+ error.statusText + ' '+ error.error.error;
+      //  this.globVarible.httpErrorcode = error.status + ' '+ error.statusText + ' '+ error.error.error;
       // let errormsg ={
       //   'Status':error.status,
       //   'statusText':error.statusText
       // };
+      // this.presentAlert('Error', error.status + ' '+ error.statusText)
       // localStorage.setItem('HttpResponse',JSON.stringify(errormsg));
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
@@ -94,6 +101,18 @@ export class RestApiProvider {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  presentLoadingDefault() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
+  
+    setTimeout(() => {
+      loading.dismiss();
+    }, 5000);
   }
 
 }

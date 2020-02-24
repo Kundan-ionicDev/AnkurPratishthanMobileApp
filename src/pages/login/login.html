@@ -1,6 +1,8 @@
 <!-- -->
 <ion-content padding class="animated fadeIn login auth-page">
   <div class="login-content">
+ 
+    
 
     <!-- Logo -->
     <div padding-horizontal text-center class="animated fadeInDown">
@@ -32,18 +34,11 @@
     <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p>
 
     <div>
-      <button ion-button icon-start block color="dark"   [disabled]="!user.valid" type="submit">
+      <button ion-button icon-start block [disabled]="!user.valid" type="submit">
         <ion-icon name="log-in"></ion-icon>
         SIGN IN
       </button>
-
-      <!-- <p text-center ion-text color="secondary">Or Sign in with:</p> -->
     </div>
   </form>
-    <!-- Other links -->
-    <!-- <div text-center margin-top>
-      <span ion-text color="secondary" tappable (click)="register()">New here? <strong>Sign up</strong></span>
-    </div> -->
-
   </div>
 </ion-content>

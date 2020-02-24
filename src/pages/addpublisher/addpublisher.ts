@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { RestApiProvider } from '../../providers/rest-api/rest-api';
 
 /**
  * Generated class for the AddpublisherPage page.
@@ -16,20 +17,33 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class AddpublisherPage {
   ispublisheradd: boolean = false;
   iconName:string= "add";
-  items = [
-    { title:'Dean Koontz', subtitle:"Dadar", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
-    { title:'Malcolm Gladwell' , subtitle:"Andheri", address:"", icon:"../../assets/img/trip/thumb/trip_2.jpg" },
-    { title:'Jeff Kinney', subtitle:"Bandra", address:"", icon:"../../assets/img/trip/thumb/trip_3.jpg" } ,
-    { title:'Gregg Olsen' , subtitle:"Sion", address:"", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
-    { title:'Carolyn Brown' , subtitle:"", address:"Virar", icon:"../../assets/img/trip/thumb/trip_1.jpg" } ,
-    { title:'Lee Child', subtitle:"", address:"Dahisar", icon:"../../assets/img/trip/thumb/trip_4.jpg" }
-  ];
+  items :any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public api: RestApiProvider,
+    public navCtrl: NavController, 
+    public loadingCtrl: LoadingController,
+    public navParams: NavParams) {
+      this.initialize();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddpublisherPage');
+  }
+
+  initialize(){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
+    this.api._postAPI("GetBooksData",{"Mode":"P"}).subscribe(res => {
+      // alert('GetBooksData ::'+ JSON.stringify(res));
+      this.items = res.GetBooksDataResult;
+    },(err) => {
+        alert('Error:'+err);
+    });
+    loading.dismiss();
   }
 
   addpublisher(){

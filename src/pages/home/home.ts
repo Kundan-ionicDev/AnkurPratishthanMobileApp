@@ -55,7 +55,7 @@ export class HomePage {
   scannedResult:any;
   encodeData: any;
   scannedData: {};
-
+  checkdata: any;
   barcodeScannerOptions: BarcodeScannerOptions;
   
 
@@ -73,6 +73,8 @@ export class HomePage {
         showTorchButton: true,
         showFlipCameraButton: true
       };
+      this.checkdata = JSON.parse(localStorage.getItem('UserLogin'));
+
   }
   
  

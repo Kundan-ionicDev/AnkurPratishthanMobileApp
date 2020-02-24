@@ -41,7 +41,8 @@
 //
 //
 .text-primary {
-  color: color($colors, secondary);
+  // color: color($colors, primary);
+  color: #5e2525;
 }
 
 .text-secondary {
@@ -346,11 +347,13 @@ ion-navbar.no-border {
 
           ion-label {
             font-size: 1em;
-            color: color($colors, primary);
+            // color: color($colors, secondary);
+            color: #000000;
           }
 
           input {
-            color: color($colors, primary);
+            color: #000000;
+            // color: color($colors, secondary);
           }
         }
       }

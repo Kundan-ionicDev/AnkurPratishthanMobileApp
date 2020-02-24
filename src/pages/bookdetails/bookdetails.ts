@@ -11,7 +11,7 @@ import { RestApiProvider } from '../../providers/rest-api/rest-api';
 })
 export class BookdetailsPage {
   // trip info
-  public trip: any;
+  public slideimgs: any;
   // number of adult
   public adults = 2;
   // number of children
@@ -26,11 +26,18 @@ export class BookdetailsPage {
     public navCtrl: NavController, 
     public service: ActivityService,
     public navParams: NavParams) {
-      this.trip = { "id":1,"title":"Rich Dad Poor Dad","subtitle":"Rich Dad Poor Dad is a 1997 book written by Robert Kiyosaki and Sharon Lechter. It advocates the importance of financial literacy, financial independence and building wealth through investing in assets, ... ","publisher":"Book by Robert Kiyosaki and Sharon Lechter","category":"Self-help book","author":"Robert Kiyosaki, Sharon Lechter","price":320,"sold":"7","totalstock":10,"added_on":"2006-03-12","booksliked":"95% liked this book","available":3,"Pagecount":207,"thumb":"assets/img/books/ngo1.jpeg","location":"Vinayalaya Rd, Gundavali, Andheri East, Mumbai, Maharashtra 400093","images":["assets/img/trip/thumb/trip_1.jpg","assets/img/trip/thumb/trip_2.jpg","assets/img/trip/thumb/trip_3.jpg","assets/img/trip/thumb/trip_4.jpg" ]};
+      this.slideimgs = { 
+        "images":
+        ["assets/img/slider/slider1.jpg",
+        "assets/img/slider/slider1.jpg",
+        "assets/img/slider/slider1.jpg",
+        "assets/img/slider/slider1.jpg" 
+      ]};
+
       navParams.get('userProfile');
       this.bookData = navParams.data.bookData;
       this.roleId = this.apiProvider.UserRoleId;
-      console.log(JSON.stringify(this.trip));
+      console.log(JSON.stringify(this.slideimgs));
     }
     ionViewDidLoad() {
     }

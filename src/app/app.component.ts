@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { Platform, Nav } from "ionic-angular";
+import { Platform, Nav, ToastController,App,AlertController } from "ionic-angular";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from '@ionic-native/keyboard';
@@ -13,14 +13,14 @@ import { HelpPage } from "../pages/help/help";
 import { ContactusPage } from "../pages/contactus/contactus";
 import { QrcodePage } from "../pages/qrcode/qrcode";
 import { RestApiProvider } from "../providers/rest-api/rest-api";
-import { FCM } from '@ionic-native/fcm/ngx';
+import { FCM } from '@ionic-native/fcm';
 
 
 export interface MenuItem {
-    title: string;
-    component: any;
-    icon: string;
-    roleId:number;
+  title: string;
+  component: any;
+  icon: string;
+  roleId: number;
 }
 
 @Component({
@@ -32,58 +32,102 @@ export class MyApp {
 
   rootPage: any = LoginPage;
 
-  appMenuItems: Array<MenuItem>;
+  appMenuItems: Array < MenuItem > ;
+  checkdata: [{
+    
+  }];
 
   constructor(
     private fcm: FCM,
+    public app: App,
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public keyboard: Keyboard,
-    public apiProvider: RestApiProvider
+    public apiProvider: RestApiProvider,
+    public alertCtrl: AlertController
   ) {
     this.apiProvider.UserRoleId = 1;
     this.initializeApp();
     this.appMenuItems = [
       // Menu for Admin
-      { title: 'Home', component: HomePage, icon: 'home',roleId:0 },
-      { title: 'Book Management', component: ManagebooksPage, icon: 'ios-book',roleId:0 },
-      { title: 'Cluster Management', component: AddusersPage, icon: 'ios-add-circle-outline',roleId:0 },
-      { title: 'Librarian Management', component: AddusersPage, icon: 'md-person',roleId:0 },
-      { title: 'Member Management', component: AddusersPage, icon: 'ios-people',roleId:0 },
-      { title: 'Approvals', component: ManageRequestsPage, icon: 'git-pull-request',roleId:0 },
-      { title: 'Reports', component: ManageOrphanePage, icon: 'body',roleId:0 },   
-      { title: 'Help', component: HelpPage, icon: 'md-help-circle',roleId:0 },
-      { title: 'QR Code', component: QrcodePage, icon: 'md-help',roleId:0 },
-      { title: 'Contact us', component: ContactusPage, icon: 'md-call',roleId:0 },
+      { title: 'Home', component: HomePage, icon: 'home', roleId: 1 },
+      { title: 'Book Management', component: ManagebooksPage, icon: 'ios-book', roleId: 1 },
+      { title: 'Cluster Management', component: AddusersPage, icon: 'ios-add-circle-outline', roleId: 1 },
+      { title: 'Librarian Management', component: AddusersPage, icon: 'md-person', roleId: 1 },
+      { title: 'Member Management', component: AddusersPage, icon: 'ios-people', roleId: 1 },
+      { title: 'Approvals', component: ManageRequestsPage, icon: 'git-pull-request', roleId: 1 },
+      { title: 'Reports', component: ManageOrphanePage, icon: 'body', roleId: 1 },
+      { title: 'Help', component: HelpPage, icon: 'md-help-circle', roleId: 1 },
+      { title: 'QR Code', component: QrcodePage, icon: 'md-help', roleId: 1 },
+      { title: 'Contact us', component: ContactusPage, icon: 'md-call', roleId: 1 },
 
       // Menu for Librarian 
-      { title: 'Home', component: HomePage, icon: 'home',roleId:1 },
-      { title: 'Book Circulation', component: ManagebooksPage, icon: 'sync',roleId:1 },
-      { title: 'Member Management', component: AddusersPage, icon: 'people',roleId:1 },
-      { title: 'Contact us', component: ContactusPage, icon: 'md-call',roleId:1 },
-
+      { title: 'Home',component: HomePage, icon: 'home',roleId: 2 },
+      { title: 'Book Circulation',component: ManagebooksPage, icon: 'sync', roleId: 2 },
+      { title: 'Member Management', component: AddusersPage, icon: 'people',roleId: 2 },
+      { title: 'Contact us', component: ContactusPage, icon: 'md-call', roleId: 2 },
 
       // Menu for Cluster
-      { title: 'Home', component: HomePage, icon: 'home',roleId:2 },
-      { title: 'Book Circulation', component: ManagebooksPage, icon: 'sync',roleId:2 },
-      { title: 'Member Management', component: AddusersPage, icon: 'people',roleId:2 },
-      { title: 'Contact us', component: ContactusPage, icon: 'md-call',roleId:2 },
-
+      { title: 'Home', component: HomePage, icon: 'home', roleId: 3 },
+      { title: 'Book Circulation', component: ManagebooksPage, icon: 'sync', roleId: 3 },
+      { title: 'Member Management', component: AddusersPage, icon: 'people', roleId: 3 },
+      { title: 'Contact us', component: ContactusPage, icon: 'md-call', roleId: 3 },
 
       // Menu for members
-      { title: 'Home', component: HomePage, icon: 'home',roleId:3 },
-      { title: 'Books', component: ManagebooksPage, icon: 'sync',roleId:3 },
-      { title: 'Request', component: ContactusPage, icon: 'git-pull-request',roleId:3 },
-      { title: 'Contact us', component: ContactusPage, icon: 'md-call',roleId:3 },
-
+      { title: 'Home', component: HomePage, icon: 'home', roleId: 4 },
+      { title: 'Books', component: ManagebooksPage, icon: 'sync', roleId: 4 },
+      { title: 'Request', component: ContactusPage, icon: 'git-pull-request', roleId: 4 },
+      { title: 'Contact us', component: ContactusPage, icon: 'md-call', roleId: 4 }
     ];
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
-
+      //back button handle
+      //Registration of push in Android and Windows Phone
+      var lastTimeBackPress = 0;
+      var timePeriodToExit = 2000;
+      // alert('checkdata' + JSON.stringify(this.checkdata));
+      if (localStorage.hasOwnProperty("UserLogin")) {
+        this.checkdata = JSON.parse(localStorage.getItem('UserLogin'));
+      }else{
+        // alert('No data available');
+      }
+     
+      
+      this.platform.registerBackButtonAction(() => {
+        // get current active page
+        let nav = this.app.getActiveNavs()[0];
+        let activeView = nav.getActive();
+        // alert('view.component.name' + activeView.component.name);
+        if (activeView.component.name === "HomePage") {
+          if (nav.canGoBack()) {
+            nav.pop();
+          } else {
+            const alert = this.alertCtrl.create({
+              title: 'Fechar o App',
+              message: 'Você tem certeza?',
+              buttons: [{
+                text: 'Cancelar',
+                role: 'cancel',
+                handler: () => {
+                  this.nav.setRoot('HomePage');
+                  console.log('** Saída do App Cancelada! **');
+                }
+              }, {
+                text: 'Fechar o App',
+                handler: () => {
+                  this.logout();
+                  this.platform.exitApp();
+                }
+              }]
+            });
+            alert.present();
+          }
+        }
+      });
       //*** Control Splash Screen
       this.splashScreen.show();
       this.splashScreen.hide();
@@ -97,30 +141,30 @@ export class MyApp {
 
       this.fcm.subscribeToTopic('marketing');
 
+
       this.fcm.getToken().then(token => {
-        console.log(token);
-        alert('getToken :' + token)
+        console.log('FCM Token:', token);
+        localStorage.setItem('FCMToken', token);
       });
 
       this.fcm.onNotification().subscribe(data => {
-        if(data.wasTapped){
-          console.log("Received in background");
-          alert('data :' + data)
+        if (data.wasTapped) {
+          // console.log("Received in background");
+          // alert('data :' + JSON.stringify(data))
         } else {
-          console.log("Received in foreground");
+          // console.log("Received in foreground");
         };
       });
 
       this.fcm.onTokenRefresh().subscribe(token => {
-        console.log(token);
-        alert('onTokenRefresh :' + token)
+        // console.log(token);
       });
 
       // this.fcm.unsubscribeFromTopic('marketing');
     });
   }
 
-  openPage(page,title) {
+  openPage(page, title) {
     // alert('page'+ title);
     this.apiProvider._selectedtitle = title;
     // Reset the content nav to have just this page

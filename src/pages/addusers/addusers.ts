@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { RestApiProvider } from '../../providers/rest-api/rest-api';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -47,6 +47,7 @@ export class AddusersPage {
     public navCtrl: NavController, 
     public apiProvider: RestApiProvider,
     private formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController,
     public navParams: NavParams) {
       // Cluster
      this.clusteradd = this.formBuilder.group({
@@ -94,6 +95,11 @@ export class AddusersPage {
   }
 
   initialize(){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
     if(this.pagetitle == 'Cluster Management'){
       this.api._postAPI('GetClusters', '').subscribe(res => {
         // Clusters list
@@ -128,7 +134,7 @@ export class AddusersPage {
         alert('Error:' + err);
       });
     }
-    
+    loading.dismiss();
   }
   
   ionViewDidLoad() {
@@ -172,11 +178,11 @@ export class AddusersPage {
   AccessGallery(){
     this.camera.getPicture({
        sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-       destinationType: this.camera.DestinationType.DATA_URL
+       destinationType: this.camera.DestinationType.FILE_URI
       }).then((imageData) => {
        // alert('imageData'+ JSON.stringify(imageData));
         this.image = 'data:image/jpeg;base64,'+imageData;
-        // alert('image : '+ this.image);
+        alert('image : '+ this.image);
         this.photos.push(
           this.image
         );
@@ -191,15 +197,17 @@ export class AddusersPage {
    AccessCamera(){
     const options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.FILE_URI,
       saveToPhotoAlbum: true,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 200,
+      targetHeight: 200
     };
 
     this.camera.getPicture(options).then((imageData) => {
       // alert('imageData'+ JSON.stringify(imageData));
       this.image = 'data:image/jpeg;base64,' + imageData;
-      // alert('image : '+ this.image);
+      alert('image : '+ this.image);
       this.photos.push(
         this.image
       );
@@ -224,6 +232,11 @@ export class AddusersPage {
   register(id:any){
     // Add New Cluster 
     if(id == 1){
+      let loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+    
+      loading.present();
       if(this.clusteradd.valid){
         let params = {
           "ClusterName": this.clusteradd.value.fullname,
@@ -242,12 +255,19 @@ export class AddusersPage {
         }, (err) => {
           alert('Error:' + err);
         });
+        loading.dismiss();
       }else{
         alert('All fields are mandatory');
       }
+      
     }
     // Add new Librarian
     else if(id == 2){
+      let loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+    
+      loading.present();
       if(this.librariadd.valid){
         let params = {
           "cmd": "1",
@@ -266,12 +286,18 @@ export class AddusersPage {
         }, (err) => {
           alert('Error:' + err);
         });
+        loading.dismiss();
       }else{
         alert('All fields are mandatory');
       }
     }
     // Add New Member
     else if(id == 3){
+      let loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+    
+      loading.present();
       if(this.memberadd.valid){
         let params = {
           "cmd": "1",
@@ -291,6 +317,7 @@ export class AddusersPage {
         }, (err) => {
           alert('Error:' + err);
         }); 
+        loading.dismiss();
       }else{
         alert('All fields are mandatory');
       }

@@ -1,9 +1,9 @@
 <ion-content padding>
   <div *ngIf="ispublisheradd == false">
-      <ion-list>
+      <!-- <ion-list>
           <ion-item-sliding *ngFor="let item of items" (click)="itemSelected(item)">
           <ion-item>
-              <h2> {{ item.title }}</h2>
+              <h2> {{ item.PublisherName }}</h2>
           </ion-item>
           <ion-icon name="arrow-forward"  end></ion-icon>
           <ion-item-options side="right">
@@ -11,7 +11,29 @@
               <button ion-button color="danger" (click)="share(item)">Delete</button>
           </ion-item-options>
           </ion-item-sliding>
-      </ion-list>
+      </ion-list> -->
+      <ion-card>
+        <ion-card-header>
+          Explore Publishers
+        </ion-card-header>
+        <ion-list *ngFor="let item of items">
+            <ion-item-sliding  (click)="itemSelected(item)">
+            <ion-item>
+                <button ion-item>
+                  <ion-avatar item-start>
+                    <ion-text-avatar>{{item.PublisherName | slice:0:1}}</ion-text-avatar>
+                  </ion-avatar>
+                    {{ item.PublisherName }}
+                  </button>
+            </ion-item>
+            <ion-icon name="arrow-forward"  end></ion-icon>
+            <ion-item-options side="right">
+                <button ion-button color="success" (click)="favorite(item)">Edit</button>
+                <button ion-button color="danger" (click)="share(item)">Delete</button>
+            </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+      </ion-card>
   </div>
 
   <div *ngIf="ispublisheradd == true">

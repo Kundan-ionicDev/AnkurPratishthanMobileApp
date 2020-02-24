@@ -4,7 +4,8 @@ import {
 import {
   IonicPage,
   NavController,
-  NavParams
+  NavParams,
+  LoadingController
 } from 'ionic-angular';
 import {
   App
@@ -49,6 +50,9 @@ export class AllbooksPage {
   items: any;
   usrRoleId: number;
   frmbooks: FormGroup;
+  categories: any;
+  publishers: any;
+  languages: any;
 
   constructor(
     public api: RestApiProvider,
@@ -57,6 +61,7 @@ export class AllbooksPage {
     private formBuilder: FormBuilder,
     public apiProvider: RestApiProvider,
     private barcodeScanner: BarcodeScanner,
+    public loadingCtrl: LoadingController,
     public navParams: NavParams) {
     this.usrRoleId = this.apiProvider.UserRoleId;
     this.initializeItems();
@@ -119,6 +124,10 @@ export class AllbooksPage {
     }
   }
 
+  editBook(action:any, item: any) {
+    
+  }
+
   bookDetails(item: any) {
     let nav = this.app.getRootNav();
     nav.setRoot(BookdetailsPage, {
@@ -132,20 +141,29 @@ export class AllbooksPage {
     //   { title:'To Kill a Mockingbird', subtitle:"To Kill a Mockingbird. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.", publisher:"Publisher 2", category:"Anthology", author:"Harper Lee", icon:"assets/img/books/ToKillaMockingbird.jpeg" } ,
     //   { title:'Batman: The Dark Knight Returns', subtitle:"Batman: The Dark Knight Returns anthology is a collection of series of works such as short stories, poems, essays, plays, etc. by different authors into a single volume for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.", publisher:"Publisher 3", category:"Comic and Graphic Novel", author:"Frank Miller", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" } ,
     //   { title:'Sherlock Holmes', subtitle:"Arthur Conan Doyle for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.", publisher:"Publisher 3", category:"Comic and Graphic Novel", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" }
-    // ];  
-
-    this.api._postAPI("GetBooks", '').subscribe(res => {
-      // User exists
-      // alert('Books Data ::'+ JSON.stringify(res.GetBooksResult));
-      if (res.GetBooksResult.length > 0) {
-        this.items = res.GetBooksResult;
-      } else {
-        alert('No data available.')
-      }
-    }, (err) => {
-      alert('Error:' + err);
+    // ];
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
     });
-
+  
+    loading.present();
+    this.api._postAPI("GetBooks", '').subscribe(res => {
+        // User exists
+        // alert('Books Data ::'+ JSON.stringify(res.GetBooksResult));
+        if (res.GetBooksResult.length > 0) {
+          this.items = res.GetBooksResult;
+        } else {
+          alert('No data available.')
+        }
+      }, (err) => {
+        alert('Error:' + err);
+      });
+    loading.dismiss();
+    this.items = JSON.parse(localStorage.getItem('BooksData'));
+    this.categories = this.items[0].Categories;
+    this.publishers = this.items[0].Publishers;
+    this.languages = this.items[0].Languages;
+    // alert('categories :' + JSON.stringify(this.categories));
   }
 
   getItems(ev) {
