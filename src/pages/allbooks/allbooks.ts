@@ -124,9 +124,41 @@ export class AllbooksPage {
     }
   }
 
-  editBook(action:any, item: any) {
-    
+  // Delete Book Details
+  updateBook(item:any){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...while book gets deleted'
+    });
+  
+    loading.present();
+    let params = {
+      "BookName": item.BookName,
+      "cmd": "3", // Command 3 for Delete Book
+      "EmailID": "kundansakpal@gmail.com",
+      "Price": item.Price,
+      "Author": item.AuthorName,
+      "Stock": item.Stock,
+      "CategoryID": item.CategoryID,
+      "LanguageID": item.LanguageID,
+      "PublisherID": item.PublisherID,
+      "BookID": item.BookID
+    };
+    this.apiProvider._postAPI("ManageBooks", params).subscribe(res => {
+      // Manage Books Data
+      // alert('Manage Books Data ::'+ JSON.stringify(res.ManageBooksResult));
+      if(res.ManageBooksResult.length >0){
+        this.apiProvider.presentAlert('Alert!','Book Deleted Sucessfully');
+        loading.dismiss();
+      }else{
+        this.apiProvider.presentAlert('Alert!','Something went wrong. Please try again!!!');
+        loading.dismiss();
+      }
+    }, (err) => {
+      alert('Error:' + err);
+      loading.dismiss();
+    });
   }
+
 
   bookDetails(item: any) {
     let nav = this.app.getRootNav();

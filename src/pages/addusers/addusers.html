@@ -70,7 +70,69 @@
     </div>
 
     <div *ngIf="isclustadd == false && pagetitle == 'Cluster Management'">
-        <ion-list>
+      <ion-list-header>List of {{ pagetitle }}</ion-list-header>
+      <ion-card class="accordion" *ngFor= "let item of clustrdata"  >
+        <img height="150px" src="../../assets/img/books/ngo1.jpeg" />
+        <ion-card-content id="second" style="display: block" (click)="showless();">
+          <p style="font-size: 15px;">{{item.ClusterName}}</p>
+          <div class="row" style="border-bottom:0px">
+            <div class="col" style="font-size: 15px">
+              <ion-icon name="call-outline"></ion-icon> &nbsp;
+              {{item.MobileNo}}
+            </div>
+            <!-- <div class="col" style="padding-top: 20px"><hr></div> -->
+            <div class="col" style="text-align: right;font-size: 15px"><b>Cluster Code:</b>{{ item.ClusterCode}}</div>
+          </div>
+          <label style="padding-left:0px;color: #008000">{{item.Address}}</label>
+          <!-- <div class="col" style="padding-top: 20px"><hr></div> -->
+          <!-- <label>Details</label><br> -->
+          <!-- <div class="row" style="border-bottom:0px"> -->
+            <!-- <div class="col">Members</div> -->
+            <!-- <div class="col" style="text-align: center">ClusterID</div> -->
+            <!-- <div class="col" style="text-align: right">Active</div> -->
+          <!-- </div> -->
+          <!-- <div class="row" style="border-bottom:0px">
+            <div class="col" style="font-size: 15px">{{ item.Members }}</div>
+            <div class="col" style="font-size: 15px;text-align: center">{{ item.ClusterID }}</div>
+            <div class="col" style="text-align: right;font-size: 15px">Yes</div>
+          </div> -->
+          <div class="col"><hr></div>
+          <!-- <label>Details</label><br> -->
+          <div class="row" style="border-bottom:0px">
+            <div class="col"><b>Librarian Name</b></div>
+            <div class="col" style="text-align: center"><b>Members</b></div>
+            <div class="col" style="text-align: right"><b>ClusterID</b></div>
+          </div>
+          <div class="row" style="border-bottom:0px">
+            <div class="col" style="font-size: 15px">{{ item.ClusterName }}</div>
+            <div class="col" style="font-size: 15px;text-align: center">{{ item.Members }}</div>
+            <div class="col" style="text-align: right;font-size: 15px">{{ item.ClusterID }}</div>
+          </div>
+          <div class="col"><hr></div>
+          <!-- <div class="row" style="border-bottom:0px">
+            <button ion-button block color="success" type="submit">
+              Delete
+            </button>
+            <button ion-button block color="dark" type="submit">
+              Edit
+            </button>
+          </div> -->
+
+          <div class="row" style="border-bottom:0px">
+            <div class="col" style="font-size: 15px">
+              <button ion-button block color="success" type="submit">
+                Delete
+              </button>
+            </div>
+            <div class="col" style="text-align: right;font-size: 15px">
+              <button ion-button block color="dark" type="submit">
+                Edit
+              </button>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+        <!-- <ion-list>
             <ion-list-header>List of {{ pagetitle }}</ion-list-header>
             <ion-item-sliding *ngFor="let item of clustrdata" (click)="detailSelected(item)">
             <ion-item>
@@ -96,7 +158,7 @@
                 </button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+          </ion-list> -->
     </div>
 
     <!-- Add New Cluster-->

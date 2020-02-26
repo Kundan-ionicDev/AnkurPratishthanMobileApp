@@ -85,13 +85,16 @@ export class LoginPage {
           // let checkdata = JSON.parse(localStorage.getItem('UserLogin'));
           // alert('checkData' + JSON.stringify(checkdata));
           this.nav.setRoot(HomePage);
+          loading.dismiss();
         }else{
           this.apiProvider.presentAlert('Error',res.UserLoginResult.Message);
+          loading.dismiss();
         }
       },(err) => {
           alert('Error:'+err);
+          loading.dismiss();
       });
-      loading.dismiss();
+     
       // if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
       //   localStorage.removeItem('UserRoleId');
       //   this.apiProvider.UserRoleId = 0;

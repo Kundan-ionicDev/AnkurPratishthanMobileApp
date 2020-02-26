@@ -10,4 +10,14 @@ page-addusers {
           font-size: 30px !important;
         }
         }
+
+        .user-avatar {
+          width: 68px;
+          height: 68px;
+          display: inline-block;
+          border-radius: 50%;
+          img {
+            border-radius: 50%;
+          }
+        }
 }

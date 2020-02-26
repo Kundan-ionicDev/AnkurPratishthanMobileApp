@@ -18,68 +18,69 @@
   
 
         <div class="border-bottom" padding>
+          <form [formGroup]="frmbooks" novalidate (ngSubmit)="updateBook()">
+          
             <ion-list>
                 <ion-item>
                   <ion-label>Title :</ion-label>
-                  <ion-input type="text" value="{{ bookData.BookName }}"></ion-input>
+                  <ion-input type="text" formControlName="bookname" value="{{ bookData.BookName }}"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Description :</ion-label>
-                    <ion-textarea rows="6" value="{{ bookData.BookName }}" cols="20"></ion-textarea>
+                    <ion-textarea rows="6" formControlName="bookdescription" value="{{ bookData.BookDescription }}" cols="20"></ion-textarea>
                 </ion-item>
                 <ion-item>
                     <ion-label>Category :</ion-label> 
-                    <ion-input type="text" value="{{ bookData.CategoryName }}"></ion-input>
+                    <ion-input type="text" formControlName="bookcategory" value="{{ bookData.CategoryName }}"></ion-input>
                   </ion-item>
                 <ion-item>
                     <ion-label>Publisher :</ion-label> 
-                    <ion-input type="text" value=" {{ bookData.PublisherName }}"></ion-input>
+                    <ion-input type="text" formControlName="bookpublisher" value=" {{ bookData.PublisherName }}"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Author :</ion-label> 
-                    <ion-input type="text" value="{{ bookData.AuthorName }}"></ion-input>
+                    <ion-input type="text" formControlName="bookauthor" value="{{ bookData.AuthorName }}"></ion-input>
                 </ion-item>
-                <ion-item>
+                <!-- <ion-item>
                     <ion-label>Page count :</ion-label> 
-                    <ion-input type="text" value="{{ bookData.Pagecount }}"></ion-input>
-                </ion-item>
-               <ion-item>
+                    <ion-input type="text" formControlName="bookname" value="{{ bookData.Pagecount }}"></ion-input>
+                </ion-item> -->
+               <!-- <ion-item>
                   <ion-label>Book Liked :</ion-label> 
-                  <ion-input type="text" value="{{ bookData.booksliked }}"></ion-input>
-                </ion-item>
-              <ion-item>
+                  <ion-input type="text" formControlName="bookname" value="{{ bookData.booksliked }}"></ion-input>
+                </ion-item> -->
+              <ion-item *ngIf="roleId == 1">
                   <ion-label>Price :</ion-label> 
-                  <ion-input type="text" value="{{ bookData.Price }}"></ion-input>
-                </ion-item>
+                  <ion-input type="text" formControlName="bookprice" value="{{ bookData.Price }}"></ion-input>
+              </ion-item>
                
-              <ion-item>
+              <ion-item *ngIf="roleId == 1">
                   <ion-label>Total Stock :</ion-label> 
-                  <ion-input type="text" value="{{ bookData.Stock }}"></ion-input>
+                  <ion-input type="text" formControlName="booktotalstock" value="{{ bookData.Stock }}"></ion-input>
                 </ion-item>
               <ion-item>
                   <ion-label>Available :</ion-label> 
-                  <ion-input type="text" value="{{ bookData.available }}"></ion-input>
+                  <ion-input type="text" formControlName="bookisavailable" value="{{ bookData.available }}"></ion-input>
                 </ion-item>
 
-             <ion-item>
+             <ion-item *ngIf="roleId == 1">
                   <ion-label>Sold :</ion-label> 
-                  <ion-input type="text" value="{{ bookData.sold }}"></ion-input>
+                  <ion-input type="text" formControlName="booksold" value="{{ bookData.sold }}"></ion-input>
              </ion-item>
-             <ion-item text-center> 
+             <!-- <ion-item text-center> 
                 <ion-icon style="font-size: 3.2em;" name="thumbs-down"></ion-icon>&nbsp;
                 <ion-icon style="font-size: 3.2em;" name="thumbs-up"></ion-icon>
-          </ion-item>
+          </ion-item> -->
           <ion-item text-center *ngIf="roleId == 1">
-              <button ion-button color="light">
-                  <ion-icon name="ios-more"></ion-icon>
-                  Edit
-                </button>
-                <button ion-button color="primary">
-                  <ion-icon name="text"></ion-icon>
-                  Delete
+              <!-- <button ion-button color="light">
+                  <ion-icon (click)="editBook()" name="ios-more"></ion-icon>
+                  Update
+                </button> -->
+                <button ion-button block color="primary" (click)="editBook()">
+                  Update Book
                 </button>
           </ion-item>
-          <ion-item *ngIf="roleId != 0">
+          <ion-item *ngIf="roleId != 1">
               <ion-label floating>Claim for (member):</ion-label>
               <ion-select>
                 <ion-option value="e">Jagruti</ion-option>
@@ -88,11 +89,12 @@
                 <ion-option value="g">Kundan</ion-option>
               </ion-select>
           </ion-item>
-          <ion-item text-center *ngIf="roleId != 0">
+          <ion-item text-center *ngIf="roleId != 1">
               <button ion-button icon-start block color="dark" >
                   Claim
                 </button>
           </ion-item>
         </ion-list>
+      </form>
       </div>
   </ion-content>

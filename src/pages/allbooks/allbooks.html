@@ -12,16 +12,14 @@
                     <img src="assets/icon/thumbnail.png">
                   </ion-thumbnail>
                   <h2>{{ item.BookName }}</h2>
-                  <p>@ {{ item.Language }}</p>
+                  <h3>{{ item.BookDescription }}</h3>
+                  <p>Language : {{ item.Language }}</p>
                   <p>Author :{{ item.AuthorName }}</p>
+                  <p>Publisher :{{ item.PublisherName }}</p>
+                  <p>Category: {{ item.CategoryName }}</p>
                 </ion-item>
                 <ion-item-options *ngIf="usrRoleId == 1">
-                  <!-- 2 for edit and 3 for delete -->
-                  <!-- <button (click)="editBook(2,item)" ion-button color="light" icon-start>
-                    <ion-icon name="ios-more"></ion-icon>
-                    Edit
-                  </button> -->
-                  <button (click)="editBook(3,item)" ion-button color="primary" icon-start>
+                  <button (click)="updateBook(item)" ion-button color="primary" icon-start>
                     <ion-icon name="text"></ion-icon>
                     Delete
                   </button>
