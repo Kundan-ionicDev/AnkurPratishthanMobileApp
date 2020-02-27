@@ -1,9 +1,9 @@
 <ion-content padding>
     <div *ngIf="isbookadding == false">
-      <ion-searchbar (ionInput)="getItems($event)" showCancelButton="always"></ion-searchbar>
+      <ion-searchbar (ionInput)="filterItems($event)" showCancelButton="always"></ion-searchbar>
       <ion-list>
           <div *ngFor="let item of items">
-              <ion-item-sliding (click)="bookDetails(item)">
+              <ion-item-sliding>
                 <ion-item>
                   <ion-thumbnail item-start *ngIf="item.ThumbImage !=''">
                     <img src="https://ankurpratishthan.com:8443/{{ item.ThumbImage }}">
@@ -19,6 +19,10 @@
                   <p>Category: {{ item.CategoryName }}</p>
                 </ion-item>
                 <ion-item-options *ngIf="usrRoleId == 1">
+                  <button (click)="bookDetails(item)" ion-button color="secondary" icon-start>
+                    <ion-icon name="edit"></ion-icon>
+                    Edit
+                  </button>
                   <button (click)="updateBook(item)" ion-button color="primary" icon-start>
                     <ion-icon name="text"></ion-icon>
                     Delete

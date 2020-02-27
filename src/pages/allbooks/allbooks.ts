@@ -1,41 +1,13 @@
-import {
-  Component
-} from '@angular/core';
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  LoadingController
-} from 'ionic-angular';
-import {
-  App
-} from 'ionic-angular';
-import {
-  BarcodeScanner
-} from "@ionic-native/barcode-scanner";
-import {
-  BookdetailsPage
-} from '../bookdetails/bookdetails';
-import {
-  SettingsPage
-} from '../settings/settings';
-import {
-  RestApiProvider
-} from '../../providers/rest-api/rest-api';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { App } from 'ionic-angular';
+import { BarcodeScanner } from "@ionic-native/barcode-scanner";
+import { BookdetailsPage } from '../bookdetails/bookdetails';
+import { SettingsPage } from '../settings/settings';
+import { RestApiProvider } from '../../providers/rest-api/rest-api';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AlertController } from 'ionic-angular';
 
-/**
- * Generated class for the AllbooksPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -195,19 +167,22 @@ export class AllbooksPage {
     this.categories = this.items[0].Categories;
     this.publishers = this.items[0].Publishers;
     this.languages = this.items[0].Languages;
-    // alert('categories :' + JSON.stringify(this.categories));
   }
 
-  getItems(ev) {
-    // Reset items back to all of the items
-    this.initializeItems();
-    // set val to the value of the ev target
+  filterItems(ev) {
     var val = ev.target.value;
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.items = this.items.filter((item) => {
-        return JSON.stringify(item).toLowerCase().includes(val);
+    if (val.trim() !== '') 
+    {
+      this.items = this.items.filter((item) => 
+      {
+        return item.BookName.toLowerCase().indexOf(val.toLowerCase()) > -1 || 
+        item.CategoryName.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+        item.PublisherName.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+        item.AuthorName.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+        item.Language.toLowerCase().indexOf(val.toLowerCase()) > -1;
       });
+    }else{
+      this.initializeItems();
     }
   }
 }

@@ -1,35 +1,14 @@
 <ion-content padding>
   <div *ngIf="ispublisheradd == false">
-      <!-- <ion-list>
-          <ion-item-sliding *ngFor="let item of items" (click)="itemSelected(item)">
-          <ion-item>
-              <h2> {{ item.PublisherName }}</h2>
-          </ion-item>
-          <ion-icon name="arrow-forward"  end></ion-icon>
-          <ion-item-options side="right">
-              <button ion-button color="success" (click)="favorite(item)">Edit</button>
-              <button ion-button color="danger" (click)="share(item)">Delete</button>
-          </ion-item-options>
-          </ion-item-sliding>
-      </ion-list> -->
       <ion-card>
-        <ion-card-header>
-          Explore Publishers
-        </ion-card-header>
-        <ion-list *ngFor="let item of items">
+        <ion-list *ngFor="let item of items[0].Publishers">
             <ion-item-sliding  (click)="itemSelected(item)">
             <ion-item>
-                <button ion-item>
-                  <ion-avatar item-start>
-                    <ion-text-avatar>{{item.PublisherName | slice:0:1}}</ion-text-avatar>
-                  </ion-avatar>
-                    {{ item.PublisherName }}
-                  </button>
+                {{ item.PublisherName }}
             </ion-item>
             <ion-icon name="arrow-forward"  end></ion-icon>
             <ion-item-options side="right">
-                <button ion-button color="success" (click)="favorite(item)">Edit</button>
-                <button ion-button color="danger" (click)="share(item)">Delete</button>
+              <button ion-button color="danger" (click)="deletePublisher(item.PublisherID)">Delete</button>
             </ion-item-options>
             </ion-item-sliding>
         </ion-list>
@@ -37,22 +16,17 @@
   </div>
 
   <div *ngIf="ispublisheradd == true">
-    <form class="list-form">
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="email" placeholder="Publisher..." item-start class="text-primary"></ion-icon>
-          Publisher
-        </ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <button ion-button icon-start block color="dark" tappable (click)="save()">
-          <ion-icon name="save"></ion-icon>
-          Save
-        </button>
-      </ion-item>
-    </form>
+    <ion-card>
+    <ion-item padding>
+      <ion-label color="dark" stacked>Publisher Name</ion-label>
+      <ion-input type="text" [(ngModel)]="publisherName" placeholder="Publisher Name"></ion-input>
+    </ion-item>
+    <ion-item>
+    <button type="submit" ion-button block color="primary" (click)="save()">
+        Save
+      </button>
+    </ion-item>
+  </ion-card>
   </div>
 
   <ion-fab right bottom>

@@ -301,7 +301,7 @@ ion-navbar.no-border {
   background-color: #fff;
   &::after {
     content: "";
-    background: url("../assets/img/bg.jpg") no-repeat;
+    // background: url("../assets/img/bg.jpg") no-repeat;
     background-size: cover;
     top: 0;
     left: 0;

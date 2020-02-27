@@ -1,61 +1,39 @@
 <ion-content padding>
   <div *ngIf="islanguageadd == false">
-      <!-- <ion-list>
-          <ion-item-sliding *ngFor="let item of items" (click)="itemSelected(item)">
+    <ion-card>
+      <ion-list *ngFor="let item of items[0].Languages">
+        <ion-item-sliding (click)="itemSelected(item)">
           <ion-item>
-              <h2> {{ item.LanguageName }}</h2>
+            <button ion-item>
+              {{ item.LanguageName }}
+            </button>
           </ion-item>
-          <ion-icon name="arrow-forward"  end></ion-icon>
+          <ion-icon name="arrow-forward" end></ion-icon>
           <ion-item-options side="right">
-              <button ion-button color="success" (click)="favorite(item)">Edit</button>
-              <button ion-button color="danger" (click)="share(item)">Delete</button>
+            <button ion-button color="danger" (click)="deleteLanguage(item.LanguageID)">Delete</button>
           </ion-item-options>
-          </ion-item-sliding>
-      </ion-list> -->
-      <ion-card>
-        <ion-card-header>
-          Explore Languages
-        </ion-card-header>
-        <ion-list *ngFor="let item of items">
-            <ion-item-sliding  (click)="itemSelected(item)">
-            <ion-item>
-                <button ion-item>
-                    <ion-icon name="cart" item-start></ion-icon>
-                    {{ item.LanguageName }}
-                  </button>
-            </ion-item>
-            <ion-icon name="arrow-forward"  end></ion-icon>
-            <ion-item-options side="right">
-                <button ion-button color="success" (click)="favorite(item)">Edit</button>
-                <button ion-button color="danger" (click)="share(item)">Delete</button>
-            </ion-item-options>
-            </ion-item-sliding>
-        </ion-list>
-      </ion-card>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-card>
   </div>
 
   <div *ngIf="islanguageadd == true">
-    <form class="list-form">
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="email" item-start class="text-primary"></ion-icon>
-          Language
-        </ion-label>
-        <ion-input type="text"></ion-input>
+    <ion-card>
+      <ion-item padding>
+        <ion-label color="dark" stacked>Language Name</ion-label>
+        <ion-input type="text" [(ngModel)]="languageName" placeholder="Language"></ion-input>
       </ion-item>
-
       <ion-item>
-        <button ion-button icon-start block color="dark" tappable (click)="save()">
-          <ion-icon name="save"></ion-icon>
+        <button type="submit" ion-button block color="primary" (click)="save()">
           Save
         </button>
       </ion-item>
-    </form>
+    </ion-card>
   </div>
 
   <ion-fab right bottom>
-      <button (click)="addlanguage()" ion-fab color="light">
-       <ion-icon name="{{iconName}}"></ion-icon>
-      </button>
-    </ion-fab>
+    <button (click)="addlanguage()" ion-fab color="light">
+      <ion-icon name="{{iconName}}"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

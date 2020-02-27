@@ -72,7 +72,7 @@
     <div *ngIf="isclustadd == false && pagetitle == 'Cluster Management'">
       <ion-list-header>List of {{ pagetitle }}</ion-list-header>
       <ion-card class="accordion" *ngFor= "let item of clustrdata"  >
-        <img height="150px" src="../../assets/img/books/ngo1.jpeg" />
+        <img height="150px" src="assets/img/books/ngo1.jpeg" />
         <ion-card-content id="second" style="display: block" (click)="showless();">
           <p style="font-size: 15px;">{{item.ClusterName}}</p>
           <div class="row" style="border-bottom:0px">

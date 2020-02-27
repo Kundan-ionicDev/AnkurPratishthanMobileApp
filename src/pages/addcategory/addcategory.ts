@@ -30,6 +30,7 @@ export class AddcategoryPage {
   iconName: string="add";
   items : any;
   booksdata: any;
+  catName: string;
 
   constructor(
     public api: RestApiProvider,
@@ -61,6 +62,73 @@ export class AddcategoryPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddcategoryPage');
+  }
+
+  getBooksData(){
+    this.api._postAPI("GetBooksData", '').subscribe(res => {
+      let obj = res.GetBooksDataResult;
+      localStorage.removeItem('BooksData');
+      localStorage.setItem('BooksData',JSON.stringify(obj))
+      this.items = JSON.parse(localStorage.getItem('BooksData'));
+    }, (err) => {
+      alert('Error:' + err);
+    });
+  }
+
+  save(){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    if(this.catName.length >0){
+      let params = {
+        "CategoryName":  this.catName,
+        "cmd": "1",
+        "Email": "testign@testing.com"
+      };
+      this.api._postAPI("ManageCategories",params).subscribe(res => {
+        // alert('ManageCategories ::'+ JSON.stringify(res.ManageCategoriesResult));
+        if(res.ManageCategoriesResult.length >0){
+          this.api.presentAlert('Alert!','New Category added sucessfully.');
+          this.getBooksData();
+          loading.dismiss();
+        }else{
+          this.api.presentAlert('Error',res.ManageCategoriesResult.Message)
+          loading.dismiss();
+        }
+      },(err) => {
+          alert('Error:'+err);
+      });
+    }else{
+      this.api.presentAlert('Error','Please provide Category name')
+    }
+    
+  }
+
+  deleteCategory(CatId:any){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    let params =  {
+        "CategoryID":CatId,
+        "CategoryName": "",
+        "cmd": "2",
+        "Email": "testign@testing.com"
+    }
+    this.api._postAPI("ManageCategories",params).subscribe(res => {
+      // alert('ManageCategories ::'+ JSON.stringify(res.ManageCategoriesResult));
+      if(res.ManageCategoriesResult.length >0){
+        this.api.presentAlert('Alert!','Category Deleted sucessfully.');
+        this.getBooksData();
+        loading.dismiss();
+      }else{
+        this.api.presentAlert('Error',res.ManageCategoriesResult.Message)
+        loading.dismiss();
+      }
+    },(err) => {
+        alert('Error:'+err);
+    });
   }
 
   addcategory(){

@@ -1,71 +1,35 @@
 <ion-content padding>
-        <!-- <ion-buttons end>
-            <button ion-button tappable (click)="save()">
-                <ion-icon name="add"></ion-icon>
-                    Add New
-            </button>
-            </ion-buttons> -->
     <div *ngIf="iscatadd == false">
         <ion-card>
-            <ion-card-header>
-              Explore Categories
-            </ion-card-header>
             <ion-list *ngFor="let item of items[0].Categories">
                 <ion-item-sliding  (click)="itemSelected(item)">
                 <ion-item>
                     <button ion-item>
-                        <ion-avatar item-start>
-                            <ion-text-avatar>{{item.CategoryName | slice:0:1}}</ion-text-avatar>
-                          </ion-avatar>
                         {{ item.CategoryName }}
                       </button>
                 </ion-item>
                 <ion-icon name="arrow-forward"  end></ion-icon>
                 <ion-item-options side="right">
-                    <button ion-button color="success" (click)="favorite(item)">Edit</button>
-                    <button ion-button color="danger" (click)="share(item)">Delete</button>
+                    <!-- <button ion-button color="success" (click)="favorite(item)">Edit</button> -->
+                    <button ion-button color="danger" (click)="deleteCategory(item.CategoryID)">Delete</button>
                 </ion-item-options>
                 </ion-item-sliding>
             </ion-list>
-          </ion-card>
-
-
-        <!-- <ion-list>
-            <ion-item-sliding *ngFor="let item of items" (click)="itemSelected(item)">
-            <ion-item>
-            <h2> {{ item.CategoryName }}</h2>
-            </ion-item>
-            <ion-icon name="arrow-forward"  end></ion-icon>
-            <ion-item-options side="right">
-                <button ion-button color="success" (click)="favorite(item)">Edit</button>
-                <button ion-button color="danger" (click)="share(item)">Delete</button>
-            </ion-item-options>
-            </ion-item-sliding>
-        </ion-list> -->
+          </ion-card> 
     </div>
 
     <div *ngIf="iscatadd == true">
-        <form class="list-form" >
-                <ion-item no-padding>
-                    <ion-label color="dark" stacked>Adult 1 Name:</ion-label>
-                    <ion-input type="text" placeholder="Ex. Joe Doe" value=""></ion-input>
-                </ion-item>
-
-            <ion-item>
-            <ion-label floating>
-                <ion-icon name="email" item-start class="text-primary"></ion-icon>
-                Category
-            </ion-label>
-            <ion-input type="text"></ion-input>
-            </ion-item>
-        
-            <ion-item>
-            <button ion-button icon-start block color="dark" tappable (click)="save()">
-                <ion-icon name="save"></ion-icon>
-                Save
-            </button>
-            </ion-item>
-        </form>
+      <ion-card>
+        <ion-item padding>
+            <ion-label color="dark" stacked>Category Name</ion-label>
+            <ion-input type="text" [(ngModel)]="catName" placeholder="Category name"></ion-input>
+        </ion-item>
+        <ion-item>
+        <button type="submit" ion-button block color="primary" (click)="save()">
+            Save
+          </button>
+        </ion-item>
+      </ion-card>
     </div>
       <ion-fab right bottom>
         <button (click)="addcategory()" ion-fab color="light">
