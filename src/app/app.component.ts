@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { Platform, Nav, ToastController,App,AlertController } from "ionic-angular";
+import { Platform, Nav, ToastController,App,AlertController, Events } from "ionic-angular";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from '@ionic-native/keyboard';
@@ -14,6 +14,8 @@ import { ContactusPage } from "../pages/contactus/contactus";
 import { QrcodePage } from "../pages/qrcode/qrcode";
 import { RestApiProvider } from "../providers/rest-api/rest-api";
 import { FCM } from '@ionic-native/fcm';
+// import { NetworkProvider } from "../providers/network/network";
+// import { Network } from "@ionic-native/network/ngx";
 
 
 export interface MenuItem {
@@ -40,12 +42,15 @@ export class MyApp {
   constructor(
     private fcm: FCM,
     public app: App,
+    public events: Events,
+    // public network: Network,
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public keyboard: Keyboard,
     public apiProvider: RestApiProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+   // public networkProvider: NetworkProvider
   ) {
     this.apiProvider.UserRoleId = 1;
     this.initializeApp();
@@ -84,6 +89,18 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      // this.networkProvider.initializeNetworkEvents();
+
+	    //    		// Offline event
+			//     this.events.subscribe('network:offline', () => {
+			//         alert('network:offline ==> '+this.network.type);    
+			//     });
+
+			//     // Online event
+			//     this.events.subscribe('network:online', () => {
+			//         alert('network:online ==> '+this.network.type);        
+      //     });
+          
       // Okay, so the platform is ready and our plugins are available.
       //back button handle
       //Registration of push in Android and Windows Phone
@@ -102,22 +119,21 @@ export class MyApp {
         let nav = this.app.getActiveNavs()[0];
         let activeView = nav.getActive();
         // alert('view.component.name' + activeView.component.name);
-        if (activeView.component.name === "HomePage") {
+        if (activeView.component.name === "HomePage" || activeView.component.name ==="LoginPage") {
           if (nav.canGoBack()) {
             nav.pop();
           } else {
             const alert = this.alertCtrl.create({
-              title: 'Fechar o App',
-              message: 'Você tem certeza?',
+              title: 'Do you want to exit the app?',
+              message: '',
               buttons: [{
-                text: 'Cancelar',
+                text: 'Cancel',
                 role: 'cancel',
                 handler: () => {
                   this.nav.setRoot('HomePage');
-                  console.log('** Saída do App Cancelada! **');
                 }
               }, {
-                text: 'Fechar o App',
+                text: 'OK',
                 handler: () => {
                   this.logout();
                   this.platform.exitApp();

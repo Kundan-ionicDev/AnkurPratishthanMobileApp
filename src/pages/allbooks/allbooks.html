@@ -1,106 +1,136 @@
 <ion-content padding>
-    <div *ngIf="isbookadding == false">
-      <ion-searchbar (ionInput)="filterItems($event)" showCancelButton="always"></ion-searchbar>
-      <ion-list>
-          <div *ngFor="let item of items">
-              <ion-item-sliding>
-                <ion-item>
-                  <ion-thumbnail item-start *ngIf="item.ThumbImage !=''">
-                    <img src="https://ankurpratishthan.com:8443/{{ item.ThumbImage }}">
-                  </ion-thumbnail>
-                  <ion-thumbnail item-start *ngIf="item.ThumbImage ==''" >
-                    <img src="assets/icon/thumbnail.png">
-                  </ion-thumbnail>
-                  <h2>{{ item.BookName }}</h2>
-                  <h3>{{ item.BookDescription }}</h3>
-                  <p>Language : {{ item.Language }}</p>
-                  <p>Author :{{ item.AuthorName }}</p>
-                  <p>Publisher :{{ item.PublisherName }}</p>
-                  <p>Category: {{ item.CategoryName }}</p>
-                </ion-item>
-                <ion-item-options *ngIf="usrRoleId == 1">
-                  <button (click)="bookDetails(item)" ion-button color="secondary" icon-start>
-                    <ion-icon name="edit"></ion-icon>
-                    Edit
-                  </button>
-                  <button (click)="updateBook(item)" ion-button color="primary" icon-start>
-                    <ion-icon name="text"></ion-icon>
-                    Delete
-                  </button>
-                </ion-item-options>
-              </ion-item-sliding>
-          </div>
-        </ion-list>
-    </div>
+  <div *ngIf="isbookadding == false">
+    <ion-searchbar (ionInput)="filterItems($event)" showCancelButton="always"></ion-searchbar>
+    <ion-list>
+      <div *ngFor="let item of items">
+        <ion-item-sliding>
+          <ion-item>
+            <ion-thumbnail item-start *ngIf="item.ThumbImage !=''">
+              <img src="https://ankurpratishthan.com:8443/{{ item.ThumbImage }}">
+            </ion-thumbnail>
+            <ion-thumbnail item-start *ngIf="item.ThumbImage ==''">
+              <img src="assets/icon/thumbnail.png">
+            </ion-thumbnail>
+            <h2>{{ item.BookName }}</h2>
+            <h3>{{ item.BookDescription }}</h3>
+            <p>Language : {{ item.Language }}</p>
+            <p>Author :{{ item.AuthorName }}</p>
+            <p>Publisher :{{ item.PublisherName }}</p>
+            <p>Category: {{ item.CategoryName }}</p>
+          </ion-item>
+          <ion-item-options >
+            <button (click)="bookDetails(item)" *ngIf="usrRoleId == 1" ion-button color="secondary" icon-start>
+              <ion-icon name="create"></ion-icon>
+              Edit
+            </button>
+            <button (click)="deleteBook(item)" *ngIf="usrRoleId == 1" ion-button color="danger" icon-start>
+              <ion-icon name="close"></ion-icon>
+              Delete
+            </button>
+            <button (click)="bookInfo(item)" ion-button color="tertiary" icon-start>
+              <ion-icon name="search"></ion-icon>
+              Details
+            </button>
+          </ion-item-options>
+          <!-- <ion-item-options *ngIf="usrRoleId == 1">
+            <button (click)="bookInfo(item)" ion-button color="primary" icon-start>
+              <ion-icon name="text"></ion-icon>
+              Details
+            </button>
+          </ion-item-options> -->
+        </ion-item-sliding>
+      </div>
+    </ion-list>
+  </div>
 
-    <div *ngIf="isbookadding == true">
-      <form [formGroup]="frmbooks" novalidate (ngSubmit)="addBook(frmbooks)">
-        <ion-item>
-          <ion-label floating>
-            <ion-icon name="email"  item-start class="text-primary"></ion-icon>
-            Book Name
-          </ion-label>
-          <ion-input formControlName="bookname" type="text"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-          <ion-label floating>
-            <ion-icon name="email" item-start class="text-primary"></ion-icon>
-            Author
-          </ion-label>
-          <ion-input formControlName ="author" type="text"></ion-input>
-        </ion-item>
+  <div *ngIf="isbookadding == true">
+    <form [formGroup]="frmbooks" (ngSubmit)="addBook(frmbooks)">
+      <br />
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold"> Book Name</span>
+        <ion-input formControlName="bookname" type="text"></ion-input>
+      </div>
 
-        <ion-item>
-          <ion-label floating>
-            <ion-icon name="email" item-start class="text-primary"></ion-icon>
-            Price
-          </ion-label>
-          <ion-input formControlName="price" type="number"></ion-input>
-        </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold"> Book Description</span>
+        <ion-textarea type="text" formControlName="bookdescription"></ion-textarea>
 
-        <ion-item>
-          <ion-label floating>
-            <ion-icon name="email" item-start class="text-primary"></ion-icon>
-            Quantity
-          </ion-label>
-          <ion-input formControlName="quantity" type="number"></ion-input>
-        </ion-item>
+      </div>
 
-        <ion-item>
-            <ion-label floating>Category</ion-label>
-            <ion-select formControlName="Category">
-              <ion-option *ngFor="let item of categories" [value]="item.CategoryID">{{ item.CategoryName }}</ion-option>
-            </ion-select>
-        </ion-item>
-        
-        <ion-item>
-          <ion-label floating>Publisher</ion-label>
-          <ion-select formControlName="language">
-            <ion-option *ngFor="let item of publishers" [value]="item.PublisherID">{{ item.PublisherName }}</ion-option>
-          </ion-select>
-       </ion-item>
+       <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Author</span>
+        <ion-input formControlName="author" type="text"></ion-input>
+      </div>
 
-        <ion-item>
-            <ion-label floating>Language</ion-label>
-            <ion-select formControlName="language">
-              <ion-option *ngFor="let item of languages" [value]="item.LanguageID">{{ item.LanguageName }}</ion-option>
-            </ion-select>
-        </ion-item>
-      
-        <button type="submit" ion-button block color="primary" [disabled]="frmbooks.invalid">
-          Save
-        </button>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Price</span>
+        <ion-input formControlName="price" type="number"></ion-input>
+      </div>
 
-        <p>Please go to QRCODE screen to get pdf generated and send email to print QR Code Stickers.</p>
-      </form>
-    </div>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Quantity</span>
+        <ion-input formControlName="quantity" type="number"></ion-input>
+      </div>
 
-    
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Category</span>
+        <ion-select formControlName="Category">
+          <ion-option *ngFor="let item of categories" [value]="item.CategoryID">{{ item.CategoryName }}</ion-option>
+        </ion-select>
+      </div>
 
-    <ion-fab right bottom *ngIf="usrRoleId == 1">
-      <button (click)="addbook()" ion-fab color="light">
-        <ion-icon name="{{ iconName }}"></ion-icon>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Publisher</span>
+        <ion-select formControlName="language">
+          <ion-option *ngFor="let item of publishers" [value]="item.PublisherID">{{ item.PublisherName }}</ion-option>
+        </ion-select>
+      </div>
+
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Language</span>
+        <ion-select formControlName="publisher">
+          <ion-option *ngFor="let item of languages" [value]="item.LanguageID">{{ item.LanguageName }}</ion-option>
+        </ion-select>
+      </div>
+
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col (click)="AccessGallery()">
+              <ion-icon name="image" item-start class="text-primary">
+                Gallery
+              </ion-icon>
+            </ion-col>
+            <ion-col (click)="AccessCamera()">
+              <ion-icon name="camera" item-start class="text-primary">
+                Camera
+              </ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center col-12 *ngFor="let photo of photos; let id = index">
+              <ion-card>
+                <ion-icon name="trash" (click)="deletePhoto(id)"></ion-icon>
+                <img height="150px;" [src]="imagePath + photo.Image" *ngIf="photo" />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <button type="submit" ion-button block color="primary" [disabled]="frmbooks.invalid">
+        Save
       </button>
-    </ion-fab>
+
+      <p>Please go to QRCODE screen to get pdf generated and send email to print QR Code Stickers.</p>
+    </form>
+  </div>
+
+
+
+  <ion-fab right bottom *ngIf="usrRoleId == 1">
+    <button (click)="addbook()" ion-fab color="light">
+      <ion-icon name="{{ iconName }}"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

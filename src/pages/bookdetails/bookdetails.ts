@@ -30,16 +30,10 @@ export class BookdetailsPage {
     public navCtrl: NavController, 
     public service: ActivityService,
     public navParams: NavParams) {
-      this.slideimgs = { 
-        "images":
-        ["assets/img/slider/slider1.jpg",
-        "assets/img/slider/slider1.jpg",
-        "assets/img/slider/slider1.jpg",
-        "assets/img/slider/slider1.jpg" 
-      ]};
-
       navParams.get('userProfile');
       this.bookData = navParams.data.bookData;
+      
+      this.slideimgs = [{ "image":this.bookData.ThumbImage },{"image": this.bookData.Image2 }]
       console.log('bookdata', JSON.stringify(this.bookData));
       this.roleId = this.apiProvider.UserRoleId;
       console.log(JSON.stringify(this.slideimgs));
@@ -82,8 +76,11 @@ export class BookdetailsPage {
         "CategoryID": this.bookData.CategoryID,
         "LanguageID": this.bookData.LanguageID,
         "PublisherID": this.bookData.PublisherID,
-        "BookID": this.bookData.BookID
+        "BookID": this.bookData.BookID,
+        "ThumbImg64": this.slideimgs[0].Image,
+        "Img1":this.slideimgs[1].Image
       };
+      alert('params' + JSON.stringify(params));
       this.apiProvider._postAPI("ManageBooks", params).subscribe(res => {
         // Manage Books Data
         // alert('Manage Books Data ::'+ JSON.stringify(res.ManageBooksResult));

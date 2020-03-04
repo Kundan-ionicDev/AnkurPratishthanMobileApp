@@ -74,10 +74,16 @@ export class HomePage {
         showFlipCameraButton: true
       };
       this.checkdata = JSON.parse(localStorage.getItem('UserLogin'));
-
+    }
+    
+  openPage(page, title) {
+    // alert('page'+ title);
+    this.apiProvider._selectedtitle = title;
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.push(page.component);
   }
   
- 
   scanCode() {
     this.barcodeScanner
       .scan()
@@ -87,7 +93,7 @@ export class HomePage {
       })
       .catch(err => {
         console.log("Error", err);
-      });
+    });
   }
  
   encodedText(){
@@ -226,7 +232,7 @@ export class HomePage {
   presentNotifications(myEvent) {
     console.log(myEvent);
     let popover = this.popoverCtrl.create(NotificationsPage);
-    popover.present({
+       popover.present({
       ev: myEvent
     });
   }

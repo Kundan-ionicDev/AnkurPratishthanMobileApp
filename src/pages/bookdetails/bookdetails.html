@@ -11,15 +11,12 @@
 <ion-content class="common-bg">
     <!--slides-->
     <ion-slides class="to-top" pager>
-      <ion-slide *ngFor="let image of slideimgs.images">
-        <img [src]="image" alt="">
+      <ion-slide *ngFor="let item of slideimgs">
+        <img height="150px" src="https://ankurpratishthan.com:8443/{{item.image}}" alt="">
       </ion-slide>
     </ion-slides>
-  
-
         <div class="border-bottom" padding>
           <form [formGroup]="frmbooks" novalidate (ngSubmit)="updateBook()">
-          
             <ion-list>
                 <ion-item>
                   <ion-label>Title :</ion-label>
@@ -41,14 +38,6 @@
                     <ion-label>Author :</ion-label> 
                     <ion-input type="text" formControlName="bookauthor" value="{{ bookData.AuthorName }}"></ion-input>
                 </ion-item>
-                <!-- <ion-item>
-                    <ion-label>Page count :</ion-label> 
-                    <ion-input type="text" formControlName="bookname" value="{{ bookData.Pagecount }}"></ion-input>
-                </ion-item> -->
-               <!-- <ion-item>
-                  <ion-label>Book Liked :</ion-label> 
-                  <ion-input type="text" formControlName="bookname" value="{{ bookData.booksliked }}"></ion-input>
-                </ion-item> -->
               <ion-item *ngIf="roleId == 1">
                   <ion-label>Price :</ion-label> 
                   <ion-input type="text" formControlName="bookprice" value="{{ bookData.Price }}"></ion-input>
@@ -67,15 +56,7 @@
                   <ion-label>Sold :</ion-label> 
                   <ion-input type="text" formControlName="booksold" value="{{ bookData.sold }}"></ion-input>
              </ion-item>
-             <!-- <ion-item text-center> 
-                <ion-icon style="font-size: 3.2em;" name="thumbs-down"></ion-icon>&nbsp;
-                <ion-icon style="font-size: 3.2em;" name="thumbs-up"></ion-icon>
-          </ion-item> -->
           <ion-item text-center *ngIf="roleId == 1">
-              <!-- <button ion-button color="light">
-                  <ion-icon (click)="editBook()" name="ios-more"></ion-icon>
-                  Update
-                </button> -->
                 <button ion-button block color="primary" (click)="editBook()">
                   Update Book
                 </button>

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AlertController, LoadingController } from 'ionic-angular';
+import { Network } from '@ionic-native/network/ngx';
 
 @Injectable()
 export class RestApiProvider {
@@ -39,15 +40,15 @@ export class RestApiProvider {
   };
 
   public booksData :any;
-
-  // public _apiURL = "http://ec2-3-6-173-252.ap-south-1.compute.amazonaws.com/APService.svc/";
   public _apiURL ="https://ankurpratishthan.com:8443/APService.svc/";
-  // public _apiURL = "https://admin-abe-dev.squarepanda.com/admin/v1/";
   constructor(
     private http: HttpClient,
     private alertCtrl: AlertController,
-    public loadingCtrl: LoadingController
-  ) { }
+    public loadingCtrl: LoadingController,
+    private network: Network
+  ) { 
+        
+  }
  
   // Calling POST Method's 
   _postAPI(methodname:string, params: any): Observable<any> {
@@ -79,7 +80,7 @@ export class RestApiProvider {
       //   'Status':error.status,
       //   'statusText':error.statusText
       // };
-      // this.presentAlert('Error', error.status + ' '+ error.statusText)
+      this.presentAlert('Error', error.status + ' '+ error.statusText)
       // localStorage.setItem('HttpResponse',JSON.stringify(errormsg));
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
@@ -92,13 +93,15 @@ export class RestApiProvider {
   /** Log a Service message with the MessageService */
   private log(message: string) {
     console.log(message);
+    // this.presentAlert('API Error', message);
   }
 
   presentAlert(title,subtitle) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: subtitle,
-      buttons: ['OK']
+      buttons: ['OK'],
+      enableBackdropDismiss : false
     });
     alert.present();
   }

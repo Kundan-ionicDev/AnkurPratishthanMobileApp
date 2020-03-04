@@ -18,6 +18,18 @@ export class RegisterPage {
     this.nav.setRoot(HomePage);
   }
 
+  otpController(event,next,prev){
+    if(event.target.value.length < 1 && prev){
+      prev.setFocus()
+    }
+    else if(next && event.target.value.length>0){
+      next.setFocus();
+    }
+    else {
+     return 0;
+    }
+  } 
+
   // go to login page
   login() {
     this.nav.setRoot(LoginPage);

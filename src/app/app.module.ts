@@ -36,7 +36,15 @@ import { BookdetailsPage } from "../pages/bookdetails/bookdetails";
 import { ManageOrphanedetailsPage } from "../pages/manage-orphanedetails/manage-orphanedetails";
 import { FCM } from '@ionic-native/fcm';
 import { Device } from '@ionic-native/device';
-
+import { Network } from '@ionic-native/network/ngx';
+import { NgOtpInputModule } from  'ng-otp-input';
+import { MemberdetailsPage } from "../pages/memberdetails/memberdetails";
+import { CallNumber } from '@ionic-native/call-number';
+import { Contacts, Contact, ContactField, ContactName, ContactFindOptions, ContactFieldType } from '@ionic-native/contacts';
+import { LibrariandetailsPage } from "../pages/librariandetails/librariandetails";
+import { DatePicker } from '@ionic-native/date-picker';
+// import { NetworkProvider } from '../providers/network/network';
+import { BookinfoPage } from "../pages/bookinfo/bookinfo";
 
 @NgModule({
   declarations: [
@@ -58,13 +66,17 @@ import { Device } from '@ionic-native/device';
     IonTextAvatar,
     ContactusPage,
     ManageOrphanedetailsPage,
-    BookdetailsPage
+    MemberdetailsPage,
+    BookdetailsPage,
+    LibrariandetailsPage,
+    BookinfoPage
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    
     SuperTabsModule.forRoot(),
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
@@ -75,13 +87,16 @@ import { Device } from '@ionic-native/device';
     IonicStorageModule.forRoot({
       name: '__ionic3_start_theme',
         driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    NgOtpInputModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     QrcodePage,
     SettingsPage,
+    BookinfoPage,
     CheckoutTripPage,
     HomePage,
     LoginPage,
@@ -97,7 +112,10 @@ import { Device } from '@ionic-native/device';
     FaqsPage,
     BookdetailsPage,
     ManageOrphanedetailsPage,
-    ContactusPage
+    MemberdetailsPage,
+    ContactusPage,
+    LibrariandetailsPage
+    
   ],
   providers: [
     StatusBar,
@@ -110,7 +128,12 @@ import { Device } from '@ionic-native/device';
     FingerprintAIO,
     RestApiProvider,
     FCM,
-    Device
+    Device,
+    Network,
+    CallNumber,
+    Contacts,
+    DatePicker,
+    // NetworkProvider
   ]
 })
 

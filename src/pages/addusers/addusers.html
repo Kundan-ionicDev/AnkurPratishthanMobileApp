@@ -1,428 +1,393 @@
 <ion-header>
   <ion-navbar color="primary">
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>{{ pagetitle }} </ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ pagetitle }} </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-    <div *ngIf="isclustadd == false && pagetitle == 'Librarian Management'">
-      <ion-list>
-          <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-          <ion-item-sliding *ngFor="let item of librariabdata">
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/icon/thumbnail.png">
-              </ion-thumbnail>
-            <ion-label>
-              <h3>{{ item.LibrarianName}}</h3>
-              <p><b>Address:</b> {{ item.Address }}</p>
-              <p><b>Phone:</b>{{ item.MobileNo }}</p>
-              <p><b>Email Id :</b>{{ item.EmailID }}</p>
-              <p><b>Cluster Name :</b> {{ item.ClusterName }}</p>
-            </ion-label>
-          </ion-item>
-          <ion-item-options>
-              <button ion-button color="light" icon-start>
-                <ion-icon name="ios-more"></ion-icon>
-                Edit
-              </button>
-              <button ion-button color="primary" icon-start>
-                <ion-icon name="text"></ion-icon>
-                Delete
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-    </div>
-
-    <div *ngIf="isclustadd == false && pagetitle == 'Member Management'">
-        <ion-list>
-            <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-            <ion-item-sliding *ngFor="let item of memberdata">
-            <ion-item>
-              <ion-thumbnail item-start>
-                <img src="assets/icon/thumbnail.png">
-                </ion-thumbnail>
-              <ion-label>
-                <h3>{{ item.MemberName}}</h3>
-                <p><b>Address:</b> {{ item.Address }}</p>
-                <p><b>Phone:</b>{{ item.MobileNo }}</p>
-                <p><b>Email Id :</b>{{ item.EmailID }}</p>
-                <p><b>Cluster Name :</b> {{ item.ClusterName }}</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options>
-                <button ion-button color="light" icon-start>
-                  <ion-icon name="ios-more"></ion-icon>
-                  Edit
-                </button>
-                <button ion-button color="primary" icon-start>
-                  <ion-icon name="text"></ion-icon>
-                  Delete
-                </button>
-              </ion-item-options>
-            </ion-item-sliding>
-          </ion-list>
-    </div>
-
-    <div *ngIf="isclustadd == false && pagetitle == 'Cluster Management'">
+  <div *ngIf="isclustadd == false && pagetitle == 'Librarian Management'">
+    <ion-searchbar (ionInput)="filterlibrarian($event)" showCancelButton="always"></ion-searchbar>
+    <ion-list>
       <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-      <ion-card class="accordion" *ngFor= "let item of clustrdata"  >
-        <img height="150px" src="assets/img/books/ngo1.jpeg" />
-        <ion-card-content id="second" style="display: block" (click)="showless();">
-          <p style="font-size: 15px;">{{item.ClusterName}}</p>
-          <div class="row" style="border-bottom:0px">
-            <div class="col" style="font-size: 15px">
-              <ion-icon name="call-outline"></ion-icon> &nbsp;
-              {{item.MobileNo}}
-            </div>
-            <!-- <div class="col" style="padding-top: 20px"><hr></div> -->
-            <div class="col" style="text-align: right;font-size: 15px"><b>Cluster Code:</b>{{ item.ClusterCode}}</div>
+      <ion-item-sliding *ngFor="let item of librariabdata">
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img height="150px" src="https://ankurpratishthan.com:8443{{ item.Image }}" />
+          </ion-thumbnail>
+          <ion-label>
+            <h3>{{ item.FirstName }} {{ item.LastName }} </h3>
+            <p (click)="openGooglemap(item.Address,item.LibrarianName)"><b>Address:</b> {{ item.Address }}</p>
+            <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.MobileNo }}</p>
+            <p>DOB : {{ item.DOB }}</p>
+            <p><b>Email Id :</b>{{ item.EmailID }}</p>
+            <!-- <p><b>Cluster Name :</b> {{ item.ClusterName }}</p> -->
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <button (click)="editlibrarian(item)" ion-button color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+            Edit
+          </button>
+          <button (click)="confirmDelete(item,2)"  ion-button color="primary" icon-start>
+            <ion-icon name="text"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+  <div *ngIf="isclustadd == false && pagetitle == 'Member Management'">
+    <ion-searchbar (ionInput)="filtermember($event)" showCancelButton="always"></ion-searchbar>
+    <ion-list>
+      <ion-list-header>List of {{ pagetitle }}</ion-list-header>
+      <ion-item-sliding *ngFor="let item of memberdata">
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img height="150px" src="https://ankurpratishthan.com:8443{{ item.Image }}" />
+          </ion-thumbnail>
+          <ion-label>
+            <h3>{{ item.FirstName }} {{ item.LastName }}</h3>
+            <p (click)="openGooglemap(item.Address,item.MemberName)"><b>Address:</b> {{ item.Address }}</p>
+            <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.MobileNo }}</p>
+            <p><b>Email Id :</b>{{ item.EmailID }}</p>
+            <p><b>Cluster Name :</b> {{ item.ClusterName }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button (click)="editmember(item)" color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+            Edit
+          </button>
+          <button (click)="confirmDelete(item,4)" ion-button color="primary" icon-start>
+            <ion-icon name="text"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+  <div *ngIf="isclustadd == false && pagetitle == 'Cluster Management'">
+    <ion-searchbar (ionInput)="filtercluster($event)" showCancelButton="always"></ion-searchbar>
+    <ion-list-header>List of {{ pagetitle }}</ion-list-header>
+    <ion-card class="accordion" *ngFor="let item of clustrdata">
+       <ion-thumbnail item-start>
+        <img height="150px" src="https://ankurpratishthan.com:8443{{ item.Image }}" />
+      </ion-thumbnail>
+      
+      <ion-card-content id="second" style="display: block">
+        <p style="font-size: 15px;">{{item.ClusterName}}</p>
+        <div class="row" style="border-bottom:0px">
+          <div  (click)="confirmDailNumber(item.MobileNo)" class="col" style="font-size: 15px">
+            <ion-icon name="call-outline"></ion-icon> &nbsp;
+            {{item.MobileNo}}
           </div>
-          <label style="padding-left:0px;color: #008000">{{item.Address}}</label>
-          <!-- <div class="col" style="padding-top: 20px"><hr></div> -->
-          <!-- <label>Details</label><br> -->
-          <!-- <div class="row" style="border-bottom:0px"> -->
-            <!-- <div class="col">Members</div> -->
-            <!-- <div class="col" style="text-align: center">ClusterID</div> -->
-            <!-- <div class="col" style="text-align: right">Active</div> -->
-          <!-- </div> -->
-          <!-- <div class="row" style="border-bottom:0px">
-            <div class="col" style="font-size: 15px">{{ item.Members }}</div>
-            <div class="col" style="font-size: 15px;text-align: center">{{ item.ClusterID }}</div>
-            <div class="col" style="text-align: right;font-size: 15px">Yes</div>
-          </div> -->
-          <div class="col"><hr></div>
-          <!-- <label>Details</label><br> -->
-          <div class="row" style="border-bottom:0px">
-            <div class="col"><b>Librarian Name</b></div>
-            <div class="col" style="text-align: center"><b>Members</b></div>
-            <div class="col" style="text-align: right"><b>ClusterID</b></div>
-          </div>
-          <div class="row" style="border-bottom:0px">
-            <div class="col" style="font-size: 15px">{{ item.ClusterName }}</div>
-            <div class="col" style="font-size: 15px;text-align: center">{{ item.Members }}</div>
-            <div class="col" style="text-align: right;font-size: 15px">{{ item.ClusterID }}</div>
-          </div>
-          <div class="col"><hr></div>
-          <!-- <div class="row" style="border-bottom:0px">
-            <button ion-button block color="success" type="submit">
+          <div class="col" style="text-align: right;font-size: 15px"><b>Cluster Code:</b>{{ item.ClusterCode}}</div>
+        </div>
+        <label style="padding-left:0px;color: #008000" (click)="openGooglemap(item.Address,item.ClusterName)">{{item.Address}}</label>
+        <div class="col">
+          <hr>
+        </div>
+        <div class="row" style="border-bottom:0px">
+          <div class="col"><b>Librarian Name</b></div>
+          <div class="col" style="text-align: center"><b>Members</b></div>
+          <div class="col" style="text-align: right"><b>ClusterID</b></div>
+        </div>
+        <div class="row" style="border-bottom:0px">
+          <div class="col" style="font-size: 15px">{{ item.ClusterName }}</div>
+          <div class="col" style="font-size: 15px;text-align: center">{{ item.Members }}</div>
+          <div class="col" style="text-align: right;font-size: 15px">{{ item.ClusterID }}</div>
+        </div>
+        <div class="col">
+          <hr>
+        </div>
+        <div class="row" style="border-bottom:0px">
+          <div class="col" style="font-size: 15px">
+            <button ion-button block color="success" (click)="confirmDelete(item,3)" type="submit">
               Delete
             </button>
-            <button ion-button block color="dark" type="submit">
+          </div>
+          <div class="col" style="text-align: right;font-size: 15px">
+            <button (click)="editCluster(item)" ion-button block color="dark" type="submit">
               Edit
             </button>
-          </div> -->
-
-          <div class="row" style="border-bottom:0px">
-            <div class="col" style="font-size: 15px">
-              <button ion-button block color="success" type="submit">
-                Delete
-              </button>
-            </div>
-            <div class="col" style="text-align: right;font-size: 15px">
-              <button ion-button block color="dark" type="submit">
-                Edit
-              </button>
-            </div>
           </div>
-        </ion-card-content>
-      </ion-card>
-        <!-- <ion-list>
-            <ion-list-header>List of {{ pagetitle }}</ion-list-header>
-            <ion-item-sliding *ngFor="let item of clustrdata" (click)="detailSelected(item)">
-            <ion-item>
-              <ion-thumbnail item-start>
-                <img src="assets/icon/thumbnail.png">
-                </ion-thumbnail>
-              <ion-label>
-                <h3>{{ item.ClusterName}}</h3>
-                <p><b>Address:</b> {{ item.Address }}</p>
-                <p><b>Phone:</b>{{ item.MobileNo }}</p>
-                <p><b>Members :</b>{{ item.Members }}</p>
-                <p><b>Libririan :</b> {{ item.Librarian }}</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options>
-                <button ion-button color="light" icon-start>
-                  <ion-icon name="ios-more"></ion-icon>
-                  Edit
-                </button>
-                <button ion-button color="primary" icon-start>
-                  <ion-icon name="text"></ion-icon>
-                  Delete
-                </button>
-              </ion-item-options>
-            </ion-item-sliding>
-          </ion-list> -->
-    </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-    <!-- Add New Cluster-->
-    <div *ngIf="isclustadd == true  && pagetitle == 'Cluster Management'">
-        <form class="list-form" [formGroup]="clusteradd" (ngSubmit)="register(1)"> 
-            <ion-item>
-              <ion-label floating>
-                <ion-icon name="person" item-start class="text-primary"></ion-icon>
-                Full Name
-              </ion-label>
-              <ion-input type="text" formControlName="fullname" ></ion-input>
-            </ion-item>
-        
-            <ion-item>
-              <ion-label floating>
-                <ion-icon name="mail" item-start class="text-primary"></ion-icon>
-                  Email
-              </ion-label>
-              <ion-input type="email" formControlName="emailaddress" ></ion-input>
-            </ion-item>
+  <!-- Add New Cluster-->
+  <div *ngIf="isclustadd == true  && pagetitle == 'Cluster Management'">
+    <!-- <p>Add New Cluster</p> -->
+    <form class="list-form" [formGroup]="clusteradd" (ngSubmit)="register(1)">
+      
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Cluster Name</span>
+        <ion-input type="text" formControlName="fullname"></ion-input>
+      </div>
+    <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Cluster Code</span>
+        <ion-input type="text" formControlName="clustercode"></ion-input>
+      </div>
+    <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Email</span>
+        <ion-input type="email" formControlName="emailaddress"></ion-input>
+      </div>
 
-            <ion-item>
-                <ion-label floating>
-                  <ion-icon name="compass" item-start class="text-primary"></ion-icon>
-                  Address
-                </ion-label>
-                <ion-textarea type="text" formControlName="address" ></ion-textarea>
-              </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Address</span>
+        <ion-textarea type="text" formControlName="address"></ion-textarea>
+      </div>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Mobile Number</span>
+        <ion-textarea type="tel" formControlName="mobilenumber"></ion-textarea>
+      </div>
 
-              <ion-item>
-                  <ion-label floating>
-                    <ion-icon name="code" item-start class="text-primary"></ion-icon>
-                    Cluster Code
-                  </ion-label>
-                  <ion-input type="text" formControlName="clustercode" ></ion-input>
-                </ion-item>
+     
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Assign Librarian</span>
+        <ion-select formControlName="librarianId">
+          <ion-option *ngFor="let item of librariabdata;" value="{{ item.LibrarianID }}">{{ item.FirstName }} {{ item.LastName }}
+          </ion-option>
+        </ion-select>
+      </div>
 
-            <ion-item>
-              <ion-label floating>
-                <ion-icon name="call" item-start class="text-primary"></ion-icon>
-                Mobile Number
-              </ion-label>
-              <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
-            </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Members</span>
+        <ion-input type="tel" formControlName="members"></ion-input>
+      </div>
 
-            <ion-item>
-              <ion-label floating>
-                <ion-icon name="call" item-start class="text-primary"></ion-icon>
-                Members
-              </ion-label>
-              <ion-input type="tel" formControlName="members" ></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col (click)="AccessGallery()">
+              <ion-icon name="image" item-start class="text-primary">
+                Gallery
+              </ion-icon>
+            </ion-col>
+            <ion-col (click)="AccessCamera()">
+              <ion-icon name="camera" item-start class="text-primary">
+                Camera
+              </ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center col-12 *ngFor="let photo of photos; let id = index">
+              <ion-card>
+                <ion-icon name="trash" (click)="deletePhoto(id)"></ion-icon>
+                <!-- <img height="150px;" [src]="photo.Image" *ngIf="photo" /> -->
+                <img height="150px;" [src]="imagePath + photo.Image" *ngIf="photo" />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      
+      <div class="row" style="border-bottom:0px">
+        <div class="col" style="font-size: 15px">
+          <button ion-button block color="success" type="submit">
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- End of Cluster adding -->
 
-            <ion-item>
-                <ion-label floating>Assign Librarian</ion-label>
-                <ion-select formControlName="librarianId">
-                  <ion-option value="e">Udhav</ion-option>
-                  <ion-option value="m">Kundan</ion-option>
-                  <ion-option value="h">Pranav</ion-option>
-                  <ion-option value="g">Devika</ion-option>
-                  <ion-option value="u">Hiren</ion-option>
-                </ion-select>
-            </ion-item>
+  <!-- Add new Librarian -->
+  <div *ngIf="isclustadd == true  && pagetitle == 'Librarian Management'">
+    <!-- <button ion-button (click)="scanQR()">Scan</button>
+    or else Enter details manually -->
+    <form class="list-form" [formGroup]="librariadd" (ngSubmit)="register(2)">
+      <p color="dark" style="font-size: 15px;" stacked>Add New Librarian</p>
+       <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">First Name</span>
+        <ion-textarea type="text" formControlName="firstname"></ion-textarea>
+      </div>
 
-            <ion-item>
-                <ion-grid>
-                  <ion-row>
-                      <ion-col (click)="AccessGallery()">
-                            <ion-icon name="image" item-start class="text-primary">
-                              Gallery
-                            </ion-icon>
-                      </ion-col> 
-                      <ion-col (click)="AccessCamera()">
-                        <ion-icon name="camera" item-start class="text-primary">
-                          Camera
-                        </ion-icon>
-                      </ion-col>
-                  </ion-row>
-                      <ion-row>
-                          <ion-col text-center col-6 *ngFor="let photo of photos; let id = index">
-                              <ion-card >
-                                <ion-icon name="trash" (click)="deletePhoto(id)"></ion-icon>
-                                <img [src]="photo" *ngIf="photo" />
-                            </ion-card>
-                        </ion-col>
-                    </ion-row>
-                  </ion-grid>
-            </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Last Name</span>
+        <ion-textarea type="text" formControlName="lastname"></ion-textarea>
+      </div>
 
-          <div margin-top>
-              <button ion-button block color="dark" type="submit">
-                Save
-              </button>
-          
-              <p text-center ion-text color="secondary">Clear</p>
-            </div>
-          </form>
-    </div>
-    <!-- End of Cluster adding -->
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Address</span>
+        <ion-textarea type="text" formControlName="address" rows="6" cols="20"></ion-textarea>
+      </div>
 
-    <!-- Add new Librarian -->
-    <div *ngIf="isclustadd == true  && pagetitle == 'Librarian Management'">
-        <button ion-button (click)="scanQR()">Scan</button>
-        or else Enter details manually
-        <form class="list-form" [formGroup]="librariadd" (ngSubmit)="register(2)"> 
-            <ion-item>
-              <ion-label floating>
-                <ion-icon name="person" item-start class="text-primary"></ion-icon>
-                Full Name
-              </ion-label>
-              <ion-input type="text" formControlName="fullname" ></ion-input>
-            </ion-item>
-        
-            <ion-item>
-                <ion-label floating>
-                  <ion-icon name="compass" item-start class="text-primary"></ion-icon>
-                  Address
-                </ion-label>
-                <ion-textarea type="text" formControlName="address" rows="6" cols="20"></ion-textarea>
-              </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Email</span>
+        <ion-textarea type="text" formControlName="emailaddress"></ion-textarea>
+      </div>
 
-              <ion-item>
-                  <ion-label floating>
-                    <ion-icon name="mail" item-start class="text-primary"></ion-icon>
-                      Email
-                  </ion-label>
-                  <ion-input type="email" formControlName="emailaddress" ></ion-input>
-                </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Mobile Number</span>
+        <ion-textarea type="text" formControlName="mobilenumber"></ion-textarea>
+      </div>
 
-              <ion-item>
-                  <ion-label floating>
-                    <ion-icon name="call" item-start class="text-primary"></ion-icon>
-                    Mobile Number
-                  </ion-label>
-                  <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
-                </ion-item>
+      <!-- <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Alternate Mobile Number</span>
+        <ion-textarea type="text" formControlName="alternatenumber"></ion-textarea>
+      </div> -->
 
-              <ion-item>
-                  <ion-label floating>
-                    <ion-icon name="call" item-start class="text-primary"></ion-icon>
-                    Alternate Mobile Number
-                  </ion-label>
-                  <ion-input type="tel" formControlName="alternatenumber" ></ion-input>
-                </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Date of Birth</span>
+        <!-- <ion-textarea type="date" formControlName="dateofbirth"></ion-textarea> -->
+        <ion-datetime displayFormat="MMM/DD/YYYY" pickerFormat="YYYY-DD-MMM" formControlName="dateofbirth"></ion-datetime>
+      </div>
+      
 
-            
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Assign Cluster</span>
+        <ion-select formControlName="clusterId">
+          <ion-option *ngFor="let item of clustrdata;" value="{{ item.ClusterID }}">{{ item.ClusterName }}
+          </ion-option>
+        </ion-select>
+      </div>
 
-              <ion-item>
-                  <ion-label floating>
-                    <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
-                   Date of Birth
-                  </ion-label>
-                  <ion-input type="text" formControlName="dateofbirth" ></ion-input>
-                </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col (click)="AccessGallery()">
+              <ion-icon name="image" item-start class="text-primary">
+                Gallery
+              </ion-icon>
+            </ion-col>
+            <ion-col (click)="AccessCamera()">
+              <ion-icon name="camera" item-start class="text-primary">
+                Camera
+              </ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center col-12 *ngFor="let photo of photos; let id = index">
+              <ion-card>
+                <ion-icon name="trash" (click)="deletePhoto(id)"></ion-icon>
+                <img height="150px;" [src]="imagePath + photo.Image" *ngIf="photo" />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
 
-            
-                <ion-item>
-                  <ion-label floating>
-                    <ion-icon name="at" item-start class="text-primary"></ion-icon>
-                    UID
-                  </ion-label>
-                  <ion-input type="tel" formControlName="uid" ></ion-input>
-                </ion-item>
-
-            <ion-item>
-                <ion-label floating>Assign Cluster</ion-label>
-                <ion-select multiple="true">
-                  <ion-option value="e">Sneha Sadan Orphanage Vinayalaya</ion-option>
-                  <ion-option value="m">Sneha Sadan</ion-option>
-                  <ion-option value="h">Home For The Aged</ion-option>
-                  <ion-option value="g">Sishu Bhavan</ion-option>
-                </ion-select>
-            </ion-item>
-
-          <div margin-top>
-              <button ion-button block color="dark" type="submit">
-                Save
-              </button>
-          
-              <p text-center ion-text color="secondary">Clear</p>
-            </div>
-          </form>
-    </div>
+      <div class="row" style="border-bottom:0px">
+        <div class="col" style="font-size: 15px">
+          <button ion-button block color="success" type="submit">
+            Save
+          </button>
+        </div>
+        <div class="col" style="text-align: right;font-size: 15px">
+          <button (click)="clearData()" ion-button block color="dark" type="submit">
+            Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
   <!-- End of Librarian adding -->
 
   <!-- Add New Member -->
   <div *ngIf="isclustadd == true  && pagetitle == 'Member Management'">
-      <form class="list-form" [formGroup]="memberadd" (ngSubmit)="register(3)"> 
-          <ion-item>
-            <ion-label floating>
-              <ion-icon name="person" item-start class="text-primary"></ion-icon>
-              Full Name
-            </ion-label>
-            <ion-input type="text" formControlName="fullname" ></ion-input>
-          </ion-item>
+    <button (click)="getContacts()"  ion-button icon-start>
+      <ion-icon name="contact"></ion-icon>
+      Add from Contact
+    </button>
+
+    <form class="list-form" [formGroup]="memberadd" (ngSubmit)="register(3)">
+      <p color="dark" style="font-size: 15px;" stacked>Add New Member</p>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">First Name</span>
+        <ion-input type="text" [(ngModel)]="name" formControlName="firstname"></ion-input>
+      </div>
+
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Last Name</span>
+        <ion-input type="text" formControlName="lastname"></ion-input>
+      </div>
+
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Address</span>
+        <ion-textarea type="text" formControlName="address"></ion-textarea>
+      </div>
       
-          <ion-item>
-              <ion-label floating>
-                <ion-icon name="compass" item-start class="text-primary"></ion-icon>
-                Address
-              </ion-label>
-              <ion-textarea type="text" formControlName="address" ></ion-textarea>
-            </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Email</span>
+        <ion-input type="email" [(ngModel)]="email" formControlName="emailaddress"></ion-input>
+      </div>
 
-            <ion-item>
-                <ion-label floating>
-                  <ion-icon name="mail" item-start class="text-primary"></ion-icon>
-                    Email
-                </ion-label>
-                <ion-input type="email" formControlName="emailaddress" ></ion-input>
-              </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Mobile Number</span>
+        <ion-input type="tel" [(ngModel)]="mobile" formControlName="mobilenumber"></ion-input>
+      </div>
 
-            <ion-item>
-                <ion-label floating>
-                  <ion-icon name="call" item-start class="text-primary"></ion-icon>
-                  Mobile Number
-                </ion-label>
-                <ion-input type="tel" formControlName="mobilenumber" ></ion-input>
-              </ion-item>
+      <!-- <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Alternate Mobile Number</span>
+        <ion-input type="tel" formControlName="alternatenumber"></ion-input>
+      </div> -->
+      
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Date of Birth</span>
+        <ion-datetime displayFormat="MMM/DD/YYYY" pickerFormat="YYYY-DD-MMM" formControlName="dateofbirth"></ion-datetime>
+      </div>
 
-          <ion-item>
-                <ion-label floating>
-                  <ion-icon name="call" item-start class="text-primary"></ion-icon>
-                  Alternate Mobile Number
-                </ion-label>
-                <ion-input type="tel" formControlName="alternatenumber" ></ion-input>
-              </ion-item>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Assign Cluster</span>
+        <ion-select formControlName="clusterid">
+          <ion-option *ngFor="let item of clustrdata;" value="{{ item.ClusterID }}">{{ item.ClusterName }}
+          </ion-option>
+        </ion-select>
+      </div>
 
-          
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col (click)="AccessGallery()">
+              <ion-icon name="image" item-start class="text-primary">
+                Gallery
+              </ion-icon>
+            </ion-col>
+            <ion-col (click)="AccessCamera()">
+              <ion-icon name="camera" item-start class="text-primary">
+                Camera
+              </ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center col-12 *ngFor="let photo of photos; let id = index">
+              <ion-card>
+                <ion-icon name="trash" (click)="deletePhoto(id)"></ion-icon>
+                <img height="150px;" [src]="imagePath +  photo.Image" *ngIf="photo" />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
 
-            <ion-item>
-                <ion-label floating>
-                  <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
-                 Date of Birth
-                </ion-label>
-                <ion-input type="date" formControlName="dateofbirth" ></ion-input>
-              </ion-item>
-
-          
-
-          <ion-item *ngIf="roleId == 0 ">
-              <ion-label floating>Assign Cluster</ion-label>
-              <ion-select>
-                <ion-option value="e">Sneha Sadan Orphanage Vinayalaya</ion-option>
-                <ion-option value="m">Sneha Sadan</ion-option>
-                <ion-option value="h">Home For The Aged</ion-option>
-                <ion-option value="g">Sishu Bhavan</ion-option>
-              </ion-select>
-          </ion-item>
-
-        <div margin-top>
-            <button ion-button block color="dark" type="submit">
-              Save
-            </button>
-        
-            <p text-center ion-text color="secondary">Clear</p>
-          </div>
-        </form>
+      <div class="row" style="border-bottom:0px">
+        <div class="col" style="font-size: 15px">
+          <button ion-button block color="success" type="submit">
+            Save
+          </button>
+        </div>
+        <div class="col" style="text-align: right;font-size: 15px">
+          <button (click)="clearData()"  ion-button block color="dark" type="submit">
+            Clear
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
   <!-- End of Adding New Member-->
-  
+
   <ion-fab right bottom>
-      <button (click)="addcategory()" ion-fab color="light">
-          <ion-icon name="{{ iconName }}"></ion-icon>
-      </button>
-    </ion-fab>
+    <button (click)="addcategory()" ion-fab color="light">
+      <ion-icon name="{{ iconName }}"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

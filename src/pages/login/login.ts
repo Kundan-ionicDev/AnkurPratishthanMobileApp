@@ -49,6 +49,8 @@ export class LoginPage {
     this.nav.setRoot(RegisterPage);
   }
 
+
+
   // login and go to home page
   async login(userdata) {
     let loading = this.loadingCtrl.create({
@@ -140,6 +142,7 @@ export class LoginPage {
       alert('Invalid');
     }
   }
+  
     
   forgotPass() {
     let forgot = this.forgotCtrl.create({
@@ -173,7 +176,9 @@ export class LoginPage {
               showCloseButton: true
             });
             toast.present();
+            this.register();
           }
+          
         }
       ]
     });

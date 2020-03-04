@@ -1,0 +1,70 @@
+<!-- -->
+<ion-header class="no-shadow">
+  <ion-navbar class="no-border">
+    <ion-title>
+      <span class="text-primary">Book Details</span>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding class="checkout-trip common-bg">
+  <div class="trip-info card round">
+    <div class="trip-image border-bottom"  [ngStyle]="{'background-image': 'url(' + strResult + ')'}"></div>
+    <!-- <div class="trip-image border-bottom"></div> -->
+    <ion-grid padding>
+      <ion-row>
+        <ion-col width-66>
+          <h5 ion-text color="primary">{{ value.BookName }}</h5>
+          <div>
+            <span class="bold">{{ value.BookDescription }}</span>
+            <br/>
+            <span ion-text color="dark">Child care Institute</span>
+          </div>
+          <div margin-top>
+            <span ion-text color="dark">2019-02-02 12:00 PM</span>
+            <br/>
+            <span ion-text>Andheri East</span>
+          </div>
+          <div margin-top>
+            <ion-icon name="checkmark" class="text-green"></ion-icon>
+            <span ion-text>Available</span>
+          </div>
+        </ion-col>
+        <ion-col col-4>
+          <span ion-text>Total </span>
+          <h5 ion-text color="primary" class="bold" no-margin>{{ value.Stock }}</h5>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <h5>Order Details</h5>
+  <div class="card round" margin-top>
+
+    <ion-list no-margin>
+      <ion-item class="primary-bg">
+        <ion-avatar item-start>
+          <img src="assets/img/books/ngo.jpeg">
+        </ion-avatar>
+        <h2 ion-text class="text-white bold">João Firmino</h2>
+        <p ion-text class="text-secondary bold">User</p>
+      </ion-item>
+    </ion-list>
+
+    <div padding>
+      <h5 ion-text color="secondary">Current Book with</h5>
+
+      <ion-item no-padding>
+        <ion-label color="dark" stacked>Adult 1 Name:</ion-label>
+        <ion-input type="text" disabled placeholder="Ex. Joe Doe" value=""></ion-input>
+        <h3>Delivered Date : 2019-12-30</h3>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label color="dark" stacked>Child 1 Name:</ion-label>
+        <ion-input type="text" disabled placeholder="Ex. Joe Doe" value=""></ion-input>
+        <h3>Delivered Date : 2020-01-16</h3>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

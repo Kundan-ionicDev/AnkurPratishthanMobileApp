@@ -67,6 +67,7 @@ export class AddlanguagePage {
         // alert('ManageLanguagesResult ::'+ JSON.stringify(res.ManageLanguagesResult));
         if(res.ManageLanguagesResult.length >0){
           this.api.presentAlert('Alert!','New Language added sucessfully.');
+          this.languageName ='';
           this.getBooksData();
           loading.dismiss();
         }else{
@@ -90,13 +91,14 @@ export class AddlanguagePage {
     let params =  {
         "LanguageID":LangId,
         "LanguageName": "",
-        "cmd": "2",
+        "cmd": "3",
         "Email": "testign@testing.com"
     }
     this.api._postAPI("ManageLanguages",params).subscribe(res => {
       // alert('ManageLanguagesResult ::'+ JSON.stringify(res.ManageLanguagesResult));
       if(res.ManageLanguagesResult.length >0){
         this.api.presentAlert('Alert!','Language Deleted sucessfully.');
+        this.languageName ='';
         this.getBooksData();
         loading.dismiss();
       }else{

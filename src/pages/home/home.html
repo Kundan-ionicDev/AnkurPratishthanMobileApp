@@ -11,8 +11,8 @@
       <button ion-button tappable (click)="presentNotifications($event)">
         <ion-icon name="notifications"></ion-icon>
       </button>
-      <button ion-button tappable (click)="goToAccount()">
-        <ion-icon name="cog"></ion-icon>
+      <button ion-button tappable (click)="scanCode()">
+        <ion-icon name="md-qr-scanner"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -30,25 +30,25 @@
 </div>
 <ion-grid class="grid">
 <ion-row class="categories">
-  <ion-col col-6 (click)="navigate(0)">
+  <ion-col col-6 (click)="openPage(0,'Books Management')">
     <div style="background-color:darkcyan;">
         <ion-icon style="text-align: center;margin-top:20px"  ios="ios-book" md="md-book"></ion-icon>
       </div>
     <p class="text-over-img">Book Managment</p>
   </ion-col>
-  <ion-col col-6 (click)="navigate(1)" >
+  <ion-col col-6 (click)="openPage(1,'Cluster Management')" >
     <div style="background-color:fuchsia;">
       <ion-icon style="text-align: center;margin-top:20px" ios="ios-infinite" md="md-infinite"></ion-icon>
     </div>
     <p class="text-over-img">Cluster Managment</p>
   </ion-col>
-  <ion-col col-6 (click)="navigate(4)">
+  <ion-col col-6 (click)="navigate(4,'Check Management')">
     <div style="background-color:deepskyblue;">
       <ion-icon style="text-align: center;margin-top:20px" ios="ios-card" md="md-card"></ion-icon>
     </div>
     <p class="text-over-img">Check Requests</p>
   </ion-col>
-  <ion-col col-6 (click)="navigate(6)">
+  <ion-col col-6 (click)="navigate(6,'Librarian Management')">
     <div style="background-color:darkblue;">
         <ion-icon style="text-align: center;margin-top:20px" name="ios-information-circle"></ion-icon>
       </div>

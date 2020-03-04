@@ -67,6 +67,7 @@ export class AddpublisherPage {
         // alert('ManagePublishersResult ::'+ JSON.stringify(res.ManagePublishersResult));
         if(res.ManagePublishersResult.length >0){
           this.api.presentAlert('Alert!','New Publisher added sucessfully.');
+          this.publisherName = '';
           this.getBooksData();
           loading.dismiss();
         }else{
@@ -90,13 +91,14 @@ export class AddpublisherPage {
     let params =  {
         "PublisherID":publisherId,
         "PublisherName": "",
-        "cmd": "2",
+        "cmd": "3",
         "Email": "testign@testing.com"
     }
     this.api._postAPI("ManagePublishers",params).subscribe(res => {
       // alert('ManagePublishersResult ::'+ JSON.stringify(res.ManagePublishersResult));
       if(res.ManagePublishersResult.length >0){
         this.api.presentAlert('Alert!','Publisher Deleted sucessfully.');
+        this.publisherName ='';
         this.getBooksData();
         loading.dismiss();
       }else{

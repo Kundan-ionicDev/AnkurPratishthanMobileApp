@@ -4,50 +4,45 @@
 
     <!-- Logo -->
     <div padding text-center>
-      <div class="logo"></div>
+      <div class="forgotpasslogo"></div>
       <h2 ion-text class="text-primary">
-        <strong>Ankur</strong>-Prathishthan
+        <strong>Password Reset</strong> 
       </h2>
     </div>
 
     <!-- Login form -->
     <form class="list-form">
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="person" item-start class="text-primary"></ion-icon>
-          Full Name
-        </ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
-          Email
-        </ion-label>
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Email Id</span>
         <ion-input type="email"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="lock" item-start class="text-primary"></ion-icon>
-          Password
-        </ion-label>
+      </div>
+      
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">OTP</span>
+        <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:5}"></ng-otp-input>
+      </div>
+      <br />
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">New Password</span>
         <ion-input type="password"></ion-input>
-      </ion-item>
+      </div>
+     
+      <div class="border-bottom" style="position: relative;">
+        <span ion-text color="primary" class="bold">Confirm Password</span>
+        <ion-input type="password"></ion-input>
+      </div>
+     
     </form>
 
     <div margin-top>
-      <button ion-button block color="dark" tappable (click)="register()">
-        SIGN UP
+      <button ion-button icon-start block tappable (click)="register()">
+       Change password
       </button>
-
-      <p text-center ion-text color="secondary">Or Sign Up with:</p>
     </div>
 
     <!-- Other links -->
     <div text-center margin-top>
-      <span ion-text color="primary" tappable (click)="login()">I have an account</span>
+      <span ion-text color="primary" tappable (click)="login()">Login</span>
     </div>
 
   </div>

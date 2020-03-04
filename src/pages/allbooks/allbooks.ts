@@ -7,6 +7,8 @@ import { SettingsPage } from '../settings/settings';
 import { RestApiProvider } from '../../providers/rest-api/rest-api';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AlertController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { BookinfoPage } from '../bookinfo/bookinfo';
 
 
 @IonicPage()
@@ -25,8 +27,13 @@ export class AllbooksPage {
   categories: any;
   publishers: any;
   languages: any;
+  image: string;
+  photos = [];
+  picture = [];
+  imagePath : any ="data:image/jpeg;base64,";
 
   constructor(
+    private camera: Camera,
     public api: RestApiProvider,
     public navCtrl: NavController,
     public app: App,
@@ -34,20 +41,24 @@ export class AllbooksPage {
     public apiProvider: RestApiProvider,
     private barcodeScanner: BarcodeScanner,
     public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController,
     public navParams: NavParams) {
     this.usrRoleId = this.apiProvider.UserRoleId;
     this.initializeItems();
     this.frmbooks = this.formBuilder.group({
+      // thumbimage : new FormControl('', [Validators.required]),
+      // image : new FormControl('', [Validators.required]),
       bookname: new FormControl('', [Validators.required]),
-      publisher: new FormControl('', [Validators.required]),
+      bookdescription: new FormControl('', [Validators.required]),
       author: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
+      quantity: new FormControl('', [Validators.required]),
       Category: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
-      quantity: new FormControl('', [Validators.required]),
+      publisher: new FormControl('', [Validators.required])
     });
+    //this.presentActionSheet();
   }
-
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad AllbooksPage');
@@ -63,28 +74,54 @@ export class AllbooksPage {
     }
   }
 
+  // Show Book Information
+  bookInfo(item:any){
+    this.navCtrl.push(BookinfoPage,{
+      bookInfo:item
+    });
+  }
+
   addBook() {
-    if (this.frmbooks.valid) {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
+    // alert('this.frmbooks.value' + JSON.stringify(this.frmbooks.value));
+    if (this.frmbooks.valid && this.photos.length >0) {
       let params = {
         "BookName": this.frmbooks.value.bookname,
         "cmd": "1",
+        "BookDescription":this.frmbooks.value.bookdescription,
         "EmailID": "kundansakpal@gmail.com",
         "Price": this.frmbooks.value.price,
         "Author": this.frmbooks.value.author,
         "Stock": this.frmbooks.value.quantity,
         "CategoryID": this.frmbooks.value.Category,
-        "LanguageID": '1',//this.frmbooks.value.language,
-        "PublisherID": '2',//this.frmbooks.value.publisher,
-        "BookID": ""
+        "LanguageID": this.frmbooks.value.language,
+        "PublisherID": this.frmbooks.value.publisher,
+        "BookID": "",
+        "ThumbImg64": this.photos[0].Image,
+        "Img1":this.photos[1].Image
       };
+      
+      // alert('params :'  + JSON.stringify(params));
       this.api._postAPI("ManageBooks", params).subscribe(res => {
         // User exists
-        alert('Manage Books Data ::'+ JSON.stringify(res.ManageBooksResult));
-        this.api.presentAlert('Alert!','Book Added Sucessfully');
-        this.frmbooks.reset();
-        this.initializeItems();
+        // alert('Manage Books Data ::'+ JSON.stringify(res.ManageBooksResult));
+        if(res.ManageBooksResult.length >0){
+          this.api.presentAlert('Alert!','Book Added Sucessfully');
+          loading.dismiss();
+          this.frmbooks.reset();
+          this.initializeItems();
+        }else{
+          this.api.presentAlert('Alert!','Please try again.');
+          loading.dismiss();
+        }
       }, (err) => {
-        alert('Error:' + err);
+        // alert('Error:' + err);
+        this.api.presentAlert('Error!',err);
+        loading.dismiss();
       });
       // this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE,'Kundan Sakpal').then((encodedData) => {
       //     this.encodeData = encodedData;
@@ -92,12 +129,17 @@ export class AllbooksPage {
       //     console.log("Error occured : " + err);
       // }); 
     } else {
-      alert('All Fields are mandatory');
+      if(!this.frmbooks.valid){
+        this.api.presentAlert('Error!','All Fields are mandatory');
+      }else if(this.photos.length <=0){
+        this.api.presentAlert('Error!','Please provide photos');
+      }
+      loading.dismiss();
     }
   }
 
   // Delete Book Details
-  updateBook(item:any){
+  deleteBook(item:any){
     let loading = this.loadingCtrl.create({
       content: 'Please wait...while book gets deleted'
     });
@@ -120,15 +162,102 @@ export class AllbooksPage {
       // alert('Manage Books Data ::'+ JSON.stringify(res.ManageBooksResult));
       if(res.ManageBooksResult.length >0){
         this.apiProvider.presentAlert('Alert!','Book Deleted Sucessfully');
+        this.initializeItems();
         loading.dismiss();
       }else{
         this.apiProvider.presentAlert('Alert!','Something went wrong. Please try again!!!');
         loading.dismiss();
       }
     }, (err) => {
-      alert('Error:' + err);
+      this.api.presentAlert('Error!',err);
       loading.dismiss();
     });
+  }
+
+
+  deletePhoto(index) {
+    // this.photos.splice(index, 1);
+    let confirm = this.alertCtrl.create({
+      title: 'Do you want to delete this photo?',
+      message: '',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            // console.log('Disagree clicked');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            console.log('Agree clicked');
+            this.photos.splice(index, 1);
+          }
+        }
+      ]
+    });
+  confirm.present();
+   }
+
+   
+  AccessGallery(){
+    if(this.photos.length <2){
+      this.camera.getPicture({
+        sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+        destinationType: this.camera.DestinationType.DATA_URL
+       }).then((imageData) => {
+        // alert('imageData'+ JSON.stringify(imageData));
+         // this.image = 'data:image/jpeg;base64,'+imageData;
+         this.image = imageData;
+         // alert('image : '+ this.image);
+           this.photos.push(
+            { "Image":this.image }
+           );
+         this.photos.reverse();
+         this.picture = imageData;
+            }, (err) => {
+             this.displayErrorAlert(err);
+       });
+    }else{
+      this.api.presentAlert('Alert','Only 2 photos are allowed.');
+    }
+   }
+   
+   AccessCamera(){
+    if(this.photos.length <2){
+      const options: CameraOptions = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        saveToPhotoAlbum: true,
+        mediaType: this.camera.MediaType.PICTURE,
+        targetWidth: 200,
+        targetHeight: 200
+      };
+  
+      this.camera.getPicture(options).then((imageData) => {
+          // alert('imageData'+ JSON.stringify(imageData));
+          //this.image = 'data:image/jpeg;base64,' + imageData;
+          this.image = imageData;
+          // alert('image : '+ this.image);
+          this.photos.push(
+            { "Image":this.image }
+           );
+            // alert('photos length' + JSON.stringify(this.photos.length));
+          this.photos.reverse(); 
+        }, (err) => {
+          this.displayErrorAlert(err);
+        });
+    }else{
+      this.api.presentAlert('Alert','Only 2 photos are allowed.');
+    }
+  }
+
+  displayErrorAlert(err){
+    let alert = this.alertCtrl.create({
+       title: 'Error',
+       subTitle: 'Error while trying to capture picture',
+       buttons: ['OK']
+     });
+     alert.present();
   }
 
 
@@ -140,20 +269,12 @@ export class AllbooksPage {
   }
 
   initializeItems() {
-    // this.items = [
-    //   { title:'The Poets Laureate Anthology', subtitle:"An anthology is a collection of series of works such as short stories, poems, essays, plays, etc. by different authors into a single volume for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.", publisher:"Publisher 1", category:"Anthology", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Poets.jpeg" } ,
-    //   { title:'To Kill a Mockingbird', subtitle:"To Kill a Mockingbird. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.", publisher:"Publisher 2", category:"Anthology", author:"Harper Lee", icon:"assets/img/books/ToKillaMockingbird.jpeg" } ,
-    //   { title:'Batman: The Dark Knight Returns', subtitle:"Batman: The Dark Knight Returns anthology is a collection of series of works such as short stories, poems, essays, plays, etc. by different authors into a single volume for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.", publisher:"Publisher 3", category:"Comic and Graphic Novel", author:"Frank Miller", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" } ,
-    //   { title:'Sherlock Holmes', subtitle:"Arthur Conan Doyle for publication. The selection of such works is made based on some common theme or subject of books and usually done by an editor or small editorial board.", publisher:"Publisher 3", category:"Comic and Graphic Novel", author:"Elizabeth Hun Schmidt", icon:"assets/img/books/Batman-TheDarkKnightReturns.jpeg" }
-    // ];
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
   
     loading.present();
     this.api._postAPI("GetBooks", '').subscribe(res => {
-        // User exists
-        // alert('Books Data ::'+ JSON.stringify(res.GetBooksResult));
         if (res.GetBooksResult.length > 0) {
           this.items = res.GetBooksResult;
         } else {

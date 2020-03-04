@@ -90,6 +90,7 @@ export class AddcategoryPage {
         // alert('ManageCategories ::'+ JSON.stringify(res.ManageCategoriesResult));
         if(res.ManageCategoriesResult.length >0){
           this.api.presentAlert('Alert!','New Category added sucessfully.');
+          this.catName ='';
           this.getBooksData();
           loading.dismiss();
         }else{
@@ -113,13 +114,14 @@ export class AddcategoryPage {
     let params =  {
         "CategoryID":CatId,
         "CategoryName": "",
-        "cmd": "2",
+        "cmd": "3",
         "Email": "testign@testing.com"
     }
     this.api._postAPI("ManageCategories",params).subscribe(res => {
       // alert('ManageCategories ::'+ JSON.stringify(res.ManageCategoriesResult));
       if(res.ManageCategoriesResult.length >0){
         this.api.presentAlert('Alert!','Category Deleted sucessfully.');
+        this.catName ='';
         this.getBooksData();
         loading.dismiss();
       }else{
