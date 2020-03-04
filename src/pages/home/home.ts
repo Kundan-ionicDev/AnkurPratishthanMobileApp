@@ -107,7 +107,11 @@ export class HomePage {
 
 
   ngOnInit() {
-    // this.barChart = new Chart(this.barCanvas.nativeElement, {
+    this.reportDetails();
+  }
+
+  reportDetails(){
+// this.barChart = new Chart(this.barCanvas.nativeElement, {
     //   type: "bar",
     //   data: {
     //     labels: ["Orphan1", "Orphan2", "Orphan3", "Orphan4", "Orphan5"],
