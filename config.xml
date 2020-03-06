@@ -6,7 +6,6 @@
     <content src="index.html" />
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <access origin="*" />
-    <access origin="*" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>

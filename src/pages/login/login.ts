@@ -76,26 +76,31 @@ export class LoginPage {
       this.api._postAPI("UserLogin",params).subscribe(res => {
         // User exists
         // alert('Login Data ::'+ JSON.stringify(res));
-        if(res.UserLoginResult.Message =="Success"){
-          localStorage.removeItem('UserRoleId');
-          this.apiProvider.UserRoleId = res.UserLoginResult.RoleID;
-          this.loginData = {
-            "EmailId":res.UserLoginResult.EmailId,
-            "FullName":res.UserLoginResult.FullName,
-            "RoleID":res.UserLoginResult.RoleID
-          };
-          localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
-          // let checkdata = JSON.parse(localStorage.getItem('UserLogin'));
-          // alert('checkData' + JSON.stringify(checkdata));
-          this.nav.setRoot(HomePage);
-          loading.dismiss();
+        if(res.length >0){
+          if(res.UserLoginResult.Message =="Success"){
+            localStorage.removeItem('UserRoleId');
+            this.apiProvider.UserRoleId = res.UserLoginResult.RoleID;
+            this.loginData = {
+              "EmailId":res.UserLoginResult.EmailId,
+              "FullName":res.UserLoginResult.FullName,
+              "RoleID":res.UserLoginResult.RoleID
+            };
+            localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
+            // let checkdata = JSON.parse(localStorage.getItem('UserLogin'));
+            // alert('checkData' + JSON.stringify(checkdata));
+            this.nav.setRoot(HomePage);
+            loading.dismiss();
+          }else{
+            loading.dismiss();
+            this.apiProvider.presentAlert('Error',res.UserLoginResult.Message);
+          }
         }else{
-          this.apiProvider.presentAlert('Error',res.UserLoginResult.Message);
           loading.dismiss();
+          this.apiProvider.presentAlert('Error','Please try again');
         }
       },(err) => {
+        loading.dismiss();
         this.apiProvider.presentAlert('Error',err);
-          loading.dismiss();
       });
      
       // if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){

@@ -61,29 +61,29 @@ export class MyApp {
       { title: 'Cluster Management', component: AddusersPage, icon: 'ios-add-circle-outline', roleId: 1 },
       { title: 'Librarian Management', component: AddusersPage, icon: 'md-person', roleId: 1 },
       { title: 'Member Management', component: AddusersPage, icon: 'ios-people', roleId: 1 },
-      { title: 'Approvals', component: ManageRequestsPage, icon: 'git-pull-request', roleId: 1 },
+      { title: 'Approvals', component: ManageRequestsPage, icon: 'md-git-pull-request', roleId: 1 },
       // { title: 'Reports', component: ManageOrphanePage, icon: 'body', roleId: 1 },
       // { title: 'Help', component: HelpPage, icon: 'md-help-circle', roleId: 1 },
-      { title: 'QR Code', component: QrcodePage, icon: 'qr-code-outline', roleId: 1 },
-      { title: 'Contact us', component: ContactusPage, icon: 'call-outline', roleId: 1 },
+      { title: 'Print QR Code', component: QrcodePage, icon: 'qr-scanner', roleId: 1 },
+      { title: 'Contact us', component: ContactusPage, icon: 'call', roleId: 1 },
 
       // Menu for Librarian 
       { title: 'Home',component: HomePage, icon: 'home',roleId: 2 },
       { title: 'Book Circulation',component: ManagebooksPage, icon: 'book-outline', roleId: 2 },
       { title: 'Member Management', component: AddusersPage, icon: 'people',roleId: 2 },
-      { title: 'Contact us', component: ContactusPage, icon: 'call-outline', roleId: 2 },
+      { title: 'Contact us', component: ContactusPage, icon: 'call', roleId: 2 },
 
       // Menu for Cluster
       { title: 'Home', component: HomePage, icon: 'home', roleId: 3 },
       { title: 'Book Circulation', component: ManagebooksPage, icon: 'book-outline', roleId: 3 },
       { title: 'Member Management', component: AddusersPage, icon: 'people', roleId: 3 },
-      { title: 'Contact us', component: ContactusPage, icon: 'call-outline', roleId: 3 },
+      { title: 'Contact us', component: ContactusPage, icon: 'call', roleId: 3 },
 
       // Menu for members
       { title: 'Home', component: HomePage, icon: 'home', roleId: 4 },
       { title: 'Books', component: ManagebooksPage, icon: 'book-outline', roleId: 4 },
       { title: 'Request', component: ContactusPage, icon: 'git-pull-request', roleId: 4 },
-      { title: 'Contact us', component: ContactusPage, icon: 'call-outline', roleId: 4 }
+      { title: 'Contact us', component: ContactusPage, icon: 'call', roleId: 4 }
     ];
   }
 
