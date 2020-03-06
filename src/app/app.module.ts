@@ -46,6 +46,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 // import { NetworkProvider } from '../providers/network/network';
 import { BookinfoPage } from "../pages/bookinfo/bookinfo";
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -133,6 +134,7 @@ import { BookinfoPage } from "../pages/bookinfo/bookinfo";
     CallNumber,
     Contacts,
     DatePicker,
+    
     // NetworkProvider
   ]
 })

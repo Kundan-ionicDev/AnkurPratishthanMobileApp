@@ -1,62 +1,28 @@
-<!-- <ion-list class="no-margin">
-  <ion-list-header class="no-margin">
-  	<ion-icon name="notifications" color="primary"></ion-icon>
-  	<span ion-text color="primary" class="bold">Notifications</span>
-  </ion-list-header>
-  <button ion-item color="secondary" class="text-1x" tappable (click)="close()">
-  	<ion-icon name="mail"></ion-icon>
-  	New booking success!
-  </button>
-  <button ion-item color="secondary" class="text-1x" tappable (click)="close()">
-  	<ion-icon name="mail"></ion-icon>
-  	Activity rescheduled
-  </button>
-  <button ion-item class="text-1x" tappable (click)="close()">
-  	<ion-icon name="mail-open" color="secondary"></ion-icon>
-  	<span ion-text color="secondary">Activity rescheduled</span>
-  </button>
-  <button ion-item class="text-1x" tappable (click)="close()">
-  	<ion-icon name="mail-open" color="secondary"></ion-icon>
-  	<span ion-text color="secondary">Activity rescheduled</span>
-  </button>
-</ion-list> -->
 <ion-content class="common-bg">
-  <!-- List of Text Items -->
+ 
+<ion-list>
+  <ion-list-header>
+    Notifications
+  </ion-list-header>
+  <ion-item>
+    <ion-row>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-label>
+      <h3><strong>Kundan Sakpal</strong></h3>
+      <h4>Request Accepted</h4>
+      <p>Doreamon</p>
+      <span><ion-icon name="checkmark"></ion-icon></span>
+    </ion-label>
+  </ion-item>
   <ion-item>
     <ion-label>
-      Item Label
+      <h3><strong>Pranav Bhonde</strong></h3>
+      <h4>Request Rejected</h4>
+      <p>Book Not available</p>
+     <span> <ion-icon name="close"></ion-icon></span>
     </ion-label>
-    <div item-content>
-      Item Content next to the label
-    </div>
   </ion-item>
-  <!-- User settings-->
-  <ion-item-group>
-    <ion-item-divider color="secondary" class="bold">User Settings</ion-item-divider>
-    <ion-item>
-      <ion-label>Language</ion-label>
-      <ion-select [(ngModel)]="language" cancelText="Cancel" okText="OK">
-        <ion-option value="en-US" selected="true">English (US)</ion-option>
-        <ion-option value="en-GB">Hindi</ion-option>
-        <ion-option value="en-CA">Marathi</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Notifications?</ion-label>
-      <ion-toggle checked="true"></ion-toggle>
-    </ion-item>
-  </ion-item-group>
-  <!-- App settings-->
-  <ion-item-group>
-    <ion-item-divider color="secondary" class="bold">App Settings</ion-item-divider>
-    <ion-item>
-      <ion-label>Push Notifications?</ion-label>
-      <ion-toggle checked="false"></ion-toggle>
-    </ion-item>
-    <ion-item>
-      <span>Privacy Policy</span>
-    </ion-item>
-  </ion-item-group>
-  <!--sign out button-->
-  <button ion-button color="primary" full tappable (click)="logout()">LOG OUT</button>
+</ion-list>
+
 </ion-content>

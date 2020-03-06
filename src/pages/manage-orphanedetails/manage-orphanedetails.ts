@@ -52,10 +52,10 @@ export class ManageOrphanedetailsPage {
       if (res.GetLibrariansResult.length > 0) {
         this.librariandata = res.GetLibrariansResult;
       } else {
-        alert('No data available.')
+        this.apiProvider.presentAlert('Alert','No data available');
       }
     }, (err) => {
-      alert('Error:' + err);
+      this.apiProvider.presentAlert('Error',err);
     });
   }
 
@@ -82,7 +82,7 @@ export class ManageOrphanedetailsPage {
         "ClusterID": this.frmclusterDetails.value.ClusterID
       };
       
-      alert('Update Data:' + JSON.stringify(params));
+      // alert('Update Data:' + JSON.stringify(params));
       
       this.apiProvider._postAPI("ManageClusters",params).subscribe(res => {
         if(res.ManageClustersResult.length >0){
@@ -93,7 +93,7 @@ export class ManageOrphanedetailsPage {
           loading.dismiss();
         }
       },(err) => {
-          alert('Error:'+err);
+          this.apiProvider.presentAlert('Error',err);
       });
     }else{
       this.apiProvider.presentAlert('Oops','Please provide all details');

@@ -16,7 +16,7 @@
       </ion-slide>
     </ion-slides>
         <div class="border-bottom" padding>
-          <form [formGroup]="frmbooks" novalidate (ngSubmit)="updateBook()">
+          <form [formGroup]="frmbooks" novalidate >
             <ion-list>
                 <ion-item>
                   <ion-label>Title :</ion-label>
@@ -56,26 +56,30 @@
                   <ion-label>Sold :</ion-label> 
                   <ion-input type="text" formControlName="booksold" value="{{ bookData.sold }}"></ion-input>
              </ion-item>
-          <ion-item text-center *ngIf="roleId == 1">
-                <button ion-button block color="primary" (click)="editBook()">
-                  Update Book
-                </button>
-          </ion-item>
-          <ion-item *ngIf="roleId != 1">
-              <ion-label floating>Claim for (member):</ion-label>
-              <ion-select>
-                <ion-option value="e">Jagruti</ion-option>
-                <ion-option value="m">Sneha</ion-option>
-                <ion-option value="h">Anoop</ion-option>
-                <ion-option value="g">Kundan</ion-option>
-              </ion-select>
-          </ion-item>
-          <ion-item text-center *ngIf="roleId != 1">
-              <button ion-button icon-start block color="dark" >
-                  Claim
-                </button>
-          </ion-item>
         </ion-list>
       </form>
+
+      <ion-item text-center *ngIf="roleId == 1">
+        <button ion-button block color="primary" (click)="updateBook()">
+          Update Book
+        </button>
+      </ion-item>
+      
+      
+     <ion-card>
+      <ion-item>
+        <ion-label floating>Claim for (member):</ion-label>
+        <ion-select [(ngModel)]="memberId">
+          <ion-option *ngFor="let item of memberdata;" value="{{ item.MemberID }}">{{ item.FirstName }} {{ item.LastName }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item text-center>
+        <button ion-button block color="dark" (click)="claimBook(memberId)" >
+            Claim
+          </button>
+     </ion-item>
+     </ion-card>
       </div>
   </ion-content>

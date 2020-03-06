@@ -16,6 +16,7 @@ export class LoginPage {
 
   user: FormGroup;
   loginData: any;
+  
   constructor(
     private formBuilder: FormBuilder,
     public nav: NavController, 
@@ -58,10 +59,10 @@ export class LoginPage {
     });
   
     loading.present();
-    console.log(this.user.value);
+    // console.log(this.user.value);
     if(this.user.valid){
       localStorage.removeItem('UserRoleId');
-      this.apiProvider.UserRoleId = 0;
+      // this.apiProvider.UserRoleId = 2;
       let params = {
         "EmailID": this.user.value.emailaddress,
         "Password": this.user.value.password,
@@ -93,7 +94,7 @@ export class LoginPage {
           loading.dismiss();
         }
       },(err) => {
-          alert('Error:'+err);
+        this.apiProvider.presentAlert('Error',err);
           loading.dismiss();
       });
      

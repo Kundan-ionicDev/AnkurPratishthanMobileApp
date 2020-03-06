@@ -72,7 +72,7 @@ export class MemberdetailsPage {
     });
 
     loading.present();
-    alert('updateLibrarian' + JSON.stringify(this.frmmemberDetails.value));
+    // alert('updateLibrarian' + JSON.stringify(this.frmmemberDetails.value));
     if (this.frmmemberDetails.valid) {
       let params = {
         "cmd": "2",
@@ -89,7 +89,7 @@ export class MemberdetailsPage {
         "Image64":""
       };
       
-      alert('ManageLibrarians Data ::' + JSON.stringify(params));
+      // alert('ManageLibrarians Data ::' + JSON.stringify(params));
       this.api._postAPI('Managemembers', params).subscribe(res => {
        if(res.ManageLibrariansResult.length >0){
         this.api.presentAlert('Alert', 'Member details updated sucessfully.');

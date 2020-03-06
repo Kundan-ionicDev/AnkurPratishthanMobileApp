@@ -31,7 +31,6 @@ export class LibrariandetailsPage {
     public navCtrl: NavController, 
     public navParams: NavParams) {
       this.librarianData = navParams.data.librariabData;
-       alert('librarianData' + JSON.stringify(this.librarianData));
       this.initialize();
       // Member
       this.frmlibrarianDetails = this.formBuilder.group({

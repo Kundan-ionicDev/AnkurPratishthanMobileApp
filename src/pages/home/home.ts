@@ -207,7 +207,7 @@ export class HomePage {
     // this.search.dropOff = "Same as pickup";
     this.storage.get('pickup').then((val) => {
       if (val === null) {
-        this.search.name = "Kundan SAkpal"
+        this.search.name = "Kundan Sakpal"
       } else {
         this.search.name = val;
       }

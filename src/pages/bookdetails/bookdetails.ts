@@ -21,7 +21,8 @@ export class BookdetailsPage {
   roleId: number;
   public bookData: any;
   frmbooks: FormGroup;
-  
+  memberdata: any;
+  memberId : any;
   constructor(
     public loadingCtrl: LoadingController,
     public app:App,
@@ -34,9 +35,9 @@ export class BookdetailsPage {
       this.bookData = navParams.data.bookData;
       
       this.slideimgs = [{ "image":this.bookData.ThumbImage },{"image": this.bookData.Image2 }]
-      console.log('bookdata', JSON.stringify(this.bookData));
+      // console.log('bookdata', JSON.stringify(this.bookData));
       this.roleId = this.apiProvider.UserRoleId;
-      console.log(JSON.stringify(this.slideimgs));
+      // console.log(JSON.stringify(this.slideimgs));
       
       this.frmbooks = this.formBuilder.group({
         bookname: new FormControl(),
@@ -48,8 +49,12 @@ export class BookdetailsPage {
         booktotalstock: new FormControl(''),
         bookisavailable : new FormControl(''),
         booksold : new FormControl(''),
+        // memberId : new FormControl(''),
       });
+
+      this.initialize();
     }
+
     ionViewDidLoad() {
     }
 
@@ -58,10 +63,59 @@ export class BookdetailsPage {
     nav.setRoot(ManagebooksPage, {tabIndex: 2});
   }
 
+
+  initialize(){
+    this.apiProvider._postAPI('GetMembers', '').subscribe(res => {
+      // Get Members
+      if (res.GetMembersResult.length > 0) {
+        this.memberdata = res.GetMembersResult;
+
+      } else {
+        this.apiProvider.presentAlert('Alert', 'No data available.');
+      }
+    }, (err) => {
+      this.apiProvider.presentAlert('Error', err);
+    });
+  }
+
+
+  claimBook(){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
+    // alert('member Id' + this.memberId +'bookData :'+ JSON.stringify(this.bookData));
+    let params = 
+    {
+      "cmd": "1",
+      "BookID": this.bookData.BookID,
+      "MemberID": this.memberId,
+      "senderEmailID": "kundansakpal@gmail.com",
+      "RequestID":""
+    };
+    
+    // alert('params' + JSON.stringify(params));
+    this.apiProvider._postAPI("ManageRequests", params).subscribe(res => {
+      // Manage Book Claim Requests 
+      // alert('Manage Books Data ::'+ JSON.stringify(res.ManageRequestsResult));
+      if(res.ManageRequestsResult.length >0){
+        this.apiProvider.presentAlert('Alert!','Request Placed Sucessfully');
+        loading.dismiss();
+      }else{
+        this.apiProvider.presentAlert('Alert!','Something went wrong. Please try again!!!');
+        loading.dismiss();
+      }
+    }, (err) => {
+      alert('Error:' + err);
+      loading.dismiss();
+    });
+  }
+
   // Update Book Details
   updateBook(){
     let loading = this.loadingCtrl.create({
-      content: 'Please wait...while book gets deleted'
+      content: 'Please wait...'
     });
   
     loading.present();
@@ -80,7 +134,7 @@ export class BookdetailsPage {
         "ThumbImg64": this.slideimgs[0].Image,
         "Img1":this.slideimgs[1].Image
       };
-      alert('params' + JSON.stringify(params));
+      // alert('params' + JSON.stringify(params));
       this.apiProvider._postAPI("ManageBooks", params).subscribe(res => {
         // Manage Books Data
         // alert('Manage Books Data ::'+ JSON.stringify(res.ManageBooksResult));

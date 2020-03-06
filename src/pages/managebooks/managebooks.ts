@@ -27,6 +27,7 @@ export class ManagebooksPage {
     { pageName: 'AddcategoryPage', title: 'Category', icon: 'basket', id: 'aboutTab', role:1 },
     { pageName: 'AddpublisherPage', title: 'Publisher', icon: 'appstore', id: 'accountTab', role:1 },
     { pageName: 'AddlanguagePage', title: 'Language', icon: 'at', id: 'accountTab', role:1 },
+    { pageName: 'ClaimsPage', title: 'Claim(s)', icon: 'closed-captioning', id: 'newsTab', role:1 },
 
     // Cluster Book Management Pages
     { pageName: 'AllbooksPage', title: 'Books', icon: 'book', id: 'newsTab', role:2 },
@@ -77,8 +78,7 @@ export class ManagebooksPage {
       // alert('Books Data ::'+ JSON.stringify(res.GetBooksDataResult));
       // this.apiProvider.booksData = res.GetBooksDataResult;
       let obj = res.GetBooksDataResult;
-      localStorage.setItem('BooksData',JSON.stringify(obj))
-
+      localStorage.setItem('BooksData',JSON.stringify(obj));
     }, (err) => {
       alert('Error:' + err);
     });
