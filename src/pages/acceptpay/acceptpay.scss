@@ -1,0 +1,53 @@
+page-acceptpay {
+  .autocomplete {
+    width: 100%;
+  
+    ion-item {
+        ion-input {
+            padding: 1px !important;
+        }
+    }
+  
+    ion-list {
+        position: absolute;
+        width: 95%;
+        overflow-y: scroll;
+        max-height: 150%;
+        border: 5px;
+        z-index: 999;
+  
+        ion-item {
+            background: #f1f1f1;
+        }
+  
+        ion-item:hover {
+            cursor: pointer;
+            background: #dddddd
+        }
+    }
+  }
+  
+    .block {
+        position: relative
+        deleteIcon {
+          text-align : center;
+          color: #ffffff !important;
+          margin-left: 80% !important;
+        }
+        .deleteIcon:before {
+          font-size: 30px !important;
+        }
+        }
+
+        .user-avatar {
+          width: 68px;
+          height: 68px;
+          display: inline-block;
+          border-radius: 50%;
+          img {
+            border-radius: 50%;
+          }
+        }
+
+        img.nav-avatar{ height: 35px; width: 35px; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; }
+}

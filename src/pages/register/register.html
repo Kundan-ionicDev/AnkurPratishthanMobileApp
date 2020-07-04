@@ -12,14 +12,26 @@
 
     <!-- Login form -->
     <form class="list-form">
-      <div class="border-bottom" style="position: relative;">
+      <!-- <div class="border-bottom" style="position: relative;">
         <span ion-text color="primary" class="bold">Email Id</span>
         <ion-input type="email"></ion-input>
-      </div>
+      </div> -->
+      <ion-row text-center>
+        <ion-col>
+         <ion-input #otp1 required maxLength="1" (keyup)="otpController($event,otp2,'')">
+         </ion-input>
+         <ion-input #otp2 required maxLength="1" (keyup)="otpController($event,otp3,otp1)">
+         </ion-input>
+         <ion-input #otp3 required maxLength="1" (keyup)="otpController($event,otp4,otp2)">
+         </ion-input>
+         <ion-input #otp4  required maxLength="1" (keyup)="otpController($event,'',otp3)">
+         </ion-input>
+        </ion-col>
+      </ion-row>
       
-      <div class="border-bottom" style="position: relative;">
+      <div style="position: relative;border-bottom: grey;">
         <span ion-text color="primary" class="bold">OTP</span>
-        <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:5}"></ng-otp-input>
+        <ng-otp-input (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
       </div>
       <br />
       <div class="border-bottom" style="position: relative;">

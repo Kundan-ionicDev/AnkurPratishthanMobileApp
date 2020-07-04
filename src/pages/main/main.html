@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-navbar style="height: 60px;" color="primary">
+    <ion-title>
+      <strong>Ankur</strong> Prathishthan
+      <!-- <img (click)="presentNotifications($event)" class='nav-avatar' [src]="Profileimg">
+      <br /> -->
+      <div style="font-size:small;font-family: sans-serif;">Welcome, {{ userLogin.FullName }} !!</div>
+    </ion-title>
+    <ion-buttons end>
+      <!--  <button ion-button tappable (click)="profile($event)">
+        <ion-icon name="person"></ion-icon>
+      </button>
+     <button ion-button tappable (click)="logout()">
+        <ion-icon name="exit"></ion-icon>
+      </button> -->
+      <div (click)="presentNotifications($event)" >
+        <img class='nav-avatar' [src]="Profileimg">
+      </div>
+      <!-- <button ion-button icon-only (click)="presentNotifications($event)">
+        <ion-icon name="more"></ion-icon>
+      </button> -->
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <div class="header-banner">
+    <ion-slides pager>
+      <ion-slide *ngFor="let slide of slides" initialSlide=0 speed="3000" paginationType="bullets" loop="true" pager="true" dir="rtl">
+          <div>
+            <img [src]="slide.ImagePath" class="slider-img"/>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+<ion-grid class="grid">
+<ion-row class="categories">
+  <ion-col col-6 (click)="navigate(0)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/donor.png"></ion-img><ion-icon style="text-align: center;margin-top:20px"></ion-icon>
+      </div>
+    <p class="text-over-img">Register Donor</p>
+  </ion-col>
+
+  <ion-col col-6 (click)="navigate(1)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/celebrate.png"></ion-img>
+      </div>
+    <p class="text-over-img">Celebrate with us</p>
+  </ion-col>
+
+  <ion-col col-6 (click)="navigate(2)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/requsts.png"></ion-img>
+    </div>
+    <p class="text-over-img">Review Request</p>
+  </ion-col>
+
+  <ion-col col-6 (click)="navigate(3)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/mydonors.png"></ion-img>
+    </div>
+    <p class="text-over-img">My Donors</p>
+  </ion-col>
+
+  <!-- <ion-col col-6 (click)="navigate(4)" *ngIf="userLogin.RoleID == '1'">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/volunteer.png"></ion-img>
+    </div>
+    <p class="text-over-img">NGO Volunters</p>
+  </ion-col> -->
+ 
+  <!-- <ion-col col-6 (click)="navigate(5)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/birthday.png"></ion-img>
+      </div>
+    <p class="text-over-img">Donor's Birthdays</p>
+  </ion-col> -->
+ 
+  <!-- <ion-col col-6 (click)="navigate(6)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/contact.png"></ion-img>
+      </div>
+    <p class="text-over-img">Contact us</p>
+  </ion-col> -->
+
+  <ion-col col-6 (click)="navigate(7)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/aboutus.png"></ion-img>
+      </div>
+    <p class="text-over-img">About us</p>
+  </ion-col>
+
+  <ion-col col-6 (click)="navigate(8)">
+    <div  style="background-color:#fff;border: 1px solid rgb(238, 237, 234);">
+      <ion-img style="width: 30px; height: 30px;text-align: center;margin-top:20px" src="assets/icon/reports.png"></ion-img>
+      </div>
+    <p class="text-over-img">Reports and Credentials</p>
+  </ion-col>
+</ion-row>
+</ion-grid>
+<!-- <ion-fab right bottom>
+  <button (click)="needHelp()" ion-fab color="light">
+    <ion-icon name="help"></ion-icon>
+  </button>
+</ion-fab> -->
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="secondary">
+      <ion-grid text-center>
+        <ion-row>
+          <ion-col>
+            <img (click)="socialsite('0')" style="width: 20px; height: 20px;text-align: center;" src="assets/icon/instagram.png">
+            <!-- <ion-icon (click)="socialsite('0')" name="logo-facebook"></ion-icon> -->
+          </ion-col>
+          <ion-col>
+            <!-- <ion-icon (click)="socialsite('1')" name="logo-twitter"></ion-icon> -->
+            <img (click)="socialsite('1')" style="width: 20px; height: 20px;text-align: center;" src="assets/icon/fb.png">
+          </ion-col>
+          <ion-col>
+            <!-- <ion-icon (click)="socialsite('2')" name="logo-youtube"></ion-icon> -->
+            <img (click)="socialsite('2')" style="width: 20px; height: 20px;text-align: center;" src="assets/icon/youtube.png">
+          </ion-col>
+          <!-- <ion-col>
+            <img (click)="socialsite('3')" style="width: 20px; height: 20px;text-align: center;" src="assets/icon/mail.png">
+          </ion-col> -->
+          <ion-col>
+            <img (click)="socialsite('4')" style="width: 20px; height: 20px;text-align: center;" src="assets/icon/website.png">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-toolbar>
+</ion-footer>

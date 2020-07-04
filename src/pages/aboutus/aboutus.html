@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>About us</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list >
+    <ion-item *ngFor="let item of getdocs">
+      <ion-row>
+        <ion-col style="padding-left:0px;color: #0d0e0d;font-size: 1.6rem;" col-9 (click)="openFile(item)">          
+            {{ item.Title }}
+        </ion-col>
+        <ion-col col-3>
+          <ion-icon name="eye" style="text-align: right;float: right;" (click)="openFile(item)"></ion-icon>
+        </ion-col>
+      </ion-row>
+   
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Donor's Bithdays</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>This Month</ion-list-header>
+    <ion-item-sliding *ngFor="let item of birthdaydata">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img height="150px" src="assets/icon/person.png" />
+        </ion-thumbnail>
+        <ion-label>
+          <ion-row>
+            <ion-col col-6>
+              <p style="font-size: 15px;">{{ item.FullName }}</p>
+            </ion-col>
+            <ion-col col-6 *ngIf="item.BirthdayFlag == 'True'">
+              <ion-icon color="danger" name="md-checkmark-circle-outline" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.ContactNo }}</p>
+          <p><b>Email Id :</b>{{ item.EmailID }}</p>
+          <p><b>DOB :</b> {{ item.DOB }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button *ngIf="item.BirthdayFlag == 'True'" color="light" icon-start>
+          <ion-icon name="ios-more"></ion-icon>
+            Greeting Already Sent
+        </button>
+        <button ion-button  *ngIf="item.BirthdayFlag == 'False'" (click)="sendGreeting(item)" color="light" icon-start>
+          <ion-icon name="ios-more"></ion-icon>
+            Send Greeting
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

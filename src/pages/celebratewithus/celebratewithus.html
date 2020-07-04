@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Celebrate with us</ion-title>
+    <ion-buttons end>
+      <button (click)="getContacts()" color="dark" slot="end" ion-button>
+        <ion-icon style="font-size: large;" name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="isCelebrateAdd == true">
+    <ion-list>
+      <ion-list-header>View Celebrate with us requests</ion-list-header>
+      <ion-item-sliding *ngFor="let item of celebrateusData">
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img height="150px" src="assets/icon/person.png" />
+          </ion-thumbnail>
+          <ion-label>
+            <ion-row>
+              <ion-col col-6>
+                <p style="font-size: 15px;">{{ item.FirstName }} {{ item.LastName }}</p>
+              </ion-col>
+              <ion-col col-6>
+                <ion-icon color="danger" name="md-checkmark-circle-outline" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon>
+              </ion-col>
+            </ion-row>
+  
+            <!-- <h3>{{ item.FirstName }} {{ item.LastName }}</h3> -->
+            <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.Contact }}</p>
+            <p><b>Email Id :</b>{{ item.EmailID }}</p>
+            <p><b>Expected Event Date :</b> {{ item.DateOfEvent }}</p>
+            <p>Event</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button (click)="edit(item)" color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+            Edit
+          </button>
+          <button (click)="action(item)" ion-button color="primary" icon-start>
+            <ion-icon name="text"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+  <div *ngIf="isCelebrateAdd == false">
+  <form class="list-form" [formGroup]="celebrateregister">
+    <ion-row>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label floating>
+            <ion-icon name="person" item-start class="text-primary"></ion-icon>
+            First Name
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="fname" formControlName="firstname"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label floating>
+            <ion-icon name="person" item-start class="text-primary"></ion-icon>
+           Last Name
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="lname" formControlName="lastname"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="call" item-start class="text-primary"></ion-icon>
+        Contact Number
+      </ion-label>
+      <ion-input type="tel" [(ngModel)]="contactnumber" formControlName="contactnumber"></ion-input>
+    </ion-item>
+   
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+        Email Id 
+      </ion-label>
+      <ion-input type="email" [(ngModel)]="emailid" formControlName="emailaddress"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label floating>
+            <ion-icon name="map" item-start class="text-primary"></ion-icon>
+            Area 
+          </ion-label>
+          <ion-select [(ngModel)]="areaid" formControlName="area">
+            <ion-option value="1">Mumbai City</ion-option>
+            <ion-option value="2">Mumbai Suburbs</ion-option>
+            <ion-option value="3">Thane</ion-option>
+            <ion-option value="4">Panvel</ion-option>
+            <ion-option value="5">Kalyan Domivali</ion-option>
+            <ion-option value="6">Navi Mumbai</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-6>
+        <ion-item>
+          <ion-label floating>
+            <ion-icon name="alarm" item-start class="text-primary"></ion-icon>
+            Occasion  
+          </ion-label>
+          <ion-select [(ngModel)]="occassionid" formControlName="occassion">
+            <ion-option value="1">Birthday</ion-option>
+            <ion-option value="2">Anniversary</ion-option>
+            <ion-option value="3">Festival</ion-option>
+            <ion-option value="4">Others</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
+        Expected Date of the Event 
+      </ion-label>
+      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="expectedevdt" pickerFormat="YYYY-DD-MMM" formControlName="expectedevdate"></ion-datetime>
+    </ion-item>
+
+    <div class="row" style="border-bottom:0px">
+      <div class="col" style="font-size: 15px">
+        <button *ngIf="updateReq == false" (click)="registerCelebrateReq('1')" ion-button block color="success" type="submit">
+          Submit
+        </button>
+        <button *ngIf="updateReq == true" (click)="registerCelebrateReq('2')" ion-button block color="success" type="submit">
+          Update
+        </button>
+      </div>
+      <div class="col" style="text-align: right;font-size: 15px">
+        <button (click)="clearData()"  ion-button block color="dark" type="submit">
+          Clear
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+  <!-- fab placed to the bottom end -->
+<!-- <ion-fab right bottom>
+  <button (click)="addcelebratereq()" ion-fab color="light">
+    <ion-icon name="{{ iconName }}"></ion-icon>
+  </button>
+</ion-fab> -->
+</ion-content>

@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <!-- Edit Profile Information-->
+  <div *ngIf="editView == true">
+    <form class="list-form" [formGroup]="volunteradd" (ngSubmit)="updateProfile()">
+      <ion-item>
+        <div align="center" *ngFor="let photo of photos; let id = index">
+          <img class="profile-image img-top" (click)="changeProfilepic()" [src]="photo.Image">
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="person" item-start class="text-primary"></ion-icon>
+          Full Name
+        </ion-label>
+        <ion-input type="text" disabled formControlName="fullname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="locate" item-start class="text-primary"></ion-icon>
+          Address
+        </ion-label>
+        <ion-textarea type="text" formControlName="address"></ion-textarea>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+          Email
+        </ion-label>
+        <ion-input type="email" disabled formControlName="emailaddress"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="call" item-start class="text-primary"></ion-icon>
+          Mobile Number
+        </ion-label>
+        <ion-input type="tel" formControlName="mobilenumber"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
+          Date of Birth
+        </ion-label>
+        <ion-datetime displayFormat="YYYY-MMM-DD" pickerFormat="YYYY-MMM-DD" formControlName="dateofbirth"></ion-datetime>
+      </ion-item>
+
+      <div class="row" style="border-bottom:0px">
+        <div class="col" style="font-size: 15px">
+          <button ion-button block color="success" type="submit">
+            Update
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- View Profile Information-->
+  <div *ngIf="editView == false">
+    <ion-card>
+      <ion-card-header>
+        <div align="center">
+          <h1> About Me</h1>
+          <br />
+          <img class="profile-image" [src]="userLogin.Img">
+          <br />
+          <h3>
+            {{ userLogin.FullName }}
+          </h3>
+        </div>
+        <br />
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          <ion-icon name="call" item-start></ion-icon>
+          Phone : {{ userLogin.ContactNo }}
+        </p>
+        <hr>
+        <p>
+          <ion-icon name="mail" item-start></ion-icon>
+          Email : {{ userLogin.EmailID }}
+        </p>
+        <hr>
+        <p>
+          <ion-icon name="locate" item-start></ion-icon>
+          Address: {{ userLogin.Address }}
+        </p>
+        <hr>
+        <p>
+          <ion-icon name="calendar" item-start></ion-icon>
+          DOB: {{ userLogin.DOB }}
+        </p>
+      </ion-card-content>
+    </ion-card>  
+  </div>
+</ion-content>

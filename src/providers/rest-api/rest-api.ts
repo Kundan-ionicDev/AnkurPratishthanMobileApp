@@ -1,46 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AlertController, LoadingController } from 'ionic-angular';
 import { Network } from '@ionic-native/network/ngx';
+declare var cordova: any;
+import { of } from 'rxjs/observable/of';
+import * as Rx from 'rxjs';
+import {AutoCompleteService} from 'ionic2-auto-complete';
+import 'rxjs/add/operator/map'
 
 @Injectable()
 export class RestApiProvider {
   public UserRoleId: number;
   public _selectedtitle:any;
-
-  //------- API Resource( Method Names) -----------------------------------------------------------------------------
-  public _UserLogin:string ="UserLogin"; //---------------------------------- POST 
-  public _UserLogout:string ="UserLogout"; //-------------------------------- POST
-  public _UserRegister:string ="UserRegister"; //---------------------------- POST
-  public _ForgotPassword:string ="ForgotPassword"; //------------------------ POST
-  public _GetBooks:string ="GetBooks"; //------------------------------------ POST
-  public _ManageBooks:string ="ManageBooks"; //------------------------------ POST
-  public _ManageCategories:string = "ManageCategories"; //------------------- POST
-  public _ManageLanguages:string ="ManageLanguages"; //---------------------- POST 
-  public _ManagePublishers:string ="ManagePublishers"; //-------------------- POST
-  public _GetClusters:string ="GetClusters"; //------------------------------ POST
-  public _ManageClusters:string ="ManageClusters"; //------------------------ POST
-  public _GetLibrarians:string ="GetLibrarians"; //-------------------------- POST
-  public _GetRequests:string ="GetRequests"; //------------------------------ POST
-  public _ManageLibrarians:string ="ManageLibrarians"; //-------------------- POST
-  public _ManageMembers: string ="ManageMembers"; //------------------------- POST
-  public _ManageRequests: string ="ManageRequests"; //----------------------- POST
-  public _ValidateOTP: string ="ValidateOTP"; //----------------------------- POST
-  public _SendOTPEmail: string ="SendOTPEmail"; //--------------------------- POST
-  public _GetBooksData : string ="GetBooksData"; //-------------------------- POST
-  //------- End of API Resource -------------------------------------------------------------------------------------
-
+  public _activePage:any;
   httpOptions = {
       headers: new HttpHeaders({  
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : '*'
+       // 'Access-Control-Allow-Origin' : 'http://localhost:8100'
     })
   };
-
   public booksData :any;
-  public _apiURL ="https://ankurpratishthan.com:8443/APService.svc/";
+  public _apiURL ="https://ankurpratishthan.com/APService.svc/";
+  public userLoggedInData:any;
   constructor(
     private http: HttpClient,
     private alertCtrl: AlertController,
@@ -49,12 +32,13 @@ export class RestApiProvider {
   ) { 
         
   }
- 
+
+
   // Calling POST Method's 
   _postAPI(methodname:string, params: any): Observable<any> {
-    return this.http.post<any>(this._apiURL+methodname,params,  this.httpOptions).pipe(
-      tap(_ => 
-        this.log(methodname)
+    return this.http.post<Response>(this._apiURL+methodname,params,  this.httpOptions).pipe(
+      tap(_ =>
+          this.log(methodname)
         ),
         catchError(
          this.handleError(methodname, [])
@@ -68,6 +52,20 @@ export class RestApiProvider {
         tap(_ => this.log(methodname)),
         catchError(this.handleError('login', []))
       );
+    }
+
+    authenticateUser(params:any,methodname:any){
+      return new Promise((resolve,reject) => {
+        cordova.plugin.http.post(this._apiURL + methodname, 
+        params,  {
+            'Content-Type': 'application/json'
+          }, (res) => {
+            resolve(res.data);
+        }, function(err) {
+            alert('JSON.stringify(err)' + JSON.stringify(err))
+            reject(JSON.stringify(err));
+        });
+      })  
     }
 
   // Error Handling

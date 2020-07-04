@@ -1,83 +1,74 @@
-import {NgModule} from "@angular/core";
-import {IonicApp, IonicModule} from "ionic-angular";
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
-import {IonicStorageModule} from '@ionic/storage';
+import { NgModule} from "@angular/core";
+import { IonicApp, IonicModule, IonicPageModule} from "ionic-angular";
+import { BrowserModule} from '@angular/platform-browser';
+import { HttpClientModule} from '@angular/common/http';
+import { IonicStorageModule} from '@ionic/storage';
 import { HttpModule } from '@angular/http';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {Keyboard} from '@ionic-native/keyboard';
-import {ActivityService} from "../services/activity-service";
-import {MyApp} from "./app.component";
-import { SettingsPage} from "../pages/settings/settings";
-import { CheckoutTripPage} from "../pages/checkout-trip/checkout-trip";
-import { HomePage} from "../pages/home/home";
+//import { StatusBar} from '@ionic-native/status-bar/ngx';
+import { SplashScreen} from '@ionic-native/splash-screen';
+import { Keyboard} from '@ionic-native/keyboard';
+import { MyApp} from "./app.component";
 import { LoginPage} from "../pages/login/login";
 import { NotificationsPage} from "../pages/notifications/notifications";
 import { RegisterPage} from "../pages/register/register";
-import { SearchLocationPage} from "../pages/search-location/search-location";
-import { ManageRequestsPage } from "../pages/manage-requests/manage-requests";
-import { AddusersPage } from "../pages/addusers/addusers";
-import { ManagebooksPage } from "../pages/managebooks/managebooks";
 import { HelpPage } from "../pages/help/help";
-import { FaqsPage } from "../pages/faqs/faqs";
 import { ContactusPage } from "../pages/contactus/contactus";
-import { ManageOrphanePage } from "../pages/manage-orphane/manage-orphane";
 import { ZBar } from '@ionic-native/zbar/ngx';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 import { SuperTabsModule } from 'ionic2-super-tabs';
 import { IonTextAvatar } from 'ionic-text-avatar';
 import { RestApiProvider } from '../providers/rest-api/rest-api';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { QrcodePage } from "../pages/qrcode/qrcode"
 import { Camera } from '@ionic-native/camera';
-import { BookdetailsPage } from "../pages/bookdetails/bookdetails";
-import { ManageOrphanedetailsPage } from "../pages/manage-orphanedetails/manage-orphanedetails";
 import { FCM } from '@ionic-native/fcm';
 import { Device } from '@ionic-native/device';
 import { Network } from '@ionic-native/network/ngx';
 import { NgOtpInputModule } from  'ng-otp-input';
-import { MemberdetailsPage } from "../pages/memberdetails/memberdetails";
 import { CallNumber } from '@ionic-native/call-number';
 import { Contacts, Contact, ContactField, ContactName, ContactFindOptions, ContactFieldType } from '@ionic-native/contacts';
-import { LibrariandetailsPage } from "../pages/librariandetails/librariandetails";
 import { DatePicker } from '@ionic-native/date-picker';
-// import { NetworkProvider } from '../providers/network/network';
-import { BookinfoPage } from "../pages/bookinfo/bookinfo";
-
+import { MainPage } from "../pages/main/main";
+import { AcceptpayPage } from "../pages/acceptpay/acceptpay";
+import { ViewpaymentsPage } from "../pages/viewpayments/viewpayments";
+import { ManagevoluntersPage } from "../pages/managevolunters/managevolunters";
+import { ViewbirthdaysPage } from "../pages/viewbirthdays/viewbirthdays";
+import { CelebratewithusPage } from "../pages/celebratewithus/celebratewithus";
+import { ProfilePage } from "../pages/profile/profile";
+import { ViewDonorsreceiptPage } from "../pages/view-donorsreceipt/view-donorsreceipt";
+import { DonarDetailComponent } from "../components/donar-detail/donar-detail";
+import { MydonorsPage } from "../pages/mydonors/mydonors";
+import { AboutusPage } from "../pages/aboutus/aboutus";
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { AutoCompleteModule } from 'ionic2-auto-complete';
 
 @NgModule({
   declarations: [
     MyApp,
-    SettingsPage,
-    CheckoutTripPage,
-    HomePage,
     LoginPage,
     NotificationsPage,
     RegisterPage,
-    SearchLocationPage,
-    ManageOrphanePage,
-    ManageRequestsPage,
-    AddusersPage,
-    ManagebooksPage,
     HelpPage,
-    FaqsPage,
-    QrcodePage,
     IonTextAvatar,
     ContactusPage,
-    ManageOrphanedetailsPage,
-    MemberdetailsPage,
-    BookdetailsPage,
-    LibrariandetailsPage,
-    BookinfoPage
+    MainPage,
+    AcceptpayPage,
+    ManagevoluntersPage,
+    ViewpaymentsPage,
+    ViewbirthdaysPage,
+    CelebratewithusPage,
+    ProfilePage,
+    ViewDonorsreceiptPage,
+    DonarDetailComponent,
+    MydonorsPage,
+    AboutusPage
   ],
   imports: [
+    AutoCompleteModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    
     SuperTabsModule.forRoot(),
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
@@ -87,6 +78,7 @@ import { BookinfoPage } from "../pages/bookinfo/bookinfo";
     }),
     IonicStorageModule.forRoot({
       name: '__ionic3_start_theme',
+      
         driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
     NgOtpInputModule,
@@ -95,37 +87,29 @@ import { BookinfoPage } from "../pages/bookinfo/bookinfo";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    QrcodePage,
-    SettingsPage,
-    BookinfoPage,
-    CheckoutTripPage,
-    HomePage,
     LoginPage,
-    ManageOrphanePage,
     NotificationsPage,
     RegisterPage,
-    SearchLocationPage,
-    ManageOrphanePage,
-    ManageRequestsPage,
-    AddusersPage,
-    ManagebooksPage,
     HelpPage,
-    FaqsPage,
-    BookdetailsPage,
-    ManageOrphanedetailsPage,
-    MemberdetailsPage,
     ContactusPage,
-    LibrariandetailsPage
-    
+    MainPage,
+    AcceptpayPage,
+    ManagevoluntersPage,
+    ViewpaymentsPage,
+    ViewbirthdaysPage,
+    CelebratewithusPage,
+    ProfilePage,
+    ViewDonorsreceiptPage,
+    MydonorsPage,
+    AboutusPage
+   // DonarDetailComponent
   ],
   providers: [
-    StatusBar,
+    // StatusBar,
     ZBar,
     Camera,
-    BarcodeScanner,
     SplashScreen,
     Keyboard,
-    ActivityService,
     FingerprintAIO,
     RestApiProvider,
     FCM,
@@ -134,8 +118,8 @@ import { BookinfoPage } from "../pages/bookinfo/bookinfo";
     CallNumber,
     Contacts,
     DatePicker,
-    
-    // NetworkProvider
+    SocialSharing,
+    InAppBrowser
   ]
 })
 

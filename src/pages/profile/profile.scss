@@ -1,0 +1,54 @@
+page-profile {
+    .profile-image{
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border-color:green($color: #2a2c2a)
+    }
+
+    .card .img-top {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+    }
+    .card:hover .img-top {
+        display: inline;
+    }
+
+    ion-input {
+        background-color: (#ffffff, light);
+        padding-left: 10px;
+        color: #6c6c6c;
+        border-block-end: 1px solid #d4c7c7;
+    }
+
+    ion-label {
+        color: #6c6c6c;
+        
+    }
+
+    ion-select{
+        background-color: (#ffffff, light);
+        padding-left: 10px;
+        color: #6c6c6c;
+        border-block-end: 1px solid #d4c7c7;
+    }
+
+    ion-textarea {
+        background-color: (#ffffff, light);
+        padding-left: 10px;
+        color: #6c6c6c;
+        border-block-end: 1px solid #d4c7c7;
+    }
+
+    [floating] {
+        margin-left: 10px;
+    }
+
+    button {
+        float: right;
+        margin-right: 20px;
+    }
+}

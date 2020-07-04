@@ -1,11 +1,15 @@
-import {Component} from "@angular/core";
-import {NavController, AlertController, ToastController, MenuController, LoadingController} from "ionic-angular";
-import {HomePage} from "../home/home";
-import {RegisterPage} from "../register/register";
+import { Component, ViewChild } from "@angular/core";
+import { NavController, AlertController, ToastController, MenuController, LoadingController, ModalController, Platform} from "ionic-angular";
+import { RegisterPage } from "../register/register";
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 import { RestApiProvider } from "../../providers/rest-api/rest-api";
 import { FormGroup, FormControl, Validators, FormBuilder } from "@angular/forms";
 import { Device } from '@ionic-native/device';
+import { MainPage } from "../main/main";
+// import { DonarDetailComponent } from "../../components/donar-detail/donar-detail";
+// import { PrintModalPage } from "../print-modal/print-modal";
+
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 @Component({
@@ -13,13 +17,41 @@ import { Device } from '@ionic-native/device';
   templateUrl: 'login.html'
 })
 export class LoginPage {
+  loading: any;
+  loginDat = { email: '', password: ''};
+  data: any;
+  EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
-  user: FormGroup;
-  loginData: any;
   
+  lostpassword: any = 0;
+  user: FormGroup;
+  checkemail:FormGroup;
+  loginData: any;
+  madalDismissData: any;
+  config = {
+    allowNumbersOnly: true,
+    length: 4,
+    isPasswordInput: false,
+    disableAutoFocus: false,
+    placeholder:'',
+    inputStyles: {
+      'width': '50px',
+      'height': '50px',
+      'border': 'none',
+      'border-bottom': '1px solid grey'
+    }
+  };
+  verifyEmailId:any;
+  verifyform: FormGroup;
+  @ViewChild('ngOtpInput') ngOtpInputRef:any;
+  verifyotp: any;
+  isActiveToggleTextPassword: Boolean = true;
+  password_type: string = 'password';
+  @ViewChild('input') emailInput ;
+
   constructor(
     private formBuilder: FormBuilder,
-    public nav: NavController, 
+    public nav: NavController,
     public api: RestApiProvider,
     public forgotCtrl: AlertController, 
     public menu: MenuController, 
@@ -27,168 +59,205 @@ export class LoginPage {
     public apiProvider: RestApiProvider,
     public loadingCtrl: LoadingController,
     private device: Device,
+    public platform: Platform,
+    public modalCtrl: ModalController,
+    public keyboard: Keyboard,
     private faio: FingerprintAIO) {
-      this.menu.swipeEnable(false);
+      // this.platform.prepareReady();
+      
+      //keyboard.disableScroll(true);
+      localStorage.clear();
+      localStorage.removeItem('UserLogin');
+      // this.menu.swipeEnable(false);
       this.user = this.formBuilder.group({
-        emailaddress: new FormControl('kundansakpal@gmail.com', Validators.compose([
+        emailaddress: new FormControl('', Validators.compose([
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
-        password: ['kundan123',Validators.required]
+        password: ['',Validators.required]
+      });
+      
+      this.checkemail = this.formBuilder.group({
+        verifyEmailId: new FormControl('', Validators.compose([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        ]))
       });
 
-      // console.log('Device UUID is: ' + this.device.uuid);
-      // console.log('Device model is: ' + this.device.model);
-      // console.log('Device platform is: ' + this.device.platform);
-      // console.log('Device version is: ' + this.device.version);
-      // console.log('Device manufacturer is: ' + this.device.manufacturer);
-      
+      this.verifyform = this.formBuilder.group({
+        // verifyotp: ['',Validators.required],
+        password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(12), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')])],
+        confirmPassword: ['', Validators.required],
+      }, {validator: this.matchingPasswords('password', 'confirmPassword') 
+      })
+  }
+ 
+
+
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+    // TODO maybe use this https://github.com/yuyang041060120/ng2-validation#notequalto-1
+    return (group: FormGroup): {[key: string]: any} => {
+      let password = group.controls[passwordKey];
+      let confirmPassword = group.controls[confirmPasswordKey];
+
+      if (password.value !== confirmPassword.value) {
+        return {
+          mismatchedPasswords: true
+        };
+      }
+    }
   }
 
-  // go to register page
-  register() {
-    this.nav.setRoot(RegisterPage);
-  }
-
-
+  showPassword(input: any): any {
+    input.type = input.type === 'password' ?  'text' : 'password';
+   }
 
   // login and go to home page
   async login(userdata) {
+    localStorage.clear();
+    localStorage.removeItem('UserLogin');
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
-  
     loading.present();
-    // console.log(this.user.value);
-    if(this.user.valid){
-      localStorage.removeItem('UserRoleId');
-      // this.apiProvider.UserRoleId = 2;
-      let params = {
+    // this.nav.insert(0,MainPage);
+    // this.nav.popToRoot();
+
+    if(this.user.valid){     
+      let loginparams = {
         "EmailID": this.user.value.emailaddress,
-        "Password": this.user.value.password,
-        "deviceinfo": 'Model:'+this.device.model +'Manufacturer:'+this.device.manufacturer +'version:' +this.device.version,
-        "platform": this.device.platform,
-        "FCMID": localStorage.getItem('FCMToken'),
-        "IMEI": ""
+        "Password":this.user.value.password,
+        "FCM":localStorage.getItem('FCMToken')
       };
-      // alert('params' + JSON.stringify(params));
-      // let params = {"username":"SP005","password":"123"};
-      this.api._postAPI("UserLogin",params).subscribe(res => {
+      
+      this.api._postAPI("APLogin", loginparams).subscribe(res => {
+        alert('Res ::'+ JSON.stringify(res));
         // User exists
-        // alert('Login Data ::'+ JSON.stringify(res));
-        if(res.length >0){
-          if(res.UserLoginResult.Message =="Success"){
-            localStorage.removeItem('UserRoleId');
-            this.apiProvider.UserRoleId = res.UserLoginResult.RoleID;
-            this.loginData = {
-              "EmailId":res.UserLoginResult.EmailId,
-              "FullName":res.UserLoginResult.FullName,
-              "RoleID":res.UserLoginResult.RoleID
-            };
-            localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
-            // let checkdata = JSON.parse(localStorage.getItem('UserLogin'));
-            // alert('checkData' + JSON.stringify(checkdata));
-            this.nav.setRoot(HomePage);
-            loading.dismiss();
-          }else{
-            loading.dismiss();
-            this.apiProvider.presentAlert('Error',res.UserLoginResult.Message);
-          }
-        }else{
-          loading.dismiss();
-          this.apiProvider.presentAlert('Error','Please try again');
-        }
-      },(err) => {
         loading.dismiss();
-        this.apiProvider.presentAlert('Error',err);
+
+        if(res.APLoginResult[0].Message =="SUCCESS"){
+          this.loginData = {
+            "EmailID":res.APLoginResult[0].EmailID,
+            "FullName":res.APLoginResult[0].FirstName,// + ' '+ res.APLoginResult[0].LastName,
+            "RoleID":res.APLoginResult[0].RoleID,
+            "Address":res.APLoginResult[0].Address,
+            "ContactNo":res.APLoginResult[0].ContactNo,
+            "DOB":res.APLoginResult[0].DOB,
+            "LoginID":res.APLoginResult[0].LoginID,
+            "Img": res.APLoginResult[0].ImgPath
+          };
+          localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
+          //this.nav.setRoot(MainPage);
+          this.api.userLoggedInData = this.loginData;
+          
+          loading.dismiss();
+          this.nav.insert(0,MainPage);
+          this.nav.popToRoot();
+
+        }else if(res.APLoginResult[0].Message =="FAILURE"){
+          this.apiProvider.presentAlert('Alert','Invalid Login credentials');
+        }else {
+          this.apiProvider.presentAlert('Alert','Please try again');
+        }
+        
+      }, (err) => {
+        this.apiProvider.presentAlert('Error', err);
+        loading.dismiss();
       });
-     
-      // if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){
-      //   localStorage.removeItem('UserRoleId');
-      //   this.apiProvider.UserRoleId = 0;
-      // }else if(this.user.value.emailaddress =="cluster@ap.com" && this.user.value.password == "123"){
-      //   localStorage.removeItem('UserRoleId');
-      //   this.apiProvider.UserRoleId = 1;
-      // } else if(this.user.value.emailaddress =="lib@ap.com" && this.user.value.password == "123"){
-      //   localStorage.removeItem('UserRoleId');
-      //   this.apiProvider.UserRoleId = 2;
-      // }
-      
-      // localStorage.removeItem('UserRoleId');
-      // this.apiProvider.UserRoleId = 0;
-      // Check if Fingerprint or Face  is available
-      // this.faio.isAvailable()
-      // .then(result => {
-      // if(result === "finger" || result === "face"){
-      //   // Fingerprint or Face Auth is available
-      //   this.faio.show({
-      //     clientId: 'AnkurBioAuthApp',
-      //     clientSecret: 'ankurAuthDemo', //Only necessary for Android
-      //     disableBackup: true, //Only for Android(optional)
-      //     localizedFallbackTitle: 'Use Pin', //Only for iOS
-      //     localizedReason: 'Please Authenticate' //Only for iOS
-      // })
-      // .then((result: any) => {
-      //   if(result == "biometric_success"){
-      //   }
-      //   else {
-      //     alert(result);
-      //   }
-      // })
-      // .catch((error: any) => {
-      //   alert(error);
-      // });
-      // }
-      // else {
-      //     alert('Fingerprint/Face Auth is not available   on this device!');
-      //   }
-      // });
-      
     }else{
-      alert('Invalid');
+      this.apiProvider.presentAlert('Error', 'All fields are mandatory');
+      loading.dismiss();
     }
   }
   
+
+  cancel(){
+    this.lostpassword = 0;
+  }
     
   forgotPass() {
-    let forgot = this.forgotCtrl.create({
-      enableBackdropDismiss:false,
-      title: 'Forgot Password?',
-      message: "Enter you email address to send a reset link password.",
-      inputs: [
-        {
-          name: 'email',
-          placeholder: 'Email',
-          type: 'email'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Send',
-          handler: data => {
-            console.log('Send clicked');
-            let toast = this.toastCtrl.create({
-              message: 'Password is reset sucessfully. Please check your email.',
-              duration: 3000,
-              position: 'top',
-              cssClass: 'dark-trans',
-              closeButtonText: 'OK',
-              showCloseButton: true
-            });
-            toast.present();
-            this.register();
-          }
-          
-        }
-      ]
-    });
-    forgot.present();
+    this.lostpassword = 1;
   }
 
+
+  onOtpChange(otp) {   
+    // alert('otp'+ otp);
+    this.verifyotp = otp;
+  }  
+  
+  otpController(event,next,prev){
+    if(event.target.value.length < 1 && prev){
+      prev.setFocus()
+    }
+    else if(next && event.target.value.length>0){
+      next.setFocus();
+    }
+    else {
+     return 0;
+    }
+  } 
+
+  checkIfUserExists(){
+    // this.lostpassword = 2;
+    //alert('verifyEmailId' + this.verifyEmailId);
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    if(this.checkemail.valid){
+      this.verifyEmailId = this.checkemail.value.verifyEmailId;
+      let params ={"EmailID": this.checkemail.value.verifyEmailId }
+      this.api._postAPI("CheckUser", params).subscribe(res => {
+        // Check User exists then send OTP
+        loading.dismiss();
+        if(res.CheckUserResult[0].Message =="SUCCESS OTP Exists" || 
+            res.CheckUserResult[0].Message =="SUCCESS New OTP"){
+            this.lostpassword = 2;
+            this.apiProvider.presentAlert('Alert','We have sent you the OTP over email, Please enter OTP to change password.')
+            // this.register();
+        }else{
+          this.apiProvider.presentAlert('Alert',res.CheckUserResult[0].Message);
+        }
+      }, (err) => {
+        this.apiProvider.presentAlert('Error', err);
+        loading.dismiss();
+      });
+    }else{
+      this.apiProvider.presentAlert('Alert','Please Enter valid EmailId');
+    }
+  }
+
+  changepassword(){
+    // alert('this.verifyotp' + this.verifyotp);
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    if(this.verifyform.valid){
+      let params ={
+        "EmailID":this.verifyEmailId,
+        "Password":this.verifyform.value.password,
+        "Otp":this.verifyotp
+      }
+      // alert('verfy password '+ JSON.stringify(params));
+      //{"ChangePasswordResult":[{"Message":"SUCCESS"}]
+      this.api._postAPI("ChangePassword", params).subscribe(res => {
+        // Check User exists then send OTP
+        loading.dismiss();
+        // alert('res.ChangePasswordResult' + JSON.stringify(res.ChangePasswordResult));
+        if(res.ChangePasswordResult[0].Message =="SUCCESS Password change"){
+          this.lostpassword = 0;
+          this.apiProvider.presentAlert('Alert','Password is reset sucessfully.');
+        }else{
+          this.apiProvider.presentAlert('Alert','Error while password reset');
+        }
+      }, (err) => {
+        this.apiProvider.presentAlert('Error', err);
+        loading.dismiss();
+      });
+    }else{
+      this.apiProvider.presentAlert('Alert','Verification failed...Please try again');
+    }
+  }
 }
+ 

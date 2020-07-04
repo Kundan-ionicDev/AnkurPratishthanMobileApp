@@ -1,3 +1,33 @@
-page-login,
-.login {
+page-login{
+  .Loginlogo {
+    width: 200px;
+    height: 160px;
+    margin: 20px auto 0;
+    border-radius: 10%;
+    background: url("../assets/icon/icon.png") no-repeat;
+    background-size: 100%;
+  }
+    .login-logo {
+        padding: 20px 0;
+        min-height: 200px;
+        text-align: center;
+      }
+      
+      .login-logo img {
+        max-width: 150px;
+      }
+      
+      .list {
+        margin-bottom: 0;
+      }
+      :host {
+        ion-content {
+            --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+        }
+    }
+    
+    .paz {
+        position: relative;
+        z-index: 10;
+    }
 }

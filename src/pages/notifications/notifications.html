@@ -1,28 +1,11 @@
-<ion-content class="common-bg">
- 
-<ion-list>
-  <ion-list-header>
-    Notifications
-  </ion-list-header>
-  <ion-item>
-    <ion-row>
-      <ion-col></ion-col>
-    </ion-row>
-    <ion-label>
-      <h3><strong>Kundan Sakpal</strong></h3>
-      <h4>Request Accepted</h4>
-      <p>Doreamon</p>
-      <span><ion-icon name="checkmark"></ion-icon></span>
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label>
-      <h3><strong>Pranav Bhonde</strong></h3>
-      <h4>Request Rejected</h4>
-      <p>Book Not available</p>
-     <span> <ion-icon name="close"></ion-icon></span>
-    </ion-label>
-  </ion-item>
-</ion-list>
-
+<ion-content class="common-bg"> 
+  <ion-list>
+    <!-- <ion-list-header>Ionic</ion-list-header> -->
+    <button ion-item (click)="profile()">View Profile</button>
+    <button ion-item (click)="editProfile()">Edit profile</button>
+    <button ion-item *ngIf="userLogin.RoleID == '1'" (click)="volunteer()">Volunteers</button>
+    <button ion-item (click)="ContactUs()">Contact us</button>
+    <button ion-item (click)="Help()">Help</button>
+    <button ion-item (click)="logout()">Log Out</button>
+  </ion-list>
 </ion-content>

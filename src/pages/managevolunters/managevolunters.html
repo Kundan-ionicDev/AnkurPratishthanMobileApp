@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>NGO Volunters</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="isVolunteradd == false">
+    <ion-list>
+      <ion-list-header>List of Volunteers</ion-list-header>
+      <ion-item-sliding *ngFor="let item of volunteerData">
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img height="150px" [src]="item.Img" />
+          </ion-thumbnail>
+          <ion-label>
+            <ion-row>
+              <ion-col col-6>
+                <p style="font-size: 15px;">{{ item.FirstName }} {{ item.LastName }}</p>
+              </ion-col>
+              <ion-col col-6 *ngIf="dateTime | date:'yyyy-MM-dd' == item.DOB">
+                <ion-icon color="primary" name="calendar" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <p (click)="openGooglemap(item.Address,item.MemberName)"><b>Address:</b> {{ item.Address }}</p>
+            <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.ContactNo }}</p>
+            <p><b>DOB :</b> {{ item.DOB }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button (click)="editmember(item)" color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+            Edit
+          </button>
+          <button (click)="confirmDelete(item)" ion-button color="primary" icon-start>
+            <ion-icon name="text"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>  
+</div>
+
+  <div *ngIf="isVolunteradd == true">
+    <!-- Add New Member -->
+    <button (click)="getContacts()" slot="end" ion-button icon-start>
+      <ion-icon name="contact"></ion-icon>
+      Add from phone Contact
+    </button>
+
+    <form class="list-form" [formGroup]="volunteradd">
+      <!-- <p color="dark" style="font-size: 15px;" stacked>Add New Volunteer</p> -->
+
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="person" item-start class="text-primary"></ion-icon>
+              First Name
+            </ion-label>
+            <ion-input type="text" [(ngModel)]="name" formControlName="firstname"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="person" item-start class="text-primary"></ion-icon>
+              Last Name
+            </ion-label>
+            <ion-input type="text" [(ngModel)]="lname"  formControlName="lastname"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="locate" item-start class="text-primary"></ion-icon>
+          Address
+        </ion-label>
+        <ion-textarea type="text" formControlName="address"></ion-textarea>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+          Email
+        </ion-label>
+        <ion-input type="email" [(ngModel)]="email" formControlName="emailaddress"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="call" item-start class="text-primary"></ion-icon>
+          Mobile Number
+        </ion-label>
+        <ion-input type="tel" [(ngModel)]="mobile" formControlName="mobilenumber"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
+          Date of Birth
+        </ion-label>
+        <ion-datetime displayFormat="YYYY-DD-MMM"  pickerFormat="YYYY-DD-MMM" formControlName="dateofbirth"></ion-datetime>
+      </ion-item>
+
+      <div class="row" style="border-bottom:0px">
+        <div class="col" style="font-size: 15px">
+          <button *ngIf="reqUpdate == false" (click)="registerVolunteer('1')" ion-button block color="success" type="submit">
+            Save
+          </button>
+          <button *ngIf="reqUpdate == true" (click)="registerVolunteer('2')" ion-button block color="success" type="submit">
+            Update
+          </button>
+        </div>
+        <div class="col" style="text-align: right;font-size: 15px">
+          <button (click)="clearData()"  ion-button block color="dark" type="submit">
+            Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+<!-- fab placed to the bottom end -->
+<ion-fab right bottom>
+  <button (click)="addvolunteer()" ion-fab color="light">
+    <ion-icon name="{{ iconName }}"></ion-icon>
+  </button>
+</ion-fab>
+</ion-content>

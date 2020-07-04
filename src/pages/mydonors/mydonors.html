@@ -1,0 +1,115 @@
+<!--
+  Generated template for the MydonorsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+   <ion-title> My Donors</ion-title>
+</ion-navbar>
+</ion-header>
+
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+        <ion-label color="light">
+          <ion-label color="light" class="fw700">My Donors</ion-label>
+        </ion-label>
+    </ion-title>
+    <ion-buttons slot="end">
+      <button ion-button size="small" shape="round" color="medium" >
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end">2</ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar color="dark">
+    <ion-searchbar ></ion-searchbar>
+    <ion-buttons slot="end">
+      <button ion-button size="small" shape="round" color="medium" >
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content padding>
+  <ion-segment [(ngModel)]="donorsform">
+    <ion-segment-button (click)="changeAvatar()" class="segbtn1" value="donors">
+      My Donors
+    </ion-segment-button>
+    <ion-segment-button (click)="changeAvatar()" class="segbtn2" value="birthdays">
+      Donor's Birthday's
+    </ion-segment-button>
+  </ion-segment>
+
+  
+<div [ngSwitch]="donorsform">
+  <div *ngSwitchCase="'donors'">
+    <ion-searchbar class="searchbar-input" animated debounce="500" (ionInput)="filterItems($event)" showCancelButton="always"></ion-searchbar>
+    <br />
+  <ion-list>   
+    <ion-item-sliding *ngFor="let item of donarsData">
+        <ion-item *ngIf="item.TemporaryFlag == 0">
+          <ion-label>
+            <p><b>Donated By:</b>{{ item.Prefix }}. {{ item.FullName }}</p>
+            <p><b>Volunteer :&nbsp;</b>{{ item.CreatedBy }} </p>
+            <p><b>Donation Towards:&nbsp;</b> {{ item.DonationTowards }}</p>
+            <p><b>Amount:&nbsp;</b>Rs.  {{ item.Amount }}</p>
+            <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:&nbsp;</b>{{ item.ContactNo }}</p>
+            <p><b>DOB :&nbsp;</b> {{ item.DOB }}</p>
+            <!-- Accepted -->
+            <p *ngIf="item.AcceptFlag == 0"><b>Status :&nbsp;</b>Rejected</p>
+            <!-- Rejected -->
+            <p *ngIf="item.AcceptFlag == 1"><b>Status :&nbsp;</b>Accepted</p>
+            <!-- Pending -->
+            <p *ngIf="item.AcceptFlag == 2"><b>Status :&nbsp;</b>Pending</p>
+            <p *ngIf="item.AcceptFlag == 0">
+              <b>Rejected Reason :&nbsp;</b> {{ item.DeclineReason }}
+            </p>
+          </ion-label>
+        </ion-item>
+    </ion-item-sliding>
+  </ion-list>  
+  </div>
+  <div padding *ngSwitchCase="'birthdays'">
+    <ion-list>
+      <ion-list-header>This Month birthdays</ion-list-header>
+      <ion-item-sliding *ngFor="let item of birthdaydata">
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img *ngIf="item.Prefix == 'Shri'" height="150px" src="assets/icon/shri.png" />
+            <img *ngIf="item.Prefix == 'Smt'" height="150px" src="assets/icon/smt.png" />
+            <img *ngIf="item.Prefix == 'Kum'" height="150px" src="assets/icon/miss.png" />
+          </ion-thumbnail>
+          <ion-label>
+            <ion-row>
+              <ion-col col-6>
+                <p style="font-size: 15px;">{{ item.FullName }}</p>
+              </ion-col>
+              <ion-col col-6 *ngIf="item.BirthdayFlag == 'True'">
+                <ion-icon color="danger" name="md-checkmark-circle-outline" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.ContactNo }}</p>
+            <p><b>Email Id :</b>{{ item.EmailID }}</p>
+            <p><b>DOB :</b> {{ item.DOB }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button *ngIf="item.BirthdayFlag == 'True'" color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+              Greeting Already Sent
+          </button>
+          <button ion-button  *ngIf="item.BirthdayFlag == 'False'" (click)="sendGreeting(item)" color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+              Send Greeting
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</div>
+
+</ion-content>
