@@ -16,6 +16,6 @@ constructor(
   public loadingCtrl: LoadingController, 
   public toastCtrl: ToastController) {
     this.value = navParams.get('bookInfo');
-    this.strResult = "https://ankurpratishthan.com:8443/"+this.value.ThumbImage;
+    this.strResult = "https://ankurpratishthan.com"+this.value.ThumbImage;
   }
 }

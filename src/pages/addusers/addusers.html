@@ -16,7 +16,7 @@
       <ion-item-sliding *ngFor="let item of librariabdata">
         <ion-item>
           <ion-thumbnail item-start>
-            <img height="150px" src="https://ankurpratishthan.com:8443{{ item.Image }}" />
+            <img height="150px" src="https://ankurpratishthan.com{{ item.Image }}" />
           </ion-thumbnail>
           <ion-label>
             <h3>{{ item.FirstName }} {{ item.LastName }} </h3>
@@ -48,7 +48,7 @@
       <ion-item-sliding *ngFor="let item of memberdata">
         <ion-item>
           <ion-thumbnail item-start>
-            <img height="150px" src="https://ankurpratishthan.com:8443{{ item.Image }}" />
+            <img height="150px" src="https://ankurpratishthan.com{{ item.Image }}" />
           </ion-thumbnail>
           <ion-label>
             <h3>{{ item.FirstName }} {{ item.LastName }}</h3>
@@ -77,7 +77,7 @@
     <ion-list-header>List of {{ pagetitle }}</ion-list-header>
     <ion-card class="accordion" *ngFor="let item of clustrdata">
        <ion-thumbnail item-start>
-        <img height="150px" src="https://ankurpratishthan.com:8443{{ item.Image }}" />
+        <img height="150px" src="https://ankurpratishthan.com{{ item.Image }}" />
       </ion-thumbnail>
       
       <ion-card-content id="second" style="display: block">

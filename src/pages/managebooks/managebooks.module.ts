@@ -12,5 +12,8 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     IonicPageModule.forChild(ManagebooksPage),
     SuperTabsModule
   ],
+  // entryComponents:[
+  //   ManagebooksPage
+  // ]
 })
 export class ManagebooksPageModule {}

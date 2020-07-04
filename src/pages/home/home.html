@@ -30,25 +30,25 @@
 </div>
 <ion-grid class="grid">
 <ion-row class="categories">
-  <ion-col col-6 (click)="openPage(0,'Books Management')">
+  <ion-col col-6 (click)="openPage('ManagebooksPage','')">
     <div style="background-color:darkcyan;">
         <ion-icon style="text-align: center;margin-top:20px"  ios="ios-book" md="md-book"></ion-icon>
       </div>
     <p class="text-over-img">Book Managment</p>
   </ion-col>
-  <ion-col col-6 (click)="openPage(1,'Cluster Management')" >
+  <ion-col col-6 (click)="openPage('AddusersPage','Cluster Management')" >
     <div style="background-color:fuchsia;">
       <ion-icon style="text-align: center;margin-top:20px" ios="ios-infinite" md="md-infinite"></ion-icon>
     </div>
     <p class="text-over-img">Cluster Managment</p>
   </ion-col>
-  <ion-col col-6 (click)="navigate(4,'Check Management')">
+  <ion-col col-6 (click)="navigate('ManageRequestsPage','Approvals')">
     <div style="background-color:deepskyblue;">
       <ion-icon style="text-align: center;margin-top:20px" ios="ios-card" md="md-card"></ion-icon>
     </div>
     <p class="text-over-img">Check Requests</p>
   </ion-col>
-  <ion-col col-6 (click)="navigate(6,'Librarian Management')">
+  <ion-col col-6 (click)="navigate('AddusersPage','Librarian Management')">
     <div style="background-color:darkblue;">
         <ion-icon style="text-align: center;margin-top:20px" name="ios-information-circle"></ion-icon>
       </div>

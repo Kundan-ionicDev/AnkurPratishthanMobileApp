@@ -43,6 +43,7 @@
     "chart.js": "^2.9.3",
     "cordova-android": "^8.1.0",
     "cordova-ios": "^4.4.0",
+    "cordova-plugin-advanced-http": "^2.4.1",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-contacts": "^3.0.1",
@@ -59,6 +60,7 @@
     "ionic-text-avatar": "^1.1.0",
     "ionic2-super-tabs": "^4.3.1",
     "ionicons": "3.0.0",
+    "mx.ferreyra.callnumber": "0.0.2",
     "ng-otp-input": "^1.7.0",
     "phonegap-plugin-barcodescanner": "^8.1.0",
     "rxjs": "^6.0.0",
@@ -87,7 +89,9 @@
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
-      "cordova-plugin-camera": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
       "cordova-plugin-fcm-with-dependecy-updated": {
         "FCM_CORE_VERSION": "16.0.9",
         "FCM_VERSION": "18.0.0",
@@ -97,7 +101,8 @@
       "cordova-plugin-network-information": {},
       "mx.ferreyra.callnumber": {},
       "cordova-plugin-contacts": {},
-      "cordova-plugin-datepicker": {}
+      "cordova-plugin-datepicker": {},
+      "call-number": {}
     },
     "platforms": [
       "ios",

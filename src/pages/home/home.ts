@@ -7,6 +7,9 @@ import {SearchLocationPage} from "../search-location/search-location";
 import { Chart } from 'chart.js';
 import { BarcodeScannerOptions, BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { RestApiProvider } from "../../providers/rest-api/rest-api";
+import { MemberdetailsPage } from "../memberdetails/memberdetails";
+import { AllbooksPage } from "../allbooks/allbooks";
+import { ManageOrphanedetailsPage } from "../manage-orphanedetails/manage-orphanedetails";
 
 
 @Component({
@@ -76,12 +79,16 @@ export class HomePage {
       this.checkdata = JSON.parse(localStorage.getItem('UserLogin'));
     }
     
-  openPage(page, title) {
+  openPage(title,page) {
     // alert('page'+ title);
-    this.apiProvider._selectedtitle = title;
+    // this.apiProvider._selectedtitle = title;
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.push(page.component);
+    // this.nav.push(title);
+    this.apiProvider._selectedtitle = page;
+    this.nav.push(page,{
+      'title':title
+    });
   }
   
   scanCode() {

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AlertController, LoadingController } from 'ionic-angular';
 import { Network } from '@ionic-native/network/ngx';
+declare var cordova: any;
 
 @Injectable()
 export class RestApiProvider {
@@ -35,12 +36,13 @@ export class RestApiProvider {
   httpOptions = {
       headers: new HttpHeaders({  
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : '*'
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Headers':'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
     })
   };
 
   public booksData :any;
-  public _apiURL ="https://ankurpratishthan.com:8443/APService.svc/";
+  public _apiURL ="https://ankurpratishthan.com/APService.svc/";
   constructor(
     private http: HttpClient,
     private alertCtrl: AlertController,
@@ -70,6 +72,20 @@ export class RestApiProvider {
       );
     }
 
+    authenticateUser(params:any,methodname:any){
+      return new Promise((resolve,reject) => {
+        cordova.plugin.http.post(this._apiURL + methodname, 
+        params,  {
+            'Content-Type': 'application/json'
+          }, (res) => {
+            resolve(res.data);
+        }, function(err) {
+            alert('JSON.stringify(err)' + JSON.stringify(err))
+            reject(JSON.stringify(err));
+        });
+      })  
+    }
+
   // Error Handling
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -80,7 +96,7 @@ export class RestApiProvider {
       //   'Status':error.status,
       //   'statusText':error.statusText
       // };
-      this.presentAlert('Error', error.status + ' '+ error.statusText)
+      //this.presentAlert('Error', error.status + ' '+ error.statusText)
       // localStorage.setItem('HttpResponse',JSON.stringify(errormsg));
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);

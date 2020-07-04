@@ -59,6 +59,15 @@ export class LoginPage {
     });
   
     loading.present();
+    
+    // let params = {"EmailID":"Volunteer@ap.com","Password":"vol123","FCM":""};
+    // this.api._postAPI("APLogin", params).subscribe(res => {
+    //   // User exists
+    //    alert('API Data ::'+ JSON.stringify(res));
+    //   }, (err) => {
+    //    alert('Error:' + err);
+    // });
+
     // console.log(this.user.value);
     if(this.user.valid){
       localStorage.removeItem('UserRoleId');
@@ -71,13 +80,15 @@ export class LoginPage {
         "FCMID": localStorage.getItem('FCMToken'),
         "IMEI": ""
       };
+
+      this.api._postAPI("UserLogin",params).subscribe(res => {
       // alert('params' + JSON.stringify(params));
       // let params = {"username":"SP005","password":"123"};
-      this.api._postAPI("UserLogin",params).subscribe(res => {
-        // User exists
-        // alert('Login Data ::'+ JSON.stringify(res));
-        if(res.length >0){
-          if(res.UserLoginResult.Message =="Success"){
+     
+      // User exists
+       // alert('Login Data ::'+ JSON.stringify(res));
+      // if(res.length >0){
+          if(res.UserLoginResult.Message == "Success"){
             localStorage.removeItem('UserRoleId');
             this.apiProvider.UserRoleId = res.UserLoginResult.RoleID;
             this.loginData = {
@@ -92,15 +103,15 @@ export class LoginPage {
             loading.dismiss();
           }else{
             loading.dismiss();
-            this.apiProvider.presentAlert('Error',res.UserLoginResult.Message);
+            this.apiProvider.presentAlert('Error1',res.UserLoginResult.Message);
           }
-        }else{
-          loading.dismiss();
-          this.apiProvider.presentAlert('Error','Please try again');
-        }
+        // }else{
+        //   loading.dismiss();
+        //   this.apiProvider.presentAlert('Error','Please try again');
+        // }
       },(err) => {
         loading.dismiss();
-        this.apiProvider.presentAlert('Error',err);
+        this.apiProvider.presentAlert('Error2s',err);
       });
      
       // if(this.user.value.emailaddress =="admin@ap.com" && this.user.value.password == "123"){

@@ -45,6 +45,7 @@ import { LibrariandetailsPage } from "../pages/librariandetails/librariandetails
 import { DatePicker } from '@ionic-native/date-picker';
 // import { NetworkProvider } from '../providers/network/network';
 import { BookinfoPage } from "../pages/bookinfo/bookinfo";
+//import { AllbooksPage } from "../pages/allbooks/allbooks";
 
 
 @NgModule({
@@ -70,16 +71,16 @@ import { BookinfoPage } from "../pages/bookinfo/bookinfo";
     MemberdetailsPage,
     BookdetailsPage,
     LibrariandetailsPage,
-    BookinfoPage
+    BookinfoPage,
+    //AllbooksPage
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    
-    SuperTabsModule.forRoot(),
     HttpClientModule,
+    SuperTabsModule.forRoot(),   
     IonicModule.forRoot(MyApp, {
       scrollPadding: true,
       scrollAssist: true,
@@ -115,8 +116,8 @@ import { BookinfoPage } from "../pages/bookinfo/bookinfo";
     ManageOrphanedetailsPage,
     MemberdetailsPage,
     ContactusPage,
-    LibrariandetailsPage
-    
+    LibrariandetailsPage,
+   // AllbooksPage
   ],
   providers: [
     StatusBar,

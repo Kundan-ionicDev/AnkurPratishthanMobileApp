@@ -57,7 +57,7 @@ export class MyApp {
     this.appMenuItems = [
       // Menu for Admin
       { title: 'Home', component: HomePage, icon: 'home', roleId: 1 },
-      { title: 'Book Management', component: ManagebooksPage, icon: 'book-outline', roleId: 1 },
+      { title: 'Book Management', component: ManagebooksPage, icon: 'book', roleId: 1 },
       { title: 'Cluster Management', component: AddusersPage, icon: 'ios-add-circle-outline', roleId: 1 },
       { title: 'Librarian Management', component: AddusersPage, icon: 'md-person', roleId: 1 },
       { title: 'Member Management', component: AddusersPage, icon: 'ios-people', roleId: 1 },
@@ -69,7 +69,7 @@ export class MyApp {
 
       // Menu for Librarian 
       { title: 'Home',component: HomePage, icon: 'home',roleId: 2 },
-      { title: 'Book Circulation',component: ManagebooksPage, icon: 'book-outline', roleId: 2 },
+      { title: 'Book Circulation',component: ManagebooksPage, icon: 'book', roleId: 2 },
       { title: 'Member Management', component: AddusersPage, icon: 'people',roleId: 2 },
       { title: 'Contact us', component: ContactusPage, icon: 'call', roleId: 2 },
 

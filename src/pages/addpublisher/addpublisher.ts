@@ -117,8 +117,7 @@ export class AddpublisherPage {
     }else{
       this.ispublisheradd = false;
       this.iconName = "add";
-    }
-   
+    }   
   }
 
 }
