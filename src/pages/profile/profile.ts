@@ -24,16 +24,18 @@ export class ProfilePage {
   editView: boolean;
   userLogin: any;
   volunteradd: FormGroup;
-  image: string;
+  image: string="";
   photos = [];
   picture = [];
   imagePath : any ="data:image/jpeg;base64,";
-  loginData: {
-  EmailID: any;LoginID:any,FullName: string,RoleID: string,Address: any; ContactNo: any; DOB: any; Img: string; // res.APLoginResult[0].Img
-  };
+  
   img: string;
   private _anEmitter: EventEmitter< any >;
-  
+  startDate: string;
+  minDate: string;
+  maxDate: string;
+  loginData: { EmailID: any; FullName: any; FirstName: any; LastName: any; RoleID: any; Address: any; ContactNo: any; DOB: any; LoginID: any; Img: string; };
+
   constructor(
     public events : Events,
     public apiProvider: RestApiProvider,
@@ -46,6 +48,21 @@ export class ProfilePage {
     public navCtrl: NavController, 
     public changeDetector: ChangeDetectorRef,
     public navParams: NavParams) {
+      // this.startDate = new Date().toISOString(); 
+      // this.minDate = new Date().toISOString();
+      // this.maxDate = new Date().toISOString();
+
+      var MyDate = new Date();
+      var MyDateString;
+      MyDate.setDate(MyDate.getDate() + 1);
+      MyDateString = MyDate.getFullYear() + '-' + ('0' + (MyDate.getMonth()+1)).slice(-2) + '-' + ('0' + MyDate.getDate()).slice(-2) ;
+
+      this.startDate = MyDateString; 
+      this.minDate = MyDateString; //new Date().toISOString();
+      this.maxDate = MyDateString;
+      
+      // console.log('this.startDate'+ this.startDate + 'Mini:'+ this.minDate + 'Max:'+ this.maxDate);
+      
       // this.image = "assets/icon/person.png";
       this.person = {name: undefined, company: undefined, birthdate: undefined};
       this.dob = undefined;
@@ -64,21 +81,37 @@ export class ProfilePage {
         { "Image":this.userLogin.Img }
        );
 
-       this.events.subscribe('userImage', (user) => {  
+       this.events.subscribe('loginData', (user) => {  
+        this.photos = [];
+        // alert('user'+ JSON.stringify(user));
         // user and time are the same arguments passed in `events.publish(user, time)`
-        //this.Profileimg = user;
+        // this.Profileimg = user;
         this.changeDetector.detectChanges();
         this.photos.push(
-          { "Image":user }
+          { "Image":user.Img }
          );
-         this.userLogin.Img = user;
+         this.userLogin.Img = user.Img;
+         
+         this.loginData = {
+          "EmailID":user.EmailID,
+          "FullName":this.userLogin.FullName,
+          "FirstName":user.FirstName,
+          "LastName": user.LastName,
+          "RoleID":user.RoleID,
+          "Address":user.Address,
+          "ContactNo":user.ContactNo,
+          "DOB":user.DOB,
+          "LoginID":user.LoginID,
+          "Img": user.Img
+        };
         // alert('Profileimg ' + this.Profileimg);
       });
 
       this.editView = navParams.get('editView');
       // alert('editView' + this.editView);
       this.volunteradd = this.formBuilder.group({
-        fullname: ['', Validators.required],
+        fname: ['', Validators.required],
+        lname: ['', Validators.required],
         emailaddress: new FormControl('', Validators.compose([
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -89,13 +122,14 @@ export class ProfilePage {
       });
 
       this.volunteradd.setValue({
-        fullname : this.userLogin.FullName,
+        fname : this.userLogin.FirstName,
+        lname : this.userLogin.LastName,
         emailaddress : this.userLogin.EmailID,
         dateofbirth : this.userLogin.DOB,
         address : this.userLogin.Address,
         mobilenumber : this.userLogin.ContactNo
       });
-      //alert('Data ::'+ JSON.stringify(this.volunteradd.value));
+      // alert('Data :'+ JSON.stringify(this.volunteradd.value));
   }
 
   ionViewDidLoad() {
@@ -165,12 +199,12 @@ export class ProfilePage {
          // alert('imageData'+ JSON.stringify(imageData));
          // this.image = 'data:image/jpeg;base64,'+imageData;
          this.image = imageData;
-         // alert('image : '+ this.image);
+         //alert('image : '+ JSON.stringify(this.photos));
            this.photos.push(
             { "Image":this.imagePath + this.image }
            );
 
-         this.photos.reverse();
+         //this.photos.reverse();
          this.picture = imageData;
             }, (err) => {
              this.displayErrorAlert(err);
@@ -192,12 +226,12 @@ export class ProfilePage {
           // alert('imageData'+ JSON.stringify(imageData));
           //this.image = 'data:image/jpeg;base64,' + imageData;
           this.image = imageData;
-          // alert('image : '+ this.image);
+          //alert('image : '+ JSON.stringify(this.photos));
           this.photos.push(
             { "Image":this.imagePath + this.image }
           );
             // alert('photos length' + JSON.stringify(this.photos.length));
-          this.photos.reverse(); 
+          // this.photos.reverse(); 
         }, (err) => {
           this.displayErrorAlert(err);
       });
@@ -217,17 +251,22 @@ export class ProfilePage {
       content: 'Please wait...'
     });
     loading.present();
-    if(this.volunteradd.valid){
+      // if(this.volunteradd.valid){
+      // if(this.image == undefined){
+      //     this.image = this.userLogin.Img
+      //   }
       let profileparams = {
         "EmailID": this.volunteradd.value.emailaddress,
         "ContactNo": this.volunteradd.value.mobilenumber,
         "DOB": this.volunteradd.value.dateofbirth,
         "Address": this.volunteradd.value.address,
         "LoginID": this.userLogin.LoginID,
+        "FirstName":this.volunteradd.value.fname,
+        "LastName":this.volunteradd.value.lname,
         "Img": this.image
       };
 
-      //alert('profile update '+ JSON.stringify(profileparams));
+      // alert('profile update ::'+ JSON.stringify(profileparams) + this.image + this.maxDate + this.startDate);
       this.api._postAPI("UpdateProfile", profileparams).subscribe(res => {
         //alert('Respnse' + JSON.stringify(res));
         loading.dismiss();
@@ -246,6 +285,8 @@ export class ProfilePage {
           this.loginData = {
             "EmailID":res.UpdateProfileResult[0].EmailID,
             "FullName":this.userLogin.FullName,
+            "FirstName":res.UpdateProfileResult[0].FirstName,
+            "LastName": res.UpdateProfileResult[0].LastName,
             "RoleID":res.UpdateProfileResult[0].RoleID,
             "Address":res.UpdateProfileResult[0].Address,
             "ContactNo":res.UpdateProfileResult[0].ContactNo,
@@ -255,7 +296,7 @@ export class ProfilePage {
           };
 
           localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
-          this.events.publish('userImage', this.img);
+          this.events.publish('loginData', this.loginData);
           this.api.presentAlert('Alert','Profile Updated Sucessfully' );
         }else{
           this.api.presentAlert('Alert','Error while updating profile, please try again later');
@@ -264,10 +305,10 @@ export class ProfilePage {
         this.apiProvider.presentAlert('Error', err);
         loading.dismiss();
       });
-    }else{
-      loading.dismiss();
-      this.api.presentAlert('Alert','All fields are mandatory');      
-    }
+    // }else{
+    //   loading.dismiss();
+    //   this.api.presentAlert('Alert','All fields are mandatory');      
+    // }
     loading.dismissAll();
   }
 

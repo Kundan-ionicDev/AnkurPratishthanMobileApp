@@ -1,10 +1,10 @@
 <ion-header>
   <ion-navbar style="height: 60px;" color="primary">
     <ion-title>
-      <strong>Ankur</strong> Prathishthan
+      <strong>Ankur</strong> Pratishthan
       <!-- <img (click)="presentNotifications($event)" class='nav-avatar' [src]="Profileimg">
       <br /> -->
-      <div style="font-size:small;font-family: sans-serif;">Welcome, {{ userLogin.FullName }} !!</div>
+      <div style="font-size:small;font-family: sans-serif;">Welcome, {{ userName }} !!</div>
     </ion-title>
     <ion-buttons end>
       <!--  <button ion-button tappable (click)="profile($event)">
@@ -126,6 +126,9 @@
           </ion-col> -->
           <ion-col>
             <img (click)="socialsite('4')" style="width: 20px; height: 20px;text-align: center;" src="assets/icon/website.png">
+          </ion-col>
+          <ion-col>
+            <img (click)="socialsite('5')" style="width: 20px; height: 20px;text-align: center;" src="assets/icon/twitter.png">
           </ion-col>
         </ion-row>
       </ion-grid>

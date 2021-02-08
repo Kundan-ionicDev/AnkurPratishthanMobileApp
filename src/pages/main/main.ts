@@ -46,6 +46,7 @@ export class MainPage {
   };
   subscription: any;
   Profileimg:any;
+  userName: any;
   constructor(
     public platform: Platform,
     private iab: InAppBrowser,
@@ -60,11 +61,27 @@ export class MainPage {
     public changeDetector: ChangeDetectorRef) {
       this.userLogin = JSON.parse(localStorage.getItem('UserLogin'));
       this.Profileimg = this.userLogin.Img;
+      this.userName = this.userLogin.FullName;
       //this.userLogin = this.apiProvider.userLoggedInData;
-      this.events.subscribe('userImage', (user) => {  
+      this.events.subscribe('loginData', (user) => {  
+       // alert('JSON'+ JSON.stringify(user));
         // user and time are the same arguments passed in `events.publish(user, time)`
-        this.Profileimg = user;
+        this.Profileimg = user.Img;
+        this.userName = user.FullName;
+        // this.userLogin.FullName = user.FullName;
         this.changeDetector.detectChanges();
+        this.userLogin = {
+          "EmailID":user.EmailID,
+          "FullName":this.userLogin.FullName,
+          "FirstName":user.FirstName,
+          "LastName": user.LastName,
+          "RoleID":user.RoleID,
+          "Address":user.Address,
+          "ContactNo":user.ContactNo,
+          "DOB":user.DOB,
+          "LoginID":user.LoginID,
+          "Img": user.Img
+        };
         // alert('Profileimg ' + this.Profileimg);
       });
       this.getSlides();
@@ -146,6 +163,8 @@ export class MainPage {
       });
     }else if(id == '4'){
       this.openWithSystemBrowser("http://www.ankurpratishthan.org/");
+    }else if(id == '5'){
+      this.openWithSystemBrowser("https://twitter.com/ngoankur");
     }
   }
 

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ankurdonationapp.credence" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>DonationApp</name>
+<widget id="com.ankurdonationapp.credence" version="0.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Donation Management System</name>
     <description>Ankur Pratishthan mobile app Donation management system.</description>
     <author email="kundan.mobileappdev@gmail.com" href="https://credence.com">Credence Technologies</author>
     <content src="index.html" />

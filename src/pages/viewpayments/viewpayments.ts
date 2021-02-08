@@ -25,6 +25,7 @@ export class ViewpaymentsPage {
   userLogin: any;
   selected: string;
   celebrateusData: any;
+  mydonarRequests: any;
 
   constructor(
     private callNumber: CallNumber,
@@ -35,9 +36,13 @@ export class ViewpaymentsPage {
     public apiProvider: RestApiProvider,
     public navCtrl: NavController, 
     public alertCtrl: AlertController,
-    public navParams: NavParams) {
-      this.selected= "donors";
+    public navParams: NavParams) {     
       this.userLogin = JSON.parse(localStorage.getItem('UserLogin'));
+      if(this.userLogin.RoleID == 1){
+        this.selected= "myrequest";
+      }else{
+        this.selected= "donors";
+      }
       this.getDonors();
   }
 
@@ -58,7 +63,7 @@ export class ViewpaymentsPage {
   // }
 
   ionViewWillEnter(){
-    this.getDonors();
+    //this.getDonors();
     this.getCelebrateReq();
   }
 
@@ -85,9 +90,13 @@ export class ViewpaymentsPage {
     await alert.present();
   }
 
+  myDonors(){
+    this.selected= "myrequest";
+  }
+
   selectedDonors(){
-    // alert('Donors');
     this.selected= "donors";
+    this.getDonors();
   }
 
   getCelebrateReq(){
@@ -136,13 +145,25 @@ export class ViewpaymentsPage {
     // });
     // loading.present();
     let params = {"EmailID": this.userLogin.EmailID,"RoleID":this.userLogin.RoleID };
-    //alert('params' + JSON.stringify(params))
+    // alert('params' + JSON.stringify(params))
     this.apiProvider._postAPI("GetDonors", params).subscribe(res => {
       // Get Donars 
      // loading.dismiss();
-      //alert('GetDonorsResult Data ::'+ JSON.stringify(res));
+      //alert('GetDonorsResult Data ::'+ res.GetDonorsResult.length + '---'+JSON.stringify(res));
       if(res.GetDonorsResult.length >0){
-        this.donarsData = res.GetDonorsResult;
+        if(this.userLogin.RoleID == 1 && this.selected =='myrequest'){
+          this.mydonarRequests = res.GetDonorsResult.filter(i=> {
+            return i.CreatedBy === this.userLogin.EmailID
+            && i.TemporaryFlag === 1 
+            && i.AcceptFlag === 2;
+          });
+          //console.log('this.mydonarRequests::', JSON.stringify(this.mydonarRequests));
+        }else if(this.userLogin.RoleID == 1 && this.selected == 'donors'){
+          this.donarsData = res.GetDonorsResult;
+        }
+        else if(this.userLogin.RoleID == 2 && this.selected == 'donors'){
+          this.donarsData = res.GetDonorsResult;
+        }
         // alert('donarsData' + JSON.stringify(this.donarsData));
         //loading.dismiss();
       }

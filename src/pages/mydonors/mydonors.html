@@ -40,7 +40,7 @@
       My Donors
     </ion-segment-button>
     <ion-segment-button (click)="changeAvatar()" class="segbtn2" value="birthdays">
-      Donor's Birthday's
+      Birthday's of Donors
     </ion-segment-button>
   </ion-segment>
 
@@ -58,7 +58,7 @@
             <p><b>Donation Towards:&nbsp;</b> {{ item.DonationTowards }}</p>
             <p><b>Amount:&nbsp;</b>Rs.  {{ item.Amount }}</p>
             <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:&nbsp;</b>{{ item.ContactNo }}</p>
-            <p><b>DOB :&nbsp;</b> {{ item.DOB }}</p>
+            <p><b>DOB :&nbsp;</b> {{ item.DOB | date:'longDate' }}</p>
             <!-- Accepted -->
             <p *ngIf="item.AcceptFlag == 0"><b>Status :&nbsp;</b>Rejected</p>
             <!-- Rejected -->

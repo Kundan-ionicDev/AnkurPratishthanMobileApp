@@ -12,13 +12,28 @@
           <img class="profile-image img-top" (click)="changeProfilepic()" [src]="photo.Image">
         </div>
       </ion-item>
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="person" item-start class="text-primary"></ion-icon>
-          Full Name
-        </ion-label>
-        <ion-input type="text" disabled formControlName="fullname"></ion-input>
-      </ion-item>
+      
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="person" item-start class="text-primary"></ion-icon>
+              First Name
+            </ion-label>
+            <ion-input type="text" formControlName="fname"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="person" item-start class="text-primary"></ion-icon>
+             Last Name
+            </ion-label>
+            <ion-input type="text" formControlName="lname"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
 
       <ion-item>
         <ion-label floating>
@@ -49,7 +64,7 @@
           <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
           Date of Birth
         </ion-label>
-        <ion-datetime displayFormat="YYYY-MMM-DD" pickerFormat="YYYY-MMM-DD" formControlName="dateofbirth"></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD" [max]="maxDate" formControlName="dateofbirth"></ion-datetime>
       </ion-item>
 
       <div class="row" style="border-bottom:0px">
@@ -95,7 +110,7 @@
         <hr>
         <p>
           <ion-icon name="calendar" item-start></ion-icon>
-          DOB: {{ userLogin.DOB }}
+          DOB: {{ userLogin.DOB | date: 'yyyy-MMM-dd' }}
         </p>
       </ion-card-content>
     </ion-card>  

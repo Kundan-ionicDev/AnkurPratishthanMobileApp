@@ -1,33 +1,65 @@
-
 <!-- -->
-<ion-content padding>
-  
+<ion-content padding class="login auth-page">
   <!-- Login to System -->
-  <div *ngIf="lostpassword == 0">
-    <!-- Logo -->
-    <div padding-horizontal text-center>
+  <div class="login-content" *ngIf="lostpassword == 0">
+    <!-- Login -->
+    <div text-center>
       <div class="Loginlogo"></div>
       <h4 ion-text class="text-primary">
-        <strong>Donation Management  App</strong>
+        <strong>Donation Management System</strong>
       </h4>
     </div>
 
-    <ion-item>
+
+    <!-- <ion-item>
       <ion-label floating>
-        <ion-icon name="person" item-start class="text-primary"></ion-icon>
-        In the Name of
+        <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
+       Date of Birth
       </ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-   
+      <ion-datetime [max]="CurrentDate" displayFormat="DD-MMM-YYYY" pickerFormat="DD-MMM-YYYY" ></ion-datetime>
+    </ion-item> -->
     <!-- Login form -->
-    <form  [formGroup]="user" (ngSubmit)="login(user)">
-      <ion-item>
+    <form class="list-form" [formGroup]="user" autocomplete="off" (ngSubmit)="login(user)">
+
+      <BR />
+      <div class="floating-label">      
+        <input class="floating-input" formControlName="emailaddress" type="email" placeholder=" ">
+        <span class="highlight"></span>
+        <label>Email Id</label>
+      </div>
+
+      <div class="floating-label">      
+        <input class="floating-input" formControlName="password" [type]="getType()" placeholder=" ">
+        <label>Password</label>
+      </div>
+
+      <ion-item style="border: none;">
+        <ion-label for="checkbox" *ngIf="!passwordCheckbox" style="border-style: none;">Show password</ion-label>
+        <ion-label for="checkbox" *ngIf="passwordCheckbox">Hide password</ion-label>
+        <ion-checkbox class="marginTop" id="checkbox" style="border-style: none;"  (click)="toggleTextPassword(input)"></ion-checkbox>
+      </ion-item>
+
+      <!-- <div class="floating-label"> 
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input formControlName="password" [type]="passwordType" clearOnEdit="false"></ion-input>
+          <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+        </ion-item>
+      </div> -->
+
+
+    <!-- <ion-item style="border: none;">
+      <ion-label for="checkbox" *ngIf="!passwordCheckbox" style="border-style: none;">Remember password</ion-label>
+      <ion-label for="checkbox" *ngIf="passwordCheckbox">Don't Remember password</ion-label>
+      <ion-checkbox class="marginTop" id="checkbox" style="border-style: none;"  (click)="toggleTextPassword(input)"></ion-checkbox>
+    </ion-item> -->
+
+      <!-- <ion-item>
         <ion-label floating>
           <ion-icon name="mail" item-start class="text-primary"></ion-icon>
           Email
         </ion-label>
-        <ion-input type="email" #emailInput autocomplete="off" formControlName="emailaddress"></ion-input>
+        <ion-input type="email" autocomplete="off" formControlName="emailaddress"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -35,35 +67,43 @@
           <ion-icon name="lock" item-start class="text-primary"></ion-icon>
           Password
         </ion-label>
-        <ion-input type="password"  autocomplete="no" formControlName="password"></ion-input>
-      </ion-item>
-      
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item> -->
+     
+     
+
       <div>
-        <button ion-button color="secondary" icon-start block type="submit">
+        <button ion-button color="secondary" icon-start block [disabled]="!user.valid" type="submit">
           <ion-icon name="log-in"></ion-icon>
           SIGN IN
         </button>
       </div>
-      <p text-right ion-text color="secondary" (click)="forgotPass()"><strong>Forgot Password?</strong></p>
+      <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p>
     </form>
   </div>
 
   <!-- Send OTP for Password Reset -->
-  <div  *ngIf="lostpassword == 1">
-    <form  [formGroup]="checkemail" >
-      <div padding-horizontal text-center >
-        <div class="logo"></div>
+  <div class="login-content" *ngIf="lostpassword == 1">
+    <form class="list-form" [formGroup]="checkemail" >
+      <div padding-horizontal text-center class="animated fadeInDown">
+        <div class="Loginlogo"></div>
         <h2 ion-text class="text-primary">
-          <strong>Donation</strong>-App
+          <strong>Donation Management System</strong>
         </h2>
       </div>
-      <ion-item>
+      <!-- <ion-item>
         <ion-label floating>
           <ion-icon name="mail" item-start class="text-primary"></ion-icon>
           Email
         </ion-label>
         <ion-input type="email" formControlName="verifyEmailId"></ion-input>
-      </ion-item>
+      </ion-item> -->
+
+      <div class="floating-label">      
+        <input class="floating-input" formControlName="verifyEmailId" type="email" placeholder=" ">
+        <span class="highlight"></span>
+        <label>Email Id</label>
+      </div>
       <div>
         <button ion-button (click)="checkIfUserExists()" color="secondary" icon-start block type="submit">
           <ion-icon name="log-in"></ion-icon>
@@ -77,12 +117,12 @@
   </div>
 
   <!-- Verify OTP and Change Password -->
-  <div  *ngIf="lostpassword == 2">
-    <form  [formGroup]="verifyform" (ngSubmit)="changepassword(verifyform)">
-      <div padding-horizontal text-center >
-        <div class="logo"></div>
+  <div class="login-content" *ngIf="lostpassword == 2">
+    <form class="list-form" [formGroup]="verifyform" (ngSubmit)="changepassword(verifyform)">
+      <div padding-horizontal text-center class="animated fadeInDown">
+        <div class="Loginlogo"></div>
         <h2 ion-text class="text-primary">
-          <strong>Donation</strong>-App
+          <strong>Donation Management System</strong>
         </h2>
       </div>
 
@@ -99,6 +139,12 @@
         </ion-label>
         <ion-input type="password"  [(ngModel)]="password"  formControlName="password"></ion-input>
       </ion-item>
+
+       <div class="floating-label">      
+        <input class="floating-input" formControlName="verifyEmailId" type="email" placeholder=" ">
+        <span class="highlight"></span>
+        <label>Email Id</label>
+      </div>
 
       <ion-item class='form-text error' *ngIf="verifyform.controls.password.touched && !verifyform.controls.password.valid">
         <div style="font-size:small;">Password must be between 6 and 12 characters with at least one capital letter, one small letter, and one digit.</div>

@@ -95,12 +95,12 @@
             Area 
           </ion-label>
           <ion-select [(ngModel)]="areaid" formControlName="area">
-            <ion-option value="1">Mumbai City</ion-option>
-            <ion-option value="2">Mumbai Suburbs</ion-option>
+            <ion-option *ngFor="let area of areaDetails" [value]="area.Id">{{ area.AreaName }}</ion-option>
+            <!-- <ion-option value="2">Mumbai Suburbs</ion-option>
             <ion-option value="3">Thane</ion-option>
             <ion-option value="4">Panvel</ion-option>
-            <ion-option value="5">Kalyan Domivali</ion-option>
-            <ion-option value="6">Navi Mumbai</ion-option>
+            <ion-option value="5">Kalyan Dombivali</ion-option>
+            <ion-option value="6">Navi Mumbai</ion-option> -->
           </ion-select>
         </ion-item>
       </ion-col>
@@ -120,13 +120,21 @@
         </ion-item>
       </ion-col>
     </ion-row>
+
+    <!-- <ion-item *ngIf="occassionid == '4'">
+      <ion-label floating>
+        <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+        Other Occasion 
+      </ion-label>
+      <ion-input type="text" [(ngModel)]="otheroccassion" formControlName="otherocasion"></ion-input>
+    </ion-item> -->
     
     <ion-item>
       <ion-label floating>
         <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
         Expected Date of the Event 
       </ion-label>
-      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="expectedevdt" pickerFormat="YYYY-DD-MMM" formControlName="expectedevdate"></ion-datetime>
+      <ion-datetime displayFormat="YYYY-MM-DD" [min]="minDate" [(ngModel)]="startDate" formControlName="expectedevdate"></ion-datetime>
     </ion-item>
 
     <div class="row" style="border-bottom:0px">

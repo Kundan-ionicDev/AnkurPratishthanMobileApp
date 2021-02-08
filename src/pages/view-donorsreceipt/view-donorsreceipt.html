@@ -6,104 +6,148 @@
 -->
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>View Donors Receipt</ion-title>
+    <ion-title>Donor Receipt Preview</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <div style="font-size: xx-small;">
-    <p style="text-align: center;"><strong>ANKUR PRATISHTHAN</strong></p>
+    <!-- <p style="text-align: center;"><strong>ANKUR PRATISHTHAN</strong></p>
     <p style="text-align: center;"><strong>Registration No. : Trust : (F &ndash; 40378 &ndash; Mumbai) Society : Maharashtra State, Mumbai 2696, 2009 G.B.B.S.D.)</strong></p>
     <p style="text-align: center;"><strong>PAN : AADTA0477E | IT Registration No. : | TAX Exemption No. :         </strong></p>
     <p style="text-align: center;"><strong>Office Address :</strong> 304, Hrishikesh Apartment, Veer Savarkar Road, Near Siddhivinayak Temple, Prabhadevi, Mumbai &ndash; 400025</p>
     <p style="text-align: center;"><strong>Contact No. :</strong> 9869866814 / 9819553390 | <strong>Email ID :</strong> ngoankur@gmail.com | <strong>Website :</strong> www.ankurpratishthan.org</p>
-    <p style="text-align: center;">.................................................................................................................................................</p>
-    <ion-row>
-      <ion-col col-6>
-        <strong>Receipt No. :</strong> 2021050801
+    <p style="text-align: center;">.................................................................................................................................................</p> -->
+    <p class="center">
+      <img width="80px" height="80px" src="assets/img/logo.png" />
+  </p>
+  <div class="clear"></div>
+  <p class="center title">  
+      <strong> ANKUR PRATISHTHAN </strong>
+  </p>
+  <p class="center "><strong>Registration No. : Trust : (F &ndash; 40378 &ndash; Mumbai) Society : Maharashtra State, Mumbai 2696, 2009 G.B.B.S.D.)</strong>
+  <strong>PAN : AADTA0477E | 12AA Registration No. :</strong>2019-20/A/10285 | <strong>80G Registration No.:</strong> 2020-21/A/10154
+  <strong>Office Address : </strong> 304, Hrishikesh Apartment, Veer Savarkar Road, Near Siddhivinayak Temple, Prabhadevi, Mumbai &ndash; 400025
+  <strong>Contact No. : </strong> 9969607247 |  <strong>Email ID : </strong> <a href="mailto:ngoankur@gmail.com"> ngoankur@gmail.com </a>| <strong>Website :</strong><a href="http://www.ankurpratishthan.org"> www.ankurpratishthan.org</a></p>
+  <div class="hr"></div>
+
+    <ion-row >
+      <ion-col col-6 no-padding>
+        <strong>Receipt No. :</strong> FY20-21-01
       </ion-col>
-      <ion-col col-6>
-      <strong>Date :</strong> 08-05-2020
+      <ion-col col-6 no-padding>
+      <strong>Date :</strong> {{ donorData.dateofbirth | date: 'dd-MM-yyyy' }}
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-12>
+      <ion-col col-12 no-padding>
         <strong>Donated by :</strong>{{ donorData.donatedby }}
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-12>
+      <ion-col no-padding *ngIf="donorData.inthenameof != undefined && donorData.inthenameof != null  && donorData.inthenameof != ''"  col-12>
         <strong>In the Name of :</strong> {{ donorData.inthenameof }}
+      </ion-col>
+      <ion-col no-padding *ngIf="donorData.inthenameof == undefined || donorData.inthenameof == null  || donorData.inthenameof == ''"  col-12>
+        <strong>In the Name of :</strong> NA
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-12>
+      <ion-col no-padding col-12>
         <strong>Residential Address :</strong> {{ donorData.address }}
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-6>
+      <ion-col no-padding col-6>
       <strong> Contact No. : </strong>  {{ donorData.mobilenumber }}
       </ion-col>
-      <ion-col col-6>
+      <ion-col no-padding col-6>
       <strong>Email ID : </strong> {{ donorData.emailaddress }}
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-6>
-        <strong>Date of Birth :</strong> {{ donorData.dateofbirth }}
+      <ion-col no-padding col-6>
+        <strong>Date of Birth :</strong> {{ donorData.dateofbirth | date: 'dd-MM-yyyy'}}
       </ion-col>
-      <ion-col col-6>
-        <strong>PAN (For Donations Exceeding Rs. 10 Thousand) :</strong> {{ donorData.panNUmber }}
+
+      <ion-col no-padding *ngIf="donorData.panNUmber != undefined && donorData.panNUmber != null  && donorData.panNUmber != ''" col-6>
+        <strong>PAN (For Donations Exceeding Rs. Ten Thousand) :</strong> {{ donorData.panNUmber }}
+      </ion-col>
+      <ion-col no-padding *ngIf="donorData.panNUmber == undefined || donorData.panNUmber == null  || donorData.panNUmber == ''" col-6>
+        <strong>PAN (For Donations Exceeding Rs. Ten Thousand) :</strong> NA
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-12>
-        <strong>Amount in Figures :</strong>   {{ donorData.amountinfigure }}
+      <ion-col no-padding col-12>
+        <strong>Amount in Figures :</strong>   {{ donorData.amountinfigure }} /-
       </ion-col>
     </ion-row>
     
     <ion-row>
-      <ion-col col-12>
+      <ion-col no-padding col-12>
         <strong>Amount in Words :</strong> {{ donorData.amountinword }}
       </ion-col>
     </ion-row>
    
     <ion-row>
-      <ion-col col-12>
+      <ion-col no-padding col-12>
         <strong>Donation Towards :</strong> {{ donorData.donationtowards }}
       </ion-col>
     </ion-row>
    
     <ion-row>
-      <ion-col col-12>
+      <ion-col no-padding col-12>
         <strong>Mode of Donation :</strong> {{ donorData.paymentmode }}
       </ion-col>
     </ion-row>
     
     <ion-row>
-      <ion-col col-12>
+      <ion-col no-padding *ngIf="donorData.referenceno !== undefined && donorData.referenceno !== null" col-12>
         <strong>Transaction Details :</strong> {{ donorData.referenceno }}
+      </ion-col>
+      <ion-col no-padding *ngIf="donorData.referenceno == undefined || donorData.referenceno == null  || donorData.referenceno == ''" col-12>
+        <strong>Transaction Details :</strong> NA
       </ion-col>
     </ion-row>
    
-    <p><strong>  </strong></p>
+    <!-- <p><strong>  </strong></p>
     <p><strong>  </strong></p>
     <ion-row>
       <ion-col col-12>
         <strong>Received by :</strong> {{ this.userLogin.FullName }}
       </ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col no-padding col-12>
+        <p class="left"><strong>Received by</strong><br /><br />
+          <img src='assets/img/sign.jpg' height='60px' width='100px'/><br /><br />
+          Pranav Bhonde<br /><br />
+          (General Secretary)
+        </p>
+      </ion-col>
     </ion-row>
-   
-    <ul>
+    
+    <div class="clear"></div>
+
+    <ion-row>
+      <ion-col no-padding col-12>
+        <ul>
+            <li><strong>Ankur Pratishthan expresses its gratitude towards your generous donation.</strong></li>
+            <li><strong>In case of donations by Cheque / DD the validity of this receipt is subject to clearance.</strong></li>
+            <li><strong>Donations made to Ankur Pratishthan are exempted under Section 80G of Income Tax Act 1999. </strong></li>
+            <li><strong>Contact our office for further assistance. </strong></li>
+        </ul>
+      </ion-col>
+    </ion-row>
+    <!-- <ul>
     <li><strong>Ankur Pratishthan expresses its gratitude towards your generous donation.</strong></li>
     <li><strong>In case of donations by Cheque / DD the validity of this receipt is subject to clearance.</strong></li>
     <li><strong>Donations made to Ankur Pratishthan are exempted under Section 80G of Income Tax Act 1999. Contact our office for further assistance. </strong></li>
-    </ul>
-  </div>
+    </ul> -->
+  </div> 
 </ion-content>

@@ -1,5 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
-import { NavController, AlertController, ToastController, MenuController, LoadingController, ModalController, Platform} from "ionic-angular";
+import { Directive, Component, ViewChild, Input, HostListener, ElementRef, HostBinding } from "@angular/core";
+import { NavController, AlertController, ToastController, MenuController, LoadingController, ModalController, Platform, DateTime} from "ionic-angular";
 import { RegisterPage } from "../register/register";
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 import { RestApiProvider } from "../../providers/rest-api/rest-api";
@@ -10,6 +10,7 @@ import { MainPage } from "../main/main";
 // import { PrintModalPage } from "../print-modal/print-modal";
 
 import { Keyboard } from '@ionic-native/keyboard';
+import { DatePipe } from "@angular/common";
 
 
 @Component({
@@ -21,8 +22,7 @@ export class LoginPage {
   loginDat = { email: '', password: ''};
   data: any;
   EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-
-  
+ 
   lostpassword: any = 0;
   user: FormGroup;
   checkemail:FormGroup;
@@ -48,8 +48,12 @@ export class LoginPage {
   isActiveToggleTextPassword: Boolean = true;
   password_type: string = 'password';
   @ViewChild('input') emailInput ;
-
+  startDate: string;
+  minDate: any;
+  maxDate: string;
+  
   constructor(
+    // public datepipes: DatePipe,
     private formBuilder: FormBuilder,
     public nav: NavController,
     public api: RestApiProvider,
@@ -63,15 +67,23 @@ export class LoginPage {
     public modalCtrl: ModalController,
     public keyboard: Keyboard,
     private faio: FingerprintAIO) {
+     
       // this.platform.prepareReady();
-      
-      //keyboard.disableScroll(true);
+      // keyboard.disableScroll(true);
+      // alert('Current Date::' + this.CurrentDate);
       localStorage.clear();
       localStorage.removeItem('UserLogin');
       // this.menu.swipeEnable(false);
+      // this.user = this.formBuilder.group({
+      //   emailaddress: new FormControl('ngoankur@gmail.com', Validators.compose([
+      //     Validators.required, 
+      //     Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      //   ])),
+      //   password: ['admin123',Validators.required]
+      // });
       this.user = this.formBuilder.group({
         emailaddress: new FormControl('', Validators.compose([
-          Validators.required,
+          Validators.required, 
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
         password: ['',Validators.required]
@@ -92,10 +104,22 @@ export class LoginPage {
       })
   }
  
+  passwordType: string = 'password';
+ passwordIcon: string = 'eye-off';
 
+ hideShowPassword() {
+     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+ }
+ 
+  public toggleTextPassword(): void{
+    this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
+  }
+  public getType() {
+      return this.isActiveToggleTextPassword ? 'password' : 'text';
+  }
 
   matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
-    // TODO maybe use this https://github.com/yuyang041060120/ng2-validation#notequalto-1
     return (group: FormGroup): {[key: string]: any} => {
       let password = group.controls[passwordKey];
       let confirmPassword = group.controls[confirmPasswordKey];
@@ -114,15 +138,31 @@ export class LoginPage {
 
   // login and go to home page
   async login(userdata) {
+    // this.loginData = {
+    //   "EmailID":"kundansakpal@gamil.com",
+    //   "FullName":"Kundan SAkpal",// + ' '+ res.APLoginResult[0].LastName,
+    //   "RoleID":"1",
+    //   "Address":"res.APLoginResult[0].Address",
+    //   "ContactNo":"res.APLoginResult[0].ContactNo",
+    //   "DOB":"res.APLoginResult[0].DOB",
+    //   "LoginID":"res.APLoginResult[0].LoginID",
+    //   "Img": "res.APLoginResult[0].ImgPath"
+    // };
+    // localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
+    // //this.nav.setRoot(MainPage);
+    // this.api.userLoggedInData = this.loginData;
+    
+    // this.nav.insert(0,MainPage);
+    // this.nav.popToRoot();
+
+
     localStorage.clear();
     localStorage.removeItem('UserLogin');
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
     loading.present();
-    // this.nav.insert(0,MainPage);
-    // this.nav.popToRoot();
-
+    
     if(this.user.valid){     
       let loginparams = {
         "EmailID": this.user.value.emailaddress,
@@ -131,23 +171,22 @@ export class LoginPage {
       };
       
       this.api._postAPI("APLogin", loginparams).subscribe(res => {
-        alert('Res ::'+ JSON.stringify(res));
-        // User exists
         loading.dismiss();
 
         if(res.APLoginResult[0].Message =="SUCCESS"){
           this.loginData = {
             "EmailID":res.APLoginResult[0].EmailID,
             "FullName":res.APLoginResult[0].FirstName,// + ' '+ res.APLoginResult[0].LastName,
+            "FirstName":res.APLoginResult[0].FirstName,
+            "LastName": res.APLoginResult[0].LastName,
             "RoleID":res.APLoginResult[0].RoleID,
             "Address":res.APLoginResult[0].Address,
             "ContactNo":res.APLoginResult[0].ContactNo,
-            "DOB":res.APLoginResult[0].DOB,
+            "DOB": res.APLoginResult[0].DOB,
             "LoginID":res.APLoginResult[0].LoginID,
             "Img": res.APLoginResult[0].ImgPath
           };
           localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
-          //this.nav.setRoot(MainPage);
           this.api.userLoggedInData = this.loginData;
           
           loading.dismiss();
@@ -217,13 +256,16 @@ export class LoginPage {
             // this.register();
         }else{
           this.apiProvider.presentAlert('Alert',res.CheckUserResult[0].Message);
+          loading.present();
         }
       }, (err) => {
         this.apiProvider.presentAlert('Error', err);
         loading.dismiss();
       });
     }else{
+      loading.present();
       this.apiProvider.presentAlert('Alert','Please Enter valid EmailId');
+      
     }
   }
 
@@ -248,15 +290,19 @@ export class LoginPage {
         if(res.ChangePasswordResult[0].Message =="SUCCESS Password change"){
           this.lostpassword = 0;
           this.apiProvider.presentAlert('Alert','Password is reset sucessfully.');
+          loading.present();
         }else{
           this.apiProvider.presentAlert('Alert','Error while password reset');
+          loading.present();
         }
       }, (err) => {
         this.apiProvider.presentAlert('Error', err);
         loading.dismiss();
       });
     }else{
+      loading.present();
       this.apiProvider.presentAlert('Alert','Verification failed...Please try again');
+     
     }
   }
 }

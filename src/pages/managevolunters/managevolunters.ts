@@ -200,6 +200,7 @@ export class ManagevoluntersPage {
   }
 
   editmember(item:any){
+    // alert('item' + JSON.stringify(item))
     this.volunteradd.setValue({
       firstname: item.FirstName,
       lastname: item.LastName,

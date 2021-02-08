@@ -5,6 +5,9 @@
 </ion-header>
 <ion-content>
   <ion-segment [(ngModel)]="selected" color="primary">
+    <ion-segment-button *ngIf="userLogin.RoleID == '1'" value="myrequest" (click)="myDonors()">
+      My Requests
+    </ion-segment-button>
     <ion-segment-button value="donors" (click)="selectedDonors()">
       Donors
     </ion-segment-button>
@@ -12,62 +15,21 @@
       Celebrate us
     </ion-segment-button>
   </ion-segment>
-
-<div *ngIf="selected == 'celebrate'">
-  <ion-list>
-    <ion-list-header>View Celebrate with us requests</ion-list-header>
-    <ion-item-sliding *ngFor="let item of celebrateusData">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img height="150px" src="assets/icon/person.png" />
-        </ion-thumbnail>
-        <ion-label>
-          <ion-row>
-            <ion-col col-12>
-              <p style="font-size: 15px;">{{ item.FirstName }} {{ item.LastName }}</p>
-            </ion-col>
-            <!-- <ion-col col-6>
-              <ion-icon color="danger" name="md-checkmark-circle-outline" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon>
-            </ion-col> -->
-          </ion-row>
-          <p>Occassion: {{ item .Occassion }}</p>
-          <p>Area : {{ item.AreaName }}</p>
-          <!-- <h3>{{ item.FirstName }} {{ item.LastName }}</h3> -->
-          <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.Contact }}</p>
-          <p><b>Email Id :</b>{{ item.Email }}</p>
-          <p><b>Expected Event Date :</b> {{ item.DateOfEvent }}</p>
-          <p>Event</p>
-        </ion-label>
-      </ion-item>
-      <ion-item-options>
-        <button ion-button (click)="editCeleReq(item)" color="light" icon-start>
-          <ion-icon name="ios-more"></ion-icon>
-          Edit
-        </button>
-        <button (click)="deleteCelebrateReq(item)" ion-button color="primary" icon-start>
-          <ion-icon name="text"></ion-icon>
-          Delete
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</div>
-<div *ngIf="selected == 'donors'">
-  
-  <!-- Volunteer Logins -->
-  <div style="padding-top: 0;margin-top: 0;" *ngIf="userLogin.RoleID == 2">
-    <ion-card *ngFor="let item of donarsData">
+  <!-- Admin To check his own requets -->
+  <div *ngIf="selected == 'myrequest' && userLogin.RoleID == '1'">
+    <ion-card *ngFor="let item of mydonarRequests">
       <!-- if volunteer logins then TemporaryFlag == 1 reords to be shown -->
       <!-- if admin logins then TemporaryFlag == 0 reords to be shown -->
       <!-- AcceptFlag = 1 for ACCEPT, AcceptFlag = 0 for DECLINE and Acceptflag = 2 for PENDING -->
-      <ion-card-content id="second" style="display: block" *ngIf="item.TemporaryFlag == 1 && item.AcceptFlag == 2">
+      <!-- <ion-card-content id="second" style="display: block" *ngIf="item.CreatedBy == userLogin.EmailID && item.TemporaryFlag == 1 && item.AcceptFlag == 2"> -->
+        <ion-card-content id="second" style="display: block">
         <ion-row>
-          <ion-col col-9 style="padding-left:0px;color: #0d0e0d">
-            <b>Donated By:</b>{{ item.Previx }}. {{ item.FullName }}
+          <ion-col col-12 style="padding-left:0px;color: #0d0e0d">
+            <b>Donated By:</b>{{item.Prefix}}. {{ item.FullName }}
           </ion-col>
-          <ion-col col-3>
-            <!-- <ion-icon name="download" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon> -->
-          </ion-col>
+          <!-- <ion-col col-3>
+            <ion-icon name="download" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon>
+          </ion-col> -->
         </ion-row>
         <div>
           <b>In the name of:</b> {{ item.Inthenameof }}
@@ -77,7 +39,7 @@
         </div>
         <div>
           <label style="padding-left:0px;" (click)="confirmDailNumber(item.ContactNo)">
-            <b>Contact No :</b>  {{ item.ContactNo }}
+            <b>Contact No :</b> {{ item.ContactNo }}
           </label>
         </div>
         <div>
@@ -112,23 +74,135 @@
         </ion-row>
         <ion-row style="border-bottom: groove;">
           <ion-col col-3>
-            <button (click)="editreq(item)" block  ion-button  color="light" type="submit">
+            <button (click)="editreq(item)" block ion-button color="light" type="submit">
               Edit
             </button>
           </ion-col>
-          <ion-col col-3 *ngIf="userLogin.RoleID == '1'" >
-            <button (click)="confirmPayment(item)" block ion-button color="secondary" type="submit">
-                Accept
+          <ion-row col-3>
+            <button (click)="registerDonor(item)" block ion-button color="secondary" type="submit">
+              Submit
+            </button>
+          </ion-row>
+          <ion-col col-3>
+            <button (click)="deletereq(item)" block ion-button color="danger" type="submit">
+              Cancel
             </button>
           </ion-col>
-          <ion-col col-3 *ngIf="userLogin.RoleID == '2'" >
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="selected == 'celebrate'">
+    <ion-list>
+      <ion-list-header>View Celebrate with us requests</ion-list-header>
+      <ion-item-sliding *ngFor="let item of celebrateusData">
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img height="150px" src="assets/icon/person.png" />
+          </ion-thumbnail>
+          <ion-label>
+            <ion-row>
+              <ion-col col-12>
+                <p style="font-size: 15px;">{{ item.FirstName }} {{ item.LastName }}</p>
+              </ion-col>
+            </ion-row>
+            <p><b>Occassion:</b> {{ item .Occassion }}</p>
+            <p><b>Area :</b> {{ item.AreaName }}</p>
+            <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:</b>{{ item.Contact }}</p>
+            <p><b>Email Id :</b>{{ item.Email }}</p>
+            <p><b>Expected Event Date :</b> {{ item.DateOfEvent }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button (click)="editCeleReq(item)" color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+            Edit
+          </button>
+          <button (click)="deleteCelebrateReq(item)" ion-button color="primary" icon-start>
+            <ion-icon name="text"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+ 
+  <!-- Volunteer Logins -->
+  <div *ngIf="userLogin.RoleID == 2 && selected == 'donors'">
+    <ion-card style="margin-top:1px" *ngFor="let item of donarsData">
+      <!-- if volunteer logins then TemporaryFlag == 1 reords to be shown -->
+      <!-- if admin logins then TemporaryFlag == 0 reords to be shown -->
+      <!-- AcceptFlag = 1 for ACCEPT, AcceptFlag = 0 for DECLINE and Acceptflag = 2 for PENDING -->
+      <ion-card-content id="second" style="display: block" *ngIf="item.TemporaryFlag == 1 && item.AcceptFlag == 2">
+        <ion-row>
+          <ion-col col-9 style="padding-left:0px;color: #0d0e0d">
+            <b>Donated By:</b>{{ item.Previx }}. {{ item.FullName }}
+          </ion-col>
+          <ion-col col-3>
+            <!-- <ion-icon name="download" (click)="downloadreceipt()" style="float: right;font-size: 20px;"></ion-icon> -->
+          </ion-col>
+        </ion-row>
+        <div>
+          <b>In the name of:</b> {{ item.Inthenameof }}
+        </div>
+        <div>
+          <b>Donation Towards :</b> {{ item.DonationTowards }}
+        </div>
+        <div>
+          <label style="padding-left:0px;" (click)="confirmDailNumber(item.ContactNo)">
+            <b>Contact No :</b> {{ item.ContactNo }}
+          </label>
+        </div>
+        <div>
+          <label style="padding-left:0px;" (click)="openGooglemap(item.Address,item.FullName)">
+            <b>Address :</b> {{ item.Address }}
+          </label>
+        </div>
+        <div class="col">
+          <hr>
+        </div>
+        <ion-row style="border-bottom: groove;">
+          <ion-col col-4>
+            <ion-label>Amount</ion-label>
+          </ion-col>
+          <ion-col col-4>
+            <ion-label>Reg. Date</ion-label>
+          </ion-col>
+          <ion-col col-4>
+            <ion-label>Mode</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row style="border-bottom: groove;">
+          <ion-col col-4>
+            <ion-label>{{ item.Amount }}</ion-label>
+          </ion-col>
+          <ion-col col-4>
+            <ion-label>{{ item.RegDate }}</ion-label>
+          </ion-col>
+          <ion-col col-4>
+            <ion-label>{{ item.PaymentMode }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row style="border-bottom: groove;">
+          <ion-col col-3>
+            <button (click)="editreq(item)" block ion-button color="light" type="submit">
+              Edit
+            </button>
+          </ion-col>
+          <ion-col col-3 *ngIf="userLogin.RoleID == '1'">
+            <button (click)="confirmPayment(item)" block ion-button color="secondary" type="submit">
+              Accept
+            </button>
+          </ion-col>
+          <ion-col col-3 *ngIf="userLogin.RoleID == '2'">
             <button (click)="registerDonor(item)" block ion-button color="secondary" type="submit">
               Submit
             </button>
           </ion-col>
-          <ion-col col-3  *ngIf="userLogin.RoleID == '1'" >
+          <ion-col col-3 *ngIf="userLogin.RoleID == '1'">
             <button (click)="rejectpayment(item)" block ion-button color="warning" type="submit">
-               Reject
+              Reject
             </button>
           </ion-col>
           <ion-col col-3>
@@ -142,7 +216,8 @@
   </div>
 
   <!-- Admin Logins-->
-  <div style="padding-top: 0;margin-top: 0;" *ngIf="userLogin.RoleID == 1">
+  <div *ngIf="userLogin.RoleID == 1 && selected == 'donors'">
+    <p>View all the volunteers requests</p>
     <ion-card *ngFor="let item of donarsData">
       <!-- if volunteer logins then TemporaryFlag == 1 reords to be shown -->
       <!-- if admin logins then TemporaryFlag == 0 reords to be shown -->
@@ -164,7 +239,7 @@
         </div>
         <div>
           <label style="padding-left:0px;" (click)="confirmDailNumber(item.ContactNo)">
-            <b>Contact No :</b>  {{ item.ContactNo }}
+            <b>Contact No :</b> {{ item.ContactNo }}
           </label>
         </div>
         <div>
@@ -199,13 +274,13 @@
         </ion-row>
         <ion-row style="border-bottom: groove;">
           <ion-col col-3>
-            <button (click)="editreq(item)" block  ion-button  color="light" type="submit">
+            <button (click)="editreq(item)" block ion-button color="light" type="submit">
               Edit
             </button>
           </ion-col>
           <ion-col col-3 *ngIf="userLogin.RoleID == '1'">
             <button (click)="confirmPayment(item)" block ion-button color="secondary" type="submit">
-               Accept
+              Accept
             </button>
           </ion-col>
           <ion-row col-3 *ngIf="userLogin.RoleID == '2'">
@@ -213,14 +288,14 @@
               Submit
             </button>
           </ion-row>
-          <ion-col col-3 *ngIf="userLogin.RoleID == '1'" >
-            <button  (click)="rejectpayment(item)" block ion-button color="warning" type="submit">
-             Reject
+          <ion-col col-3 *ngIf="userLogin.RoleID == '1'">
+            <button (click)="rejectpayment(item)" block ion-button color="warning" type="submit">
+              Reject
             </button>
           </ion-col>
           <ion-col col-3>
             <button (click)="deletereq(item)" block ion-button color="danger" type="submit">
-               Cancel
+              Cancel
             </button>
           </ion-col>
         </ion-row>
@@ -228,5 +303,4 @@
     </ion-card>
   </div>
 
-</div>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, DateTime } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { RestApiProvider } from '../../providers/rest-api/rest-api';
 import { Contacts } from '@ionic-native/contacts';
@@ -35,6 +35,12 @@ export class CelebratewithusPage {
   updateReq: boolean = false;
   contactnumber: any;
   emailid: any;
+  currentdate: any;
+  occasionName: any;
+  startDate: string;
+  minDate: string;
+  maxDate: string;
+  areaDetails: any;
   constructor(
     private contacts: Contacts,
     public loadingCtrl: LoadingController,
@@ -42,6 +48,10 @@ export class CelebratewithusPage {
     public apiProvider: RestApiProvider, 
     public navCtrl: NavController, 
     public navParams: NavParams) {
+      this.startDate = new Date().toISOString(); 
+      this.minDate = new Date().toISOString();
+      this.maxDate = new Date().toISOString();
+      //this.currentdate = this.currentdat
       this.celebrateregister = this.formBuilder.group({
         firstname: ['', Validators.required],
         lastname: ['', Validators.required],
@@ -52,43 +62,41 @@ export class CelebratewithusPage {
         ])),
         area: ['', Validators.required],
         occassion: ['', Validators.required],
+        otherocasion:[''],
         expectedevdate: ['', Validators.required]
       });
-      
       this.getCelebrateReq();
+      this.getAreaDetails();
       this.isCelebrateAdd = false;
       this.userLogin = JSON.parse(localStorage.getItem('UserLogin'));
-      // alert('ddddd' + this.userLogin.RoleID)
-      // if(this.userLogin.RoleID === "1"){
-      //   this.isCelebrateAdd = true;
-      //   this.iconName = "add";
-      // }else{
-      //   this.isCelebrateAdd = false
-      // }
-
+      //alert('ddddd' + this.userLogin.RoleID)
       let previtem = navParams.get('item');
-     //  alert('previtem' + JSON.stringify(previtem));
+     
+      //alert('previtem' + JSON.stringify(previtem));
       if(previtem != undefined || previtem != null){
+        // alert('ddd');
         this.updateReq = true;
         this.celeReqId = previtem.ID;
-        this.celebrateregister.setValue({
-          firstname: previtem.FirstName,
-          lastname: previtem.LastName,
-          contactnumber: previtem.Contact,
-          emailaddress: previtem.Email,
-          area: previtem.AreaID,
-          occassion: previtem.OccassionID,
-          expectedevdate: previtem.DateOfEvent
-        });
-
+        // alert('ddd111')
+        // this.celebrateregister.setValue({
+        //   firstname:" previtem.FirstName",
+        //   lastname: "previtem.LastName",
+        //   contactnumber: "previtem.Contact",
+        //   emailaddress: "previtem.Email",
+        //   area: "previtem.AreaID",
+        //   occassion: "previtem.OccassionID",
+        //   expectedevdate: "previtem.DateOfEvent"
+        // });
+        // alert('ddd222')
         this.fname = previtem.FirstName;
         this.lname = previtem.LastName;
         this.contactnumber = previtem.Contact;
         this.emailid = previtem.Email;
         this.areaid = previtem.AreaID;
         this.occassionid = previtem.OccassionID;
-        this.expectedevdt = previtem.DateOfEvent;
-        // alert('Email' + this.emailid + 'contac'+ this.contactnumber);
+        // this.expectedevdt = previtem.DateOfEvent;
+        // alert('cel666');
+        // alert('Data :'+ JSON.stringify(this.celebrateregister));
       }
   }
 
@@ -111,6 +119,28 @@ export class CelebratewithusPage {
       if(res.GetCelebrateRequestResult.length >0){
         this.celebrateusData = res.GetCelebrateRequestResult;
         // alert('donarsData' + JSON.stringify(this.donarsData));
+        loading.dismiss();
+      }
+    }, (err) => {
+      this.apiProvider.presentAlert('Error', err);
+      loading.dismiss();
+    });
+    loading.dismiss();
+  }
+
+  getAreaDetails(){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    let params = { };
+    //alert('params' + JSON.stringify(params))
+    this.apiProvider._postAPI("GetAreaDetails", params).subscribe(res => {
+      // Get Area Details 
+      loading.dismiss();
+      if(res.GetAreaDetailsResult.length >0){
+        this.areaDetails = res.GetAreaDetailsResult;
+        // sssalert('areaDetails' + JSON.stringify(this.areaDetails));
         loading.dismiss();
       }
     }, (err) => {
@@ -153,7 +183,7 @@ export class CelebratewithusPage {
         "Prefix":""
       };
 
-      // alert('Update Celebrate Request Params : :' + JSON.stringify(donarparams));
+      //alert('Update Celebrate Request Params : :' + JSON.stringify(donarparams));
       this.apiProvider._postAPI("ManageCelebrateRequest", donarparams).subscribe(res => {
         // Added Donar 
         // alert('API Data ::'+ JSON.stringify(res));
@@ -179,6 +209,13 @@ export class CelebratewithusPage {
     });
     loading.present();
     if(this.celebrateregister.valid){     
+      // alert('occasionid'+ this.occassionid + this.celebrateregister.value.otherocasion);
+      // if(this.occassionid == 4){
+      //   this.occasionName = this.celebrateregister.value.otherocasion;
+      // }else{
+      //   this.occasionName = this.celebrateregister.value.occassion;
+      // }
+
       let donarparams = 
       {
         "cmd": cmdId,
@@ -242,8 +279,10 @@ export class CelebratewithusPage {
         }else{
           contact["emails"]   = '';
         }
+        //alert('email' + JSON.stringify(contact));
         contact["number"] = contacts.phoneNumbers[0].value;
         this.fname = contact["name"];
+        //alert('fname' + this.fname + 'this.emailid' + this.emailid);
         this.emailid = contact["emails"];
         this.contactnumber = contact["number"];
     }, function(err){

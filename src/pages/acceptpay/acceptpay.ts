@@ -58,6 +58,14 @@ public countries: string[] = [];
   prefix: any;
   term: any;
   searchText: any;
+
+
+
+  myDate: String = new Date().toISOString();
+  startDate: string;
+  minDate: string;
+  maxDate: string;
+  donatedby: any;
   constructor(
     private keyboard: Keyboard,
     public loadingCtrl: LoadingController,
@@ -68,6 +76,9 @@ public countries: string[] = [];
     public apiProvider: RestApiProvider,
     public platform: Platform,
     public navParams: NavParams) {
+      this.startDate = new Date().toISOString(); 
+      this.minDate = new Date().toISOString();
+      this.maxDate = new Date().toISOString();
       //let id = navParams.get('id');
       let item = navParams.get('item');
       this.userLogin = JSON.parse(localStorage.getItem('UserLogin'));
@@ -76,7 +87,7 @@ public countries: string[] = [];
       this.memberadd = this.formBuilder.group({
         Prefix: ['', Validators.required],
         donatedby: ['', Validators.required],
-        inthenameof: ['', Validators.required],
+        inthenameof: [''],
         emailaddress: new FormControl('', Validators.compose([
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -89,7 +100,7 @@ public countries: string[] = [];
         amountinword: ['', Validators.required],
         donationtowards: ['', Validators.required], 
         paymentmode : ['', Validators.required],
-        referenceno: ['', Validators.required],
+        referenceno: [''],
       });
 
       if(item != undefined || item != null){
@@ -112,6 +123,7 @@ public countries: string[] = [];
         });
         this.prefix = item.Prefix
         this.name = item.FullName;
+        this.input = item.FullName;
         this.amount = item.Amount;
         this.amountinword = item.Amountinwords;
         this.referenceno = item.Description;
@@ -210,9 +222,11 @@ public countries: string[] = [];
           contact["emails"]   = '';
         }
         contact["number"] = contacts.phoneNumbers[0].value;
-        this.name = contact["name"];
+        this.donatedby = contact["name"];
+        this.input = this.donatedby;
         this.email = contact["emails"];
         this.mobile = contact["number"];
+
     }, function(err){
       // alert('Error: ' + err);
       this.api.presentAlert('Error', err);

@@ -72,9 +72,10 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     SuperTabsModule.forRoot(),
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
+      autocomplete: false,
       scrollPadding: true,
       scrollAssist: true,
-      autoFocusAssist: false
+      autoFocusAssist: true
     }),
     IonicStorageModule.forRoot({
       name: '__ionic3_start_theme',

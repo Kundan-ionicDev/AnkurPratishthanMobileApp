@@ -1,0 +1,90 @@
+Checking Java JDK and Android SDK versions
+ANDROID_SDK_ROOT=undefined (recommended setting)
+ANDROID_HOME=C:\Users\kundan.sakpal\AppData\Local\Android\sdk (DEPRECATED)
+Subproject Path: CordovaLib
+Subproject Path: app
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Configure project :app
+FCM PLUGIN GRADLE TOOLS VERSION: 3.5.0WARNING: Configuration 'compile' is obsolete and has been replaced with 'implementation' and 'api'.
+It will be removed at the end of 2018. For more information see: http://d.android.com/r/tools/update-dependency-configurations.html
+registerResGeneratingTask is deprecated, use registerGeneratedResFolders(FileCollection)
+registerResGeneratingTask is deprecated, use registerGeneratedResFolders(FileCollection)
+
+> Task :app:preBuild UP-TO-DATE
+> Task :CordovaLib:preBuild UP-TO-DATE
+> Task :CordovaLib:preDebugBuild UP-TO-DATE
+> Task :CordovaLib:checkDebugManifest UP-TO-DATE
+> Task :CordovaLib:processDebugManifest UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :CordovaLib:compileDebugAidl NO-SOURCE
+> Task :app:compileDebugAidl NO-SOURCE
+> Task :CordovaLib:packageDebugRenderscript NO-SOURCE
+> Task :app:compileDebugRenderscript UP-TO-DATE
+> Task :app:checkDebugManifest UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:prepareLintJar UP-TO-DATE
+> Task :app:generateDebugSources UP-TO-DATE
+> Task :CordovaLib:compileDebugRenderscript UP-TO-DATE
+> Task :CordovaLib:generateDebugBuildConfig UP-TO-DATE
+> Task :CordovaLib:generateDebugResValues UP-TO-DATE
+> Task :CordovaLib:generateDebugResources UP-TO-DATE
+> Task :CordovaLib:packageDebugResources UP-TO-DATE
+> Task :CordovaLib:generateDebugRFile UP-TO-DATE
+> Task :CordovaLib:prepareLintJar UP-TO-DATE
+> Task :CordovaLib:generateDebugSources UP-TO-DATE
+> Task :CordovaLib:javaPreCompileDebug UP-TO-DATE
+> Task :CordovaLib:compileDebugJavaWithJavac UP-TO-DATE
+> Task :CordovaLib:processDebugJavaRes NO-SOURCE
+> Task :CordovaLib:transformClassesAndResourcesWithPrepareIntermediateJarsForDebug UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mainApkListPersistenceDebug UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:writeDebugApplicationId UP-TO-DATE
+
+> Task :app:processDebugGoogleServices
+Parsing json file: C:\Users\kundan.sakpal\Documents\IonicProjects\Prod\AnkurPratishthanDonationApp\platforms\android\app\google-services.json
+
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:compileDebugNdk NO-SOURCE
+> Task :app:compileDebugSources UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :CordovaLib:mergeDebugShaders UP-TO-DATE
+> Task :CordovaLib:compileDebugShaders UP-TO-DATE
+> Task :CordovaLib:generateDebugAssets UP-TO-DATE
+> Task :CordovaLib:packageDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:signingConfigWriterDebug UP-TO-DATE
+> Task :app:transformClassesWithDexBuilderForDebug UP-TO-DATE
+> Task :app:transformDexArchiveWithExternalLibsDexMergerForDebug UP-TO-DATE
+> Task :app:transformDexArchiveWithDexMergerForDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :CordovaLib:compileDebugNdk NO-SOURCE
+> Task :CordovaLib:mergeDebugJniLibFolders UP-TO-DATE
+> Task :CordovaLib:transformNativeLibsWithMergeJniLibsForDebug UP-TO-DATE
+> Task :CordovaLib:transformNativeLibsWithIntermediateJniLibsForDebug UP-TO-DATE
+> Task :app:transformNativeLibsWithMergeJniLibsForDebug UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :app:transformResourcesWithMergeJavaResForDebug UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+> Task :app:cdvBuildDebug UP-TO-DATE
+
+BUILD SUCCESSFUL in 23s
+44 actionable tasks: 1 executed, 43 up-to-date
+Built the following apk(s): 
+	C:\Users\kundan.sakpal\Documents\IonicProjects\Prod\AnkurPratishthanDonationApp\platforms\android\app\build\outputs\apk\debug\app-debug.apk
+Checking Java JDK and Android SDK versions
+ANDROID_SDK_ROOT=undefined (recommended setting)
+ANDROID_HOME=C:\Users\kundan.sakpal\AppData\Local\Android\sdk (DEPRECATED)
+Using apk: C:\Users\kundan.sakpal\Documents\IonicProjects\Prod\AnkurPratishthanDonationApp\platforms\android\app\build\outputs\apk\debug\app-debug.apk
+Package name: com.ankurdonationapp.credence
+LAUNCH SUCCESS
