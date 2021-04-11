@@ -102,6 +102,13 @@ page-login{
     color:#5264AE;
   }
   
+  .passwordIcon{
+    font-size:2rem !important;
+    position: relative !important;
+    top: 5px !important;
+    margin: 0 auto !important;
+  }
+
   /* active state */
   .floating-input:focus ~ .bar:before, .floating-input:focus ~ .bar:after, .floating-select:focus ~ .bar:before, .floating-select:focus ~ .bar:after {
     width:50%;

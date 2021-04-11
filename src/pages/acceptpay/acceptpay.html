@@ -65,7 +65,26 @@
         </ion-label>
         <ion-input type="text" formControlName="inthenameof"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="person" item-start class="text-primary"></ion-icon>
+          Point of Contact
+        </ion-label>
+        <ion-select formControlName="pointofcontact" (ionChange)="selectpointocont()">
+          <ion-option value="myself">MySelf</ion-option>
+          <ion-option value="other">Other</ion-option>
+        </ion-select>
+      </ion-item>
+
       
+      <ion-item *ngIf="itemselcted == 'other'">
+        <ion-label floating>
+          <ion-icon name="person" item-start class="text-primary"></ion-icon> Other
+        </ion-label>
+        <ion-input  type="text" placeholder="Other Point of contact"></ion-input>
+      </ion-item>
+
       <ion-item>
         <ion-label floating>
           <ion-icon name="locate" item-start class="text-primary"></ion-icon>

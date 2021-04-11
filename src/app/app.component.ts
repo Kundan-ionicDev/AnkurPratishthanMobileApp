@@ -43,7 +43,7 @@ export class MyApp {
         // get current active page
         let nav = this.app.getActiveNavs()[0];
         let activeView = nav.getActive();
-        //alert('activevie' + activeView.component.name + this.apiProvider._activePage );
+        alert('activevie' + activeView.component.name + this.apiProvider._activePage );
         if (activeView.component.name === "MainPage" || activeView.component.name === "LoginPage"
         || this.apiProvider._activePage == "pop") 
         {

@@ -66,6 +66,7 @@ public countries: string[] = [];
   minDate: string;
   maxDate: string;
   donatedby: any;
+  itemselcted: any;
   constructor(
     private keyboard: Keyboard,
     public loadingCtrl: LoadingController,
@@ -87,6 +88,7 @@ public countries: string[] = [];
       this.memberadd = this.formBuilder.group({
         Prefix: ['', Validators.required],
         donatedby: ['', Validators.required],
+        pointofcontact: ['', Validators.required],
         inthenameof: [''],
         emailaddress: new FormControl('', Validators.compose([
           Validators.required,
@@ -109,6 +111,7 @@ public countries: string[] = [];
         this.memberadd.setValue({
           Prefix : item.Prefix,
           donatedby: item.FullName,
+          pointofcontact : item.PointOfContact,
           inthenameof: item.Inthenameof,
           emailaddress: item.EmailID,
           dateofbirth: item.DOB,
@@ -140,6 +143,7 @@ public countries: string[] = [];
     this.memberadd.setValue({
       Prefix : item.Prefix,
       donatedby: item.FullName,
+      pointofcontact : item.PointOfContact,
       inthenameof: item.Inthenameof,
       emailaddress: item.EmailID,
       dateofbirth: item.DOB,
@@ -157,6 +161,10 @@ public countries: string[] = [];
 
   removeFocus() {
     this.keyboard.close();
+  }
+
+  selectpointocont(){
+    this.itemselcted = this.memberadd.value.PointOfContact;
   }
 
   search() {
@@ -271,6 +279,7 @@ public countries: string[] = [];
       {
         "FullName": this.memberadd.value.donatedby,
         "Inthenameof": this.memberadd.value.inthenameof,
+        "PointOfContact" : this.memberadd.value.PointOfContact,
         "EmailID": this.memberadd.value.emailaddress,
         "ContactNo": this.memberadd.value.mobilenumber,
         "DOB": this.memberadd.value.dateofbirth,

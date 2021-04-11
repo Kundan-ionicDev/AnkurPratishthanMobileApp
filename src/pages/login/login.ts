@@ -1,5 +1,5 @@
 import { Directive, Component, ViewChild, Input, HostListener, ElementRef, HostBinding } from "@angular/core";
-import { NavController, AlertController, ToastController, MenuController, LoadingController, ModalController, Platform, DateTime} from "ionic-angular";
+import { NavController, AlertController, ToastController, MenuController, LoadingController, ModalController, Platform, DateTime, NavParams} from "ionic-angular";
 import { RegisterPage } from "../register/register";
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 import { RestApiProvider } from "../../providers/rest-api/rest-api";
@@ -9,9 +9,13 @@ import { MainPage } from "../main/main";
 // import { DonarDetailComponent } from "../../components/donar-detail/donar-detail";
 // import { PrintModalPage } from "../print-modal/print-modal";
 
+import { File } from '@ionic-native/file/ngx';
 import { Keyboard } from '@ionic-native/keyboard';
-import { DatePipe } from "@angular/common";
+import { FileOpener } from "@ionic-native/file-opener/ngx";
 
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'page-login',
@@ -51,9 +55,22 @@ export class LoginPage {
   startDate: string;
   minDate: any;
   maxDate: string;
-  
+  isPasswordchng: any;
+  itemselcted: any;
+
+
+  letterObj = {
+    to: '',
+    from: '',
+    text: ''
+  }
+ 
+  pdfObj = null;
+
   constructor(
     // public datepipes: DatePipe,
+    private file: File, 
+    private fileOpener: FileOpener,
     private formBuilder: FormBuilder,
     public nav: NavController,
     public api: RestApiProvider,
@@ -66,8 +83,8 @@ export class LoginPage {
     public platform: Platform,
     public modalCtrl: ModalController,
     public keyboard: Keyboard,
+    public navParams: NavParams,
     private faio: FingerprintAIO) {
-     
       // this.platform.prepareReady();
       // keyboard.disableScroll(true);
       // alert('Current Date::' + this.CurrentDate);
@@ -82,11 +99,11 @@ export class LoginPage {
       //   password: ['admin123',Validators.required]
       // });
       this.user = this.formBuilder.group({
-        emailaddress: new FormControl('', Validators.compose([
+        emailaddress: new FormControl('ngoankur@gmail.com', Validators.compose([
           Validators.required, 
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
-        password: ['',Validators.required]
+        password: ['admin123',Validators.required]
       });
       
       this.checkemail = this.formBuilder.group({
@@ -100,17 +117,208 @@ export class LoginPage {
         // verifyotp: ['',Validators.required],
         password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(12), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')])],
         confirmPassword: ['', Validators.required],
+        verifyEmailId : ['', Validators.required],
       }, {validator: this.matchingPasswords('password', 'confirmPassword') 
       })
+
+      //console.log('navparama' + navParams.get('isPassChng'));
+      // Check if password change requested.
+     
+      if(navParams.get('isPassChng') != undefined){
+        this.isPasswordchng = navParams.get('isPassChng');
+        if(this.isPasswordchng == true){
+          this.lostpassword = 1;
+        }
+      }
+  }
+
+
+  createPdf() {
+    // var docDefinition = {
+    //   content: [
+    //     { text: 'Print Label Of Donors', style: 'header' },
+    //     { text: new Date(), alignment: 'right' },
+ 
+    //     { text: 'Recipient Name', style: 'subheader' },
+    //     { text: this.letterObj.from },
+ 
+    //     { text: 'Address', style: 'subheader' },
+    //     this.letterObj.to,
+ 
+    //     { text: this.letterObj.text, style: 'story', margin: [0, 20, 0, 20] },
+ 
+    //     // {
+    //     //   ul: [
+    //     //     'Bacon',
+    //     //     'Rips',
+    //     //     'BBQ',
+    //     //   ]
+    //     // }
+    //   ],
+    //   styles: {
+    //     header: {
+    //       fontSize: 18,
+    //       bold: true,
+    //     },
+    //     subheader: {
+    //       fontSize: 14,
+    //       bold: true,
+    //       margin: [0, 15, 0, 0]
+    //     },
+    //     story: {
+    //       italic: true,
+    //       alignment: 'center',
+    //       width: '50%',
+    //     }
+    //   }
+    // };
+
+    var headers = {
+      fila_0:{
+          // col_1:{ text: 'Faltas', style: 'tableHeader',rowSpan: 2, alignment: 'center',margin: [0, 8, 0, 0] },
+          // col_2:{ text: 'Fecha', style: 'tableHeader',rowSpan: 2, alignment: 'center',margin: [0, 8, 0, 0] },
+          //col_3:{ text: 'Descripción', style: 'tableHeader',rowSpan: 2, alignment: 'center',margin: [0, 8, 0, 0] },
+          col_4:{ text: 'Donors Label', style: 'tableHeader',colSpan: 2, alignment: 'center' }
+      },
+      fila_1:{
+          // col_1:{ text: 'Header 1', style: 'tableHeader', alignment: 'center' },
+          // col_2:{ text: 'Header 2', style: 'tableHeader', alignment: 'center' }, 
+           //col_3:{ text: 'Header 3', style: 'tableHeader', alignment: 'center' },
+           col_4:{ text: 'Recepient Name:', style: 'tableHeader', alignment: 'center' },
+           col_5:{ text: 'Kundan Sakpal', style: 'tableHeader', alignment: 'center'}
+      }
+  };
+  var rows = {
+      a: {
+          // peaje: '1',
+          // ruta: '2',
+          // fechaCruce: '3',
+          addresslabel: 'Address:',
+          contactlabel: '30 Aulike St. Suite 105  Kailua, Hawaii 96734 Phone: (808) 266-1222 Fax: (808) 266-1226'
+      },
+      b: {
+          // peaje: '1',
+          // ruta: '2',
+          // fechaCruce: '3',
+          addresslabel: 'Contact:',
+          contactlabel: '9960097184'
+      }
+  }
+  
+  var body = [];
+  for (var key in headers){
+      if (headers.hasOwnProperty(key)){
+          var header = headers[key];
+          var row = new Array();
+          // row.push( header.col_1 );
+          // row.push( header.col_2 );
+          //row.push( header.col_3 );
+          row.push( header.col_4 );
+          row.push( header.col_5 );
+          body.push(row);
+      }
+  }
+  for (var key in rows) 
+  {
+      if (rows.hasOwnProperty(key))
+      {
+          var data = rows[key];
+          alert(JSON.stringify(data));
+          var row = new Array();
+          // row.push( data.peaje.toString() );
+          // row.push( data.ruta.toString()  );
+          // row.push( data.fechaCruce.toString() );
+          row.push( data.addresslabel.toString()  );
+          row.push( data.contactlabel.toString() );
+          body.push(row);
+      }
+  }
+  
+  var docDefinition = {
+          pageMargins: [40,155,40,55],
+          pageOrientation: 'landscape',
+          // header: function() {
+          //     return {
+          //         margin: 40,
+          //         columns: [
+          //           {
+          //             },
+          //             { text:['Resumen disciplinario'], 
+          //                     alignment: 'left',bold:true,margin:[-405,80,0,0],fontSize: 24}
+          //         ]
+          //     }
+          // },
+          footer: function(currentPage, pageCount) {
+              return { text:'Page '+ currentPage.toString() + '  ' + pageCount, alignment: 'center',margin:[0,30,0,0] };
+          },
+          content: [
+              //{ text: 'Tables', style: 'header' },
+              //'\nEl estudiante AGRESOTH NEGRETE JORYETH TATIANA - 901 - TARDE tiene 1 actas, con 1 faltas acomuladas y a manera de resumen descritas a continuación:\n\n',
+              { text: 'Print the donors label for courier', style: 'sta' },
+              '',
+              {
+                  style: 'tableExample',
+                  table: {
+                      widths: [ '*', '*', '*', '*', '*' ],
+                      headerRows: 2,
+                      // keepWithHeaderRows: 1,
+                      body: body
+                  }
+              }],
+          styles: {
+              header: {
+                  fontSize: 28,
+                  bold: true
+              },
+              subheader: {
+                  fontSize: 15,
+                  bold: true
+              },
+              quote: {
+                  italics: true
+              },
+              small: {
+                  fontSize: 8
+              },
+              sta: {
+                  fontSize: 11,
+                  bold: false,
+                  alignment: 'justify'
+              }
+          }
+  };
+
+   // alert('docDefinition' + JSON.stringify(docDefinition));
+   
+    this.pdfObj = pdfMake.createPdf(docDefinition);
+    this.downloadPdf();
+    //alert('pdf' + this.pdfObj)
   }
  
-  passwordType: string = 'password';
- passwordIcon: string = 'eye-off';
+  downloadPdf() {
+    if (this.platform.is('cordova')) {
+      this.pdfObj.getBuffer((buffer) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+ 
+        // Save the PDF to the data Directory of our App
+        this.file.writeFile(this.file.dataDirectory, 'myletter.pdf', blob, { replace: true }).then(fileEntry => {
+          // Open the PDf with the correct OS tools
+          this.fileOpener.open(this.file.dataDirectory + 'myletter.pdf', 'application/pdf');
+        })
+      });
+    } else {
+      // On a browser simply use download!
+      this.pdfObj.download();
+    }
+  }
 
- hideShowPassword() {
-     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
-     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
- }
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+
+  hideShowPassword() {
+      this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+      this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+  }
  
   public toggleTextPassword(): void{
     this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
@@ -138,30 +346,12 @@ export class LoginPage {
 
   // login and go to home page
   async login(userdata) {
-    // this.loginData = {
-    //   "EmailID":"kundansakpal@gamil.com",
-    //   "FullName":"Kundan SAkpal",// + ' '+ res.APLoginResult[0].LastName,
-    //   "RoleID":"1",
-    //   "Address":"res.APLoginResult[0].Address",
-    //   "ContactNo":"res.APLoginResult[0].ContactNo",
-    //   "DOB":"res.APLoginResult[0].DOB",
-    //   "LoginID":"res.APLoginResult[0].LoginID",
-    //   "Img": "res.APLoginResult[0].ImgPath"
-    // };
-    // localStorage.setItem('UserLogin',JSON.stringify(this.loginData));
-    // //this.nav.setRoot(MainPage);
-    // this.api.userLoggedInData = this.loginData;
-    
-    // this.nav.insert(0,MainPage);
-    // this.nav.popToRoot();
-
-
     localStorage.clear();
     localStorage.removeItem('UserLogin');
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
-    loading.present();
+    //loading.present();
     
     if(this.user.valid){     
       let loginparams = {
@@ -191,6 +381,7 @@ export class LoginPage {
           
           loading.dismiss();
           this.nav.insert(0,MainPage);
+          // this.nav.insert(0,ReportsPage);
           this.nav.popToRoot();
 
         }else if(res.APLoginResult[0].Message =="FAILURE"){

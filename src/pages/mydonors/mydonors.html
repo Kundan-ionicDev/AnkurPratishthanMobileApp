@@ -57,6 +57,7 @@
             <p><b>Volunteer :&nbsp;</b>{{ item.CreatedBy }} </p>
             <p><b>Donation Towards:&nbsp;</b> {{ item.DonationTowards }}</p>
             <p><b>Amount:&nbsp;</b>Rs.  {{ item.Amount }}</p>
+            <p><b>PointOfContact:&nbsp;{{ item.PointOfContact }}</b></p>
             <p (click)="confirmDailNumber(item.MobileNo)"><b>Phone:&nbsp;</b>{{ item.ContactNo }}</p>
             <p><b>DOB :&nbsp;</b> {{ item.DOB | date:'longDate' }}</p>
             <!-- Accepted -->
@@ -111,5 +112,4 @@
     </ion-list>
   </div>
 </div>
-
 </ion-content>

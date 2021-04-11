@@ -2,6 +2,8 @@
 <ion-content padding class="login auth-page">
   <!-- Login to System -->
   <div class="login-content" *ngIf="lostpassword == 0">
+    
+
     <!-- Login -->
     <div text-center>
       <div class="Loginlogo"></div>
@@ -9,27 +11,21 @@
         <strong>Donation Management System</strong>
       </h4>
     </div>
-
-
-    <!-- <ion-item>
-      <ion-label floating>
-        <ion-icon name="calendar" item-start class="text-primary"></ion-icon>
-       Date of Birth
-      </ion-label>
-      <ion-datetime [max]="CurrentDate" displayFormat="DD-MMM-YYYY" pickerFormat="DD-MMM-YYYY" ></ion-datetime>
-    </ion-item> -->
+   
+    <!-- <button ion-button full (click)="createPdf()">Create PDF</button>
+    <button ion-button full (click)="downloadPdf()" color="secondary" [disabled]="!pdfObj">Download PDF</button> -->
+   
     <!-- Login form -->
     <form class="list-form" [formGroup]="user" autocomplete="off" (ngSubmit)="login(user)">
-
       <BR />
       <div class="floating-label">      
-        <input class="floating-input" formControlName="emailaddress" type="email" placeholder=" ">
+        <input class="floating-input" formControlName="emailaddress" type="email">
         <span class="highlight"></span>
         <label>Email Id</label>
       </div>
 
       <div class="floating-label">      
-        <input class="floating-input" formControlName="password" [type]="getType()" placeholder=" ">
+        <input class="floating-input" formControlName="password" [type]="getType()">
         <label>Password</label>
       </div>
 
@@ -152,7 +148,7 @@
       <ion-item>
         <ion-label floating>
           <ion-icon name="lock"  item-start class="text-primary"></ion-icon>
-          Re-enter Password
+          Confirm Password
         </ion-label>
         <ion-input type="password" [(ngModel)]="confirmPassword" formControlName="confirmPassword"
                    required show-password></ion-input>
@@ -162,13 +158,23 @@
       </ion-item>
 
 
-      <button ion-button color="secondary" icon-start block type="submit">
+      <!-- <button ion-button color="secondary" icon-start block type="submit">
         <ion-icon name="log-in"></ion-icon>
         Change Password
       </button>
       <p text-center ion-text color="secondary" tappable (click)="cancel()"><strong>
           Cancel
-        </strong></p>
+        </strong></p> -->
+
+        <div>
+          <button ion-button (click)="changepassword()" color="secondary" >
+            
+            Change Password
+          </button>
+          <p text-center ion-text (click)="cancel()" color="secondary" tappable><strong>
+            Cancel
+            </strong></p>
+        </div>
     </form>
   </div>
 </ion-content>

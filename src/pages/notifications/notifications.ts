@@ -85,5 +85,11 @@ export class NotificationsPage {
     this.navCtrl.push(ManagevoluntersPage);
   }
 
+  changepassword(){
+    this.navCtrl.push(LoginPage, {
+      isPassChng: true
+    });
+  }
+
 }
 

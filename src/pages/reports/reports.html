@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Reports</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content >
+<p text-center>Your Contribution: INR 5000/-</p>
+<ion-list>
+  <ion-item *ngFor="let item of donarsData">
+    <ion-thumbnail item-start>
+      <img src="assets/icon/shri.png">
+    </ion-thumbnail>
+    <h2>{{item.Prefix}}. {{ item.FullName }}</h2>
+    <label style="padding-left:0px;" (click)="confirmDailNumber(item.ContactNo)">
+       {{ item.ContactNo }}
+    </label>
+    <br />
+    <label style="padding-left:0px;" (click)="openGooglemap(item.Address,item.FullName)">
+      {{ item.Address }}
+    </label>
+    <button ion-button clear item-end>Rs. {{ item.Amount }}</button>
+  </ion-item>
+</ion-list>
+</ion-content>

@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-list >
+  <!-- <ion-list >
     <ion-item *ngFor="let item of getdocs">
       <ion-row>
         <ion-col style="padding-left:0px;color: #0d0e0d;font-size: 1.6rem;" col-9 (click)="openFile(item)">          
@@ -13,8 +13,63 @@
         <ion-col col-3>
           <ion-icon name="eye" style="text-align: right;float: right;" (click)="openFile(item)"></ion-icon>
         </ion-col>
-      </ion-row>
-   
+      </ion-row>   
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+
+    <ion-list *ngIf="isnewDoc == false">
+      <ion-item-sliding *ngFor="let item of getdocs">
+        <ion-item  (click)="openFile(item)">
+          <ion-label>
+            <ion-row>
+              <ion-col col-12>
+                <p style="font-size: 15px;">{{ item.Title }}
+                  <ion-icon name="eye" style="text-align: right;float: right;" (click)="openFile(item)"></ion-icon>
+                </p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+        <ion-item-options *ngIf="userLogin.RoleID == '1'">
+          <button ion-button (click)="editDoc(item)" color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+            Edit
+          </button>
+          <button (click)="delDoc(item)" ion-button color="primary" icon-start>
+            <ion-icon name="text"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <ion-fab right bottom *ngIf="userLogin.RoleID == '1'">
+      <button (click)="addNewDoc()" ion-fab color="light">
+        <ion-icon name="{{ iconName }}"></ion-icon>
+      </button>
+    </ion-fab>
+
+    <ion-grid *ngIf="isnewDoc == true">
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="person" item-start class="text-primary"></ion-icon>
+              Enter Document Name
+            </ion-label>
+            <ion-input type="text" ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+              <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+              <ion-label slot="end">Upload Document</ion-label>
+              <input type="file" (change)="loadImageFromDevice($event)">
+        </ion-col>
+      </ion-row>
+      <ion-row col-12>
+        <button ion-button block color="success" type="submit">
+          Submit
+        </button>
+      </ion-row>
+    </ion-grid>
+
 </ion-content>

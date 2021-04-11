@@ -245,7 +245,8 @@ export class ViewpaymentsPage {
               "Amount1": item.Amountinwords,
               "cmd": "3",
               "DonorID": item.DonorID,
-              "Description": item.Description
+              "Description": item.Description,
+              "PointOfContact":item.PointOfContact
           };
           // alert('Delete Donors request' + JSON.stringify(params));
           this.apiProvider._postAPI("ManageDonor", params).subscribe(res => {
@@ -331,7 +332,8 @@ export class ViewpaymentsPage {
       "Description":item.Description,
       "cmd":2, // 1 == Insert, 2 == Update and 3 == Delete
       "DonorID": item.DonorID,
-      "Tempflag": 0 // 1 == Temporary Save and 0 == Permanent
+      "Tempflag": 0, // 1 == Temporary Save and 0 == Permanent
+      "PointOfContact":item.PointOfContact
     };
 
     // alert('Add Donar Params : :' + JSON.stringify(donarparams));

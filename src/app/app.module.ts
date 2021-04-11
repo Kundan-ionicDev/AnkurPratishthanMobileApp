@@ -41,6 +41,11 @@ import { AboutusPage } from "../pages/aboutus/aboutus";
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AutoCompleteModule } from 'ionic2-auto-complete';
+import { ReportsPage } from "../pages/reports/reports";
+
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+
 
 @NgModule({
   declarations: [
@@ -61,7 +66,8 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     ViewDonorsreceiptPage,
     DonarDetailComponent,
     MydonorsPage,
-    AboutusPage
+    AboutusPage,
+    ReportsPage
   ],
   imports: [
     AutoCompleteModule,
@@ -102,7 +108,8 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     ProfilePage,
     ViewDonorsreceiptPage,
     MydonorsPage,
-    AboutusPage
+    AboutusPage,
+    ReportsPage
    // DonarDetailComponent
   ],
   providers: [
@@ -120,7 +127,9 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     Contacts,
     DatePicker,
     SocialSharing,
-    InAppBrowser
+    InAppBrowser,
+    File,
+    FileOpener
   ]
 })
 

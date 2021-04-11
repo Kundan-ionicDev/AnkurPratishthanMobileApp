@@ -16,6 +16,8 @@ import { MydonorsPage } from '../mydonors/mydonors';
 import { AboutusPage } from '../aboutus/aboutus';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { RegisterPage } from '../register/register';
+import { ReportsPage } from '../reports/reports';
 
 @IonicPage()
 @Component({
@@ -123,7 +125,7 @@ export class MainPage {
     }else if(id == 7){
       this.navCtrl.push(AboutusPage);
     }else if(id == 8){
-      this.apiProvider.presentAlert('Alert','Comming Soon...Under Development');
+      this.navCtrl.push(ReportsPage);
     }
   }
 
