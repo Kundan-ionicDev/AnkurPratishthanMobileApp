@@ -18,7 +18,7 @@ export class RestApiProvider {
   httpOptions = {
       headers: new HttpHeaders({  
         'Content-Type': 'application/json',
-        //'Access-Control-Allow-Origin' : 'http://localhost:8100'
+        'Access-Control-Allow-Origin' : 'https://ankurpratishthan.com'
     })
   };
   public booksData :any;
@@ -78,7 +78,7 @@ export class RestApiProvider {
       //   'Status':error.status,
       //   'statusText':error.statusText
       // };
-      this.presentAlert('Error', error.status + ' '+ error.statusText)
+      //this.presentAlert('Error', error.status + ' '+ error.statusText)
       // localStorage.setItem('HttpResponse',JSON.stringify(errormsg));
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);

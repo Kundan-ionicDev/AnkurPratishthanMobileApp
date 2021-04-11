@@ -77,6 +77,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
     HttpModule,
     SuperTabsModule.forRoot(),
     HttpClientModule,
+    SuperTabsModule.forRoot(),   
     IonicModule.forRoot(MyApp, {
       autocomplete: false,
       scrollPadding: true,
